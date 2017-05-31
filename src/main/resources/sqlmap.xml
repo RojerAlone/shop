@@ -4,6 +4,6 @@
         "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
     <typeAliases>
-        <package name="cn.alone.pojo" />
+        <package name="cn.cie.entity" />
     </typeAliases>
 </configuration>
