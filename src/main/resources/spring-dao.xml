@@ -23,7 +23,7 @@
        </bean>
        <!-- 初始化时执行sql语句创建数据库 -->
        <jdbc:initialize-database data-source="dataSource" ignore-failures="NONE">
-              <jdbc:script location="classpath:dbDef.sql"/>
+              <jdbc:script location="classpath:schema.sql"/>
        </jdbc:initialize-database>
        <!-- spring和MyBatis整合 -->
        <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
