@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.cie.mapper.ImgMapper">
+  <resultMap id="BaseResultMap" type="cn.cie.entity.Img">
+    <result column="game" jdbcType="INTEGER" property="game" />
+    <result column="img" jdbcType="VARCHAR" property="img" />
+  </resultMap>
+
+  <insert id="insert" parameterType="cn.cie.entity.Img">
+    insert into img
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="game != null">
+        game,
+      </if>
+      <if test="img != null">
+        img,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="game != null">
+        #{game,jdbcType=INTEGER},
+      </if>
+      <if test="img != null">
+        #{img,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+
+  <select id="selectByGame" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select img from img where game = #{game,jdbcType=INTEGER}
+  </select>
+</mapper>

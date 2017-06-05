@@ -1,43 +1,50 @@
 package cn.cie.entity;
 
-import java.sql.Timestamp;
+import java.util.Date;
 
-/**
- * Created by RojerAlone on 2017/5/31.
- */
 public class User {
 
-    private int uid;
+    /**
+     * 正常
+     */
+    public static final Byte STAT_OK = 0;
+    /**
+     * 未验证，需要邮箱验证
+     */
+    public static final Byte STAT_NOT_VALIDATE = 1;
+    /**
+     * 受限
+     */
+    public static final Byte STAT_RESTRICT = 2;
+    /**
+     * 已删除
+     */
+    public static final Byte STAT_DEL = 3;
+
+    private Integer id;
+
     private String username;
+
     private String password;
+
     private String nickname;
+
     private String email;
-    private long phone;
-    private int stat;
-    private Timestamp ctime;
-    private Timestamp utime;
 
-    @Override
-    public String toString() {
-        return "User{" +
-                "uid=" + uid +
-                ", username='" + username + '\'' +
-                ", password='" + password + '\'' +
-                ", nickname='" + nickname + '\'' +
-                ", email='" + email + '\'' +
-                ", phone=" + phone +
-                ", stat=" + stat +
-                ", ctime=" + ctime +
-                ", utime=" + utime +
-                '}';
+    private Long phone;
+
+    private Date ctime;
+
+    private Date utime;
+
+    private Byte stat;
+
+    public Integer getId() {
+        return id;
     }
 
-    public int getUid() {
-        return uid;
-    }
-
-    public void setUid(int uid) {
-        this.uid = uid;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getUsername() {
@@ -72,35 +79,35 @@ public class User {
         this.email = email;
     }
 
-    public long getPhone() {
+    public Long getPhone() {
         return phone;
     }
 
-    public void setPhone(long phone) {
+    public void setPhone(Long phone) {
         this.phone = phone;
     }
 
-    public int getStat() {
-        return stat;
-    }
-
-    public void setStat(int stat) {
-        this.stat = stat;
-    }
-
-    public Timestamp getCtime() {
+    public Date getCtime() {
         return ctime;
     }
 
-    public void setCtime(Timestamp ctime) {
+    public void setCtime(Date ctime) {
         this.ctime = ctime;
     }
 
-    public Timestamp getUtime() {
+    public Date getUtime() {
         return utime;
     }
 
-    public void setUtime(Timestamp utime) {
+    public void setUtime(Date utime) {
         this.utime = utime;
+    }
+
+    public Byte getStat() {
+        return stat;
+    }
+
+    public void setStat(Byte stat) {
+        this.stat = stat;
     }
 }

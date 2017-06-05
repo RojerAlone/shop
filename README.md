@@ -1,8 +1,14 @@
 # Shop 校企联合实训项目
+## 项目信息
+- 项目名字：WePlay
+- 项目描述：基于SSM框架的网上游戏商城
 ## 环境配置
 - JDK 1.8
 - MySQL 5.7.18
 - Tomcat 8.5.15
+- Maven 3
+- Spring 4.3
+- MyBatis 3.4
 ### maven 阿里云仓库
 ```xml
 <mirror>

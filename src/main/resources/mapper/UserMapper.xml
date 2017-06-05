@@ -1,104 +1,98 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.cie.mapper.UserMapper">
-    <resultMap id="User" type="cn.cie.entity.User">
-        <id column="uid" jdbcType="INTEGER" property="uid" />
-        <result column="username" jdbcType="VARCHAR" property="username" />
-        <result column="password" jdbcType="VARCHAR" property="password" />
-        <result column="nickname" jdbcType="VARCHAR" property="nickname" />
-        <result column="email" jdbcType="VARCHAR" property="email" />
-        <result column="phone" jdbcType="BIGINT" property="phone" />
-        <result column="ctime" jdbcType="TIMESTAMP" property="ctime" />
-        <result column="utime" jdbcType="TIMESTAMP" property="utime"/>
-        <result column="stat" jdbcType="TINYINT" property="stat" />
-    </resultMap>
+  <resultMap id="BaseResultMap" type="cn.cie.entity.User">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="username" jdbcType="VARCHAR" property="username" />
+    <result column="password" jdbcType="VARCHAR" property="password" />
+    <result column="nickname" jdbcType="VARCHAR" property="nickname" />
+    <result column="email" jdbcType="VARCHAR" property="email" />
+    <result column="phone" jdbcType="BIGINT" property="phone" />
+    <result column="ctime" jdbcType="TIMESTAMP" property="ctime" />
+    <result column="utime" jdbcType="TIMESTAMP" property="utime" />
+    <result column="stat" jdbcType="TINYINT" property="stat" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, username, password, nickname, email, phone, ctime, utime, stat
+  </sql>
 
-    <sql id="all_col">
-        uid, username, password, nickname, email, phone, ctime, utime, stat
-    </sql>
+  <select id="selectById" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from user
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectByName" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from user
+    where username = #{username,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByEmail" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from user
+    where email = #{email,jdbcType=VARCHAR}
+  </select>
 
-    <insert id="insert" parameterType="cn.cie.entity.User" useGeneratedKeys="true" keyProperty="uid">
-        insert into `user`
-        <trim prefix="(" suffix=")" suffixOverrides="," >
-            <if test="username != null" >
-                username,
-            </if>
-            <if test="password != null">
-                password,
-            </if>
-            <if test="nickname != null">
-                nickname,
-            </if>
-            <if test="email != null">
-                email,
-            </if>
-            <if test="phone != null">
-                phone,
-            </if>
-            <if test="stat != null">
-                stat,
-            </if>
-        </trim>
-        <trim prefix="values (" suffix=")" suffixOverrides=",">
-            <if test="username != null" >
-                #{username,jdbcType=VARCHAR},
-            </if>
-            <if test="password != null">
-                #{password,jdbcType=VARCHAR},
-            </if>
-            <if test="nickname != null">
-                #{nickname,jdbcType=VARCHAR},
-            </if>
-            <if test="email != null">
-                #{email,jdbcType=VARCHAR},
-            </if>
-            <if test="phone != null">
-                #{phone,jdbcType=BIGINT},
-            </if>
-            <if test="stat != null">
-                #{stat,jdbcType=TINYINT},
-            </if>
-        </trim>
-    </insert>
+  <insert id="insert" parameterType="cn.cie.entity.User">
+    insert into user
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="username != null">
+        username,
+      </if>
+      <if test="password != null">
+        password,
+      </if>
+      <if test="nickname != null">
+        nickname,
+      </if>
+      <if test="email != null">
+        email,
+      </if>
+      <if test="phone != null">
+        phone,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="username != null">
+        #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null">
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="nickname != null">
+        #{nickname,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null">
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null">
+        #{phone,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
 
-    <select id="selectById" resultMap="User" parameterType="java.lang.Integer">
-        select
-        <include refid="all_col" />
-        from `user`
-        where uid = #{uid}
-    </select>
-    <select id="selectByName" resultMap="User" parameterType="java.lang.String">
-        select
-        <include refid="all_col" />
-        from `user`
-        where username = #{name}
-    </select>
-    <select id="selectByStat" resultMap="User" parameterType="java.lang.Integer">
-        select
-        <include refid="all_col" />
-        from `user`
-        where stat = #{stat}
-    </select>
+  <update id="update" parameterType="cn.cie.entity.User">
+    update user
+    <set>
+      <if test="password != null">
+        password = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="nickname != null">
+        nickname = #{nickname,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null">
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null">
+        phone = #{phone,jdbcType=BIGINT},
+      </if>
+      <if test="stat != null">
+        stat = #{stat,jdbcType=TINYINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
 
-    <update id="update" parameterType="cn.cie.entity.User">
-        update `user`
-        <set>
-            <if test="password != null">
-                password = #{password,jdbcType=VARCHAR},
-            </if>
-            <if test="nickname != null">
-                nickname = #{nickname,jdbcType=VARCHAR},
-            </if>
-            <if test="email != null">
-                email = #{email,jdbcType=VARCHAR},
-            </if>
-            <if test="phone != null">
-                phone = #{phone,jdbcType=BIGINT},
-            </if>
-            <if test="stat != null">
-                stat = #{stat,jdbcType=TINYINT},
-            </if>
-        </set>
-        where uid = #{uid,jdbcType=INTEGER}
-    </update>
 </mapper>
