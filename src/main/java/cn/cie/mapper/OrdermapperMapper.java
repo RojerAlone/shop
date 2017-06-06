@@ -8,5 +8,5 @@ import java.util.List;
 public interface OrdermapperMapper {
     int insert(Ordermapper record);
 
-    List<Order> selectByOrder(Integer order);
+    List<Integer> selectByOrder(Integer order);
 }

@@ -5,27 +5,16 @@
     <result column="game" jdbcType="INTEGER" property="game" />
     <result column="tag" jdbcType="INTEGER" property="tag" />
   </resultMap>
+
   <insert id="insert" parameterType="cn.cie.entity.Tagmapper">
     insert into tagmapper (game, tag)
     values (#{game,jdbcType=INTEGER}, #{tag,jdbcType=INTEGER})
   </insert>
-  <insert id="insertSelective" parameterType="cn.cie.entity.Tagmapper">
-    insert into tagmapper
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="game != null">
-        game,
-      </if>
-      <if test="tag != null">
-        tag,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="game != null">
-        #{game,jdbcType=INTEGER},
-      </if>
-      <if test="tag != null">
-        #{tag,jdbcType=INTEGER},
-      </if>
-    </trim>
-  </insert>
+
+  <select id="selectByTag" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+    select game from tagmapper where tag = #{tag,jdbcType=INTEGER}
+  </select>
+  <select id="selectByGame" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+    select tag from tagmapper where game = #{game,jdbcType=INTEGER}
+  </select>
 </mapper>

@@ -9,23 +9,11 @@
     insert into kindmapper (game, kind)
     values (#{game,jdbcType=INTEGER}, #{kind,jdbcType=INTEGER})
   </insert>
-  <insert id="insertSelective" parameterType="cn.cie.entity.Kindmapper">
-    insert into kindmapper
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="game != null">
-        game,
-      </if>
-      <if test="kind != null">
-        kind,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="game != null">
-        #{game,jdbcType=INTEGER},
-      </if>
-      <if test="kind != null">
-        #{kind,jdbcType=INTEGER},
-      </if>
-    </trim>
-  </insert>
+
+  <select id="selectByKind" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+    select game from kindmapper where kind = #{kind,jdbcType=INTEGER}
+  </select>
+  <select id="selectByGame" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+    select kind from kindmapper where game = #{game,jdbcType=INTEGER}
+  </select>
 </mapper>

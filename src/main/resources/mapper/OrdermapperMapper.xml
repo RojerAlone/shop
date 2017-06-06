@@ -9,7 +9,7 @@
     insert into ordermapper (order, item)
     values (#{order,jdbcType=INTEGER}, #{item,jdbcType=INTEGER})
   </insert>
-  <select id="selectByOrder" parameterType="java.lang.Integer" resultType="cn.cie.entity.Ordermapper">
-    select order, item from order where order = #{order, jdbcType=INTEGER}
+  <select id="selectByOrder" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+    select item from order where order = #{order, jdbcType=INTEGER}
   </select>
 </mapper>
