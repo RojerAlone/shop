@@ -5,13 +5,13 @@ import java.util.Date;
 public class User {
 
     /**
-     * 正常
-     */
-    public static final Byte STAT_OK = 0;
-    /**
      * 未验证，需要邮箱验证
      */
-    public static final Byte STAT_NOT_VALIDATE = 1;
+    public static final Byte STAT_NOT_VALIDATE = 0;
+    /**
+     * 正常
+     */
+    public static final Byte STAT_OK = 1;
     /**
      * 受限
      */

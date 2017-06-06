@@ -16,12 +16,20 @@ public interface UserService {
     public Result register(User user);
 
     /**
+     * 邮箱验证
+     * @param uid
+     * @param code
+     * @return
+     */
+    public Result validate(Integer uid, String code);
+
+    /**
      * 登录
      * @param username
      * @param password
      * @return
      */
-    public Result login(String username, String password);
+    public Result<User> login(String username, String password);
 
     /**
      * 更新用户信息
@@ -35,6 +43,13 @@ public interface UserService {
      * @param uid
      * @return
      */
-    public boolean restrict(Integer uid);
+    public Result restrict(Integer uid);
+
+    /**
+     * 解除账户限制
+     * @param uid
+     * @return
+     */
+    public Result relieve(Integer uid);
 
 }

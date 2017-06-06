@@ -2,6 +2,8 @@ package cn.cie.utils;
 
 import org.junit.Test;
 
+import java.util.UUID;
+
 import static org.junit.Assert.*;
 
 /**
@@ -15,6 +17,11 @@ public class MailUtilTest {
         String content = "test";
         MailUtil.sendMail(name, title, content);
 
+    }
+
+    @Test
+    public void UUIDTest() {
+        System.out.println(UUID.randomUUID().toString());
     }
 
 }

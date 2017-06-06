@@ -29,6 +29,7 @@ public class UserController extends AbstractController{
     public String login(String username, String password) {
         Result result = userService.login(username, password);
         if (result.isSuccess()) {       // 登录成功
+            this.getSession().setAttribute("user", result.getData());
             return "redirect:/index";
         } else {                        // 登录失败
             this.getModel().addAttribute("msg", result.getMsg());
@@ -52,6 +53,23 @@ public class UserController extends AbstractController{
         }
     }
 
+    @GetMapping(value = "validate")
+    public String validate() {
+        return "validate";
+    }
+
+    @PostMapping(value = "validate")
+    public String validate(String code) {
+        int uid = ((User) this.getSession().getAttribute("user")).getId();
+        Result result = userService.validate(uid, code);
+        if (result.isSuccess()) {       // 验证成功返回首页
+            return "redirect:index";
+        } else {                        // 验证失败返回验证页
+            this.getModel().addAttribute("msg", result.getMsg());
+            return "validate";
+        }
+    }
+
     @GetMapping(value = "update")
     public String udpate() {
         return "updateUserInfo";
@@ -71,6 +89,12 @@ public class UserController extends AbstractController{
     @ResponseBody
     public Result restrict(Integer uid) {
         return userService.restrict(uid);
+    }
+
+    @PostMapping(value = "relieve")
+    @ResponseBody
+    public Result relieve(Integer uid) {
+        return userService.relieve(uid);
     }
 
 }

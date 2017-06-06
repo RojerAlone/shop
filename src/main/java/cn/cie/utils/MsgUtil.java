@@ -18,4 +18,6 @@ public class MsgUtil {
 
     public static final String USER_EMAIL_REGISTERED = "该邮箱已被注册";
 
+    public static final String USER_EMAIL_CODE_ERROR = "邮箱验证码错误";
+
 }
