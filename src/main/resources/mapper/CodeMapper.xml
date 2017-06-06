@@ -5,10 +5,10 @@
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="uid" jdbcType="INTEGER" property="uid" />
     <result column="code" jdbcType="VARCHAR" property="code" />
-    <result column="stat" jdbcType="TINYINT" property="stat" />
+    <result column="success" jdbcType="TINYINT" property="success" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, uid, code, stat
+    id, uid, code, success
   </sql>
 
   <select id="selectById" parameterType="java.lang.Integer" resultMap="BaseResultMap">
@@ -47,8 +47,8 @@
       <if test="code != null">
         code = #{code,jdbcType=VARCHAR},
       </if>
-      <if test="stat != null">
-        stat = #{stat,jdbcType=TINYINT},
+      <if test="success != null">
+        success = #{success,jdbcType=TINYINT},
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER}

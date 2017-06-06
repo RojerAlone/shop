@@ -10,10 +10,10 @@
     <result column="phone" jdbcType="BIGINT" property="phone" />
     <result column="ctime" jdbcType="TIMESTAMP" property="ctime" />
     <result column="utime" jdbcType="TIMESTAMP" property="utime" />
-    <result column="stat" jdbcType="TINYINT" property="stat" />
+    <result column="success" jdbcType="TINYINT" property="success" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, username, password, nickname, email, phone, ctime, utime, stat
+    id, username, password, nickname, email, phone, ctime, utime, success
   </sql>
 
   <select id="selectById" parameterType="java.lang.Integer" resultMap="BaseResultMap">
@@ -88,8 +88,8 @@
       <if test="phone != null">
         phone = #{phone,jdbcType=BIGINT},
       </if>
-      <if test="stat != null">
-        stat = #{stat,jdbcType=TINYINT},
+      <if test="success != null">
+        success = #{success,jdbcType=TINYINT},
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER}

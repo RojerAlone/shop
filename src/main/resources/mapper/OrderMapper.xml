@@ -7,10 +7,10 @@
     <result column="price" jdbcType="DOUBLE" property="price" />
     <result column="ctime" jdbcType="TIMESTAMP" property="ctime" />
     <result column="utime" jdbcType="TIMESTAMP" property="utime" />
-    <result column="stat" jdbcType="TINYINT" property="stat" />
+    <result column="success" jdbcType="TINYINT" property="success" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, uid, price, ctime, utime, stat
+    id, uid, price, ctime, utime, success
   </sql>
 
   <select id="selectById" parameterType="java.lang.Integer" resultMap="BaseResultMap">
@@ -24,7 +24,7 @@
     <include refid="Base_Column_List" />
     from order
     where uid = #{uid,jdbcType=INTEGER}
-    and stat = #{stat,jdbcType=TINYINT}
+    and success = #{success,jdbcType=TINYINT}
   </select>
 
   <insert id="insert" parameterType="cn.cie.entity.Order">
@@ -52,8 +52,8 @@
       <if test="price != null">
         price = #{price,jdbcType=DOUBLE},
       </if>
-      <if test="stat != null">
-        stat = #{stat,jdbcType=TINYINT},
+      <if test="success != null">
+        success = #{success,jdbcType=TINYINT},
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER}

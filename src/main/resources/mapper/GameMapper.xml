@@ -11,10 +11,10 @@
     <result column="discount" jdbcType="DOUBLE" property="discount" />
     <result column="ctime" jdbcType="TIMESTAMP" property="ctime" />
     <result column="utime" jdbcType="TIMESTAMP" property="utime" />
-    <result column="stat" jdbcType="TINYINT" property="stat" />
+    <result column="success" jdbcType="TINYINT" property="success" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, creater, name, desc, systemcfg, price, discount, ctime, utime, stat
+    id, creater, name, desc, systemcfg, price, discount, ctime, utime, success
   </sql>
 
   <select id="selectById" parameterType="java.lang.Integer" resultMap="BaseResultMap">
@@ -38,7 +38,7 @@
     select
     <include refid="Base_Column_List" />
     from game
-    where stat = #{stat,jdbcType=TINYINT}
+    where success = #{success,jdbcType=TINYINT}
   </select>
 
   <insert id="insert" parameterType="cn.cie.entity.Game">
@@ -106,8 +106,8 @@
       <if test="discount != null">
         discount = #{discount,jdbcType=DOUBLE},
       </if>
-      <if test="stat != null">
-        stat = #{stat,jdbcType=TINYINT},
+      <if test="success != null">
+        success = #{success,jdbcType=TINYINT},
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER}

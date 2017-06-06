@@ -1,6 +1,6 @@
-package cn.cie.demo.one;
+package cn.cie.common.demo.one;
 
-import cn.cie.demo.DBUtil;
+import cn.cie.common.demo.DBUtil;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
