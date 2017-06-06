@@ -15,6 +15,17 @@
     from tag
     where id = #{id,jdbcType=INTEGER}
   </select>
+  <select id="selectByIds" parameterType="list" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from tag
+    <where>
+      id in
+      <foreach collection="ids" item="id" separator="," open="(" close=")">
+        #{id}
+      </foreach>
+    </where>
+  </select>
 
   <insert id="insert" parameterType="cn.cie.entity.Tag">
     insert into tag (id, name)
