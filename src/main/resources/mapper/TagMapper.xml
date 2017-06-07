@@ -26,6 +26,11 @@
       </foreach>
     </where>
   </select>
+  <select id="selectAll" parameterMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from tag
+  </select>
 
   <insert id="insert" parameterType="cn.cie.entity.Tag">
     insert into tag (id, name)

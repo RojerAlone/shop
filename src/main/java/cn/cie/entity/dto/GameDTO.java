@@ -38,7 +38,7 @@ public class GameDTO {
 
     public GameDTO() {}
 
-    public GameDTO(Game game, List<Kind> kinds) {
+    public GameDTO(Game game, List<Tag> tags) {
         this.id = game.getId();
         this.creater = game.getCreater();
         this.name = game.getName();
@@ -49,7 +49,7 @@ public class GameDTO {
         this.ctime = game.getCtime();
         this.utime = game.getUtime();
         this.stat = game.getStat();
-        this.kinds = kinds;
+        this.tags = tags;
     }
 
     public GameDTO(Game game, List<Kind> kinds, List<Tag> tags) {

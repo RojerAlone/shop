@@ -12,6 +12,8 @@ public interface TagMapper {
 
     List<Tag> selectByIds(List<Integer> ids);
 
+    List<Tag> selectAll();
+
     int update(Tag record);
 
 }
