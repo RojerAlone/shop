@@ -1,4 +1,4 @@
-package cn.cie.utils;
+package cn.cie.common.utils;
 
 import org.springframework.util.DigestUtils;
 

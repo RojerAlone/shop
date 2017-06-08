@@ -1,10 +1,8 @@
-package cn.cie.utils;
+package cn.cie.common.utils;
 
 import org.junit.Test;
 
 import java.util.UUID;
-
-import static org.junit.Assert.*;
 
 /**
  * Created by RojerAlone on 2017/6/2.

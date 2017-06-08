@@ -1,8 +1,9 @@
 package cn.cie.controller;
 
+import cn.cie.common.exception.NotFoundException;
 import cn.cie.entity.Kind;
 import cn.cie.services.KindService;
-import cn.cie.utils.Result;
+import cn.cie.common.utils.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -31,8 +32,12 @@ public class KindController extends AbstractController {
     @GetMapping(value = "{kind}")
     public String getGamesByKind(@PathVariable(value = "kind") Integer kind) {
         Result result = kindService.getGamesByKind(kind);
-        this.getModel().addAttribute("games", result.getData());
-        return "kindsOfGame";
+        if (result.isSuccess()) {
+            this.getModel().addAttribute("games", result.getData());
+            return "kindsOfGame";
+        } else {
+            throw new NotFoundException();
+        }
     }
 
 }

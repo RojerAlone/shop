@@ -1,7 +1,7 @@
 package cn.cie.services;
 
 import cn.cie.entity.User;
-import cn.cie.utils.Result;
+import cn.cie.common.utils.Result;
 
 /**
  * Created by RojerAlone on 2017/5/31.

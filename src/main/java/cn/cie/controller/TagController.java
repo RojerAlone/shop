@@ -1,8 +1,10 @@
 package cn.cie.controller;
 
+import cn.cie.common.exception.NotFoundException;
 import cn.cie.entity.dto.GameDTO;
 import cn.cie.services.TagService;
-import cn.cie.utils.Result;
+import cn.cie.common.utils.MsgCenter;
+import cn.cie.common.utils.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,6 +28,8 @@ public class TagController extends AbstractController{
         Result result = tagService.getGamesByTag(tag);
         if (result.isSuccess()) {
             this.getModel().addAttribute("games", (List<GameDTO>) result.getData());
+        } else if (result.getMsg().equals(MsgCenter.NOT_FOUND)) {
+            throw new NotFoundException();
         } else {
             this.getModel().addAttribute("msg", result.getMsg());
         }

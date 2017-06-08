@@ -1,12 +1,13 @@
 package cn.cie.services.impl;
 
+import cn.cie.common.exception.NotFoundException;
 import cn.cie.entity.Game;
 import cn.cie.entity.Kind;
 import cn.cie.entity.Tag;
 import cn.cie.entity.dto.GameDTO;
 import cn.cie.mapper.*;
 import cn.cie.services.KindService;
-import cn.cie.utils.Result;
+import cn.cie.common.utils.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -35,6 +36,10 @@ public class KindServiceImpl implements KindService {
     }
 
     public Result<List<GameDTO>> getGamesByKind(int kind) {
+        if (kindMapper.selectById(kind) == null) {
+            throw new NotFoundException();
+//            return Result.fail(MsgCenter.NOT_FOUND);
+        }
         List<Integer> gameIds = kindmapperMapper.selectByKind(kind);
         List<Game> games = gameMapper.selectByIds(gameIds);
         List<GameDTO> gameDTOS = paresGameDTO(games);

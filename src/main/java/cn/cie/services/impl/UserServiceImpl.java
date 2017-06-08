@@ -5,10 +5,10 @@ import cn.cie.entity.Validatecode;
 import cn.cie.mapper.UserMapper;
 import cn.cie.mapper.ValidatecodeMapper;
 import cn.cie.services.UserService;
-import cn.cie.utils.MailUtil;
-import cn.cie.utils.MsgUtil;
-import cn.cie.utils.PasswordUtil;
-import cn.cie.utils.Result;
+import cn.cie.common.utils.MailUtil;
+import cn.cie.common.utils.MsgCenter;
+import cn.cie.common.utils.PasswordUtil;
+import cn.cie.common.utils.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -29,9 +29,9 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public Result register(User user) {
         if (userMapper.selectByName(user.getUsername()) != null) {                  // 用户名已经被注册
-            return Result.fail(MsgUtil.USER_USERNAME_EXISTS);
+            return Result.fail(MsgCenter.USER_USERNAME_EXISTS);
         } else if (userMapper.selectByEmail(user.getEmail()) != null) {             // 邮箱已被注册
-            return Result.fail(MsgUtil.USER_EMAIL_REGISTERED);
+            return Result.fail(MsgCenter.USER_EMAIL_REGISTERED);
         } else if (1 == userMapper.insert(user)) {                                  // 注册成功
             Validatecode coder = new Validatecode();
             String code = UUID.randomUUID().toString();
@@ -41,7 +41,7 @@ public class UserServiceImpl implements UserService {
             MailUtil.sendValidateMail(user.getEmail(), code);                        // 发送验证邮件
             return Result.success();
         } else {                                                                      // 参数错误
-            return Result.fail(MsgUtil.PARAMS_ERROR);
+            return Result.fail(MsgCenter.PARAMS_ERROR);
         }
     }
 
@@ -53,12 +53,13 @@ public class UserServiceImpl implements UserService {
             user.setId(uid);
             user.setStat(User.STAT_OK);
             if (1 == userMapper.update(user)) {
+                codeMapper.delete(uid);     // 验证成功后删除验证码
                 return Result.success();
             } else {
-                return Result.fail(MsgUtil.ERROR);
+                return Result.fail(MsgCenter.ERROR);
             }
         } else {
-            return Result.fail(MsgUtil.USER_EMAIL_CODE_ERROR);
+            return Result.fail(MsgCenter.USER_EMAIL_CODE_ERROR);
         }
     }
 
@@ -66,7 +67,7 @@ public class UserServiceImpl implements UserService {
         User user = userMapper.selectByName(username);
         // 用户名不存在或者密码错误
         if (user == null || !user.getPassword().equals(PasswordUtil.pwd2Md5(password))) {
-            return Result.fail(MsgUtil.USER_LOGIN_ERROR);
+            return Result.fail(MsgCenter.USER_LOGIN_ERROR);
         } else {
             user.setPassword(null);     // 密码设为空后返回
             return Result.success(user);

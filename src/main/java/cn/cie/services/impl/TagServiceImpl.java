@@ -8,8 +8,8 @@ import cn.cie.mapper.GameMapper;
 import cn.cie.mapper.TagMapper;
 import cn.cie.mapper.TagmapperMapper;
 import cn.cie.services.TagService;
-import cn.cie.utils.MsgUtil;
-import cn.cie.utils.Result;
+import cn.cie.common.utils.MsgCenter;
+import cn.cie.common.utils.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -40,15 +40,15 @@ public class TagServiceImpl implements TagService {
         if (1 == tagMapper.insert(tag)) {
             return Result.success(tag);
         } else {
-            return Result.fail(MsgUtil.ERROR);
+            return Result.fail(MsgCenter.ERROR);
         }
     }
 
     @Transactional
     public Result addTag(String name, Integer game) {
-        // 如果没有这个游戏，就返回错误
+        // 如果没有这个游戏，就返回404
         if (gameMapper.selectById(game) == null) {
-            return Result.fail(MsgUtil.PARAMS_ERROR);
+            return Result.fail(MsgCenter.NOT_FOUND);
         }
         Result result = addTag(name);
         if (result.isSuccess()) {
@@ -59,13 +59,13 @@ public class TagServiceImpl implements TagService {
                 return Result.success();
             }
         }
-        return Result.fail(MsgUtil.ERROR);
+        return Result.fail(MsgCenter.ERROR);
     }
 
     public Result addTag(Integer tag, Integer game) {
-        // 如果没有这个游戏，就返回错误
+        // 如果没有这个游戏，就返回404
         if (gameMapper.selectById(game) == null) {
-            return Result.fail(MsgUtil.PARAMS_ERROR);
+            return Result.fail(MsgCenter.NOT_FOUND);
         }
         Tagmapper tagmapper = new Tagmapper();
         tagmapper.setGame(game);
@@ -73,14 +73,14 @@ public class TagServiceImpl implements TagService {
         if (1 == tagmapperMapper.insert(tagmapper)) {
             return Result.success();
         } else {
-            return Result.fail(MsgUtil.ERROR);
+            return Result.fail(MsgCenter.ERROR);
         }
     }
 
     public Result<List<GameDTO>> getGamesByTag(Integer tag) {
-        // 没有这个标签，返回错误
+        // 没有这个标签，返回404
         if (tagMapper.selectById(tag) == null) {
-            return Result.fail(MsgUtil.PARAMS_ERROR);
+            return Result.fail(MsgCenter.NOT_FOUND);
         }
         List<Integer> gameIds = tagmapperMapper.selectByTag(tag);                  // 根据标签获取所有的游戏ID
         List<Game> games = gameMapper.selectByIds(gameIds);                         // 根据游戏ID获取游戏实体

@@ -1,4 +1,4 @@
-package cn.cie.utils;
+package cn.cie.common.utils;
 
 /**
  * Created by RojerAlone on 2017/6/6.
@@ -20,7 +20,7 @@ public class Result<T> {
     }
 
     public static Result success() {
-        return new Result(true, MsgUtil.OK);
+        return new Result(true, MsgCenter.OK);
     }
 
     public static Result success(Object data) {

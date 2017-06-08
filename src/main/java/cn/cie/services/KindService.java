@@ -2,7 +2,7 @@ package cn.cie.services;
 
 import cn.cie.entity.Kind;
 import cn.cie.entity.dto.GameDTO;
-import cn.cie.utils.Result;
+import cn.cie.common.utils.Result;
 
 import java.util.List;
 
