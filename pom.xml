@@ -9,6 +9,7 @@
   <url>http://maven.apache.org</url>
   <properties>
     <spring.version>4.3.3.RELEASE</spring.version>
+    <aop.version>1.8.10</aop.version>
     <mybatis.version>3.4.1</mybatis.version>
     <log4j.version>1.2.17</log4j.version>
   </properties>
@@ -77,6 +78,17 @@
       <groupId>org.springframework</groupId>
       <artifactId>spring-test</artifactId>
       <version>${spring.version}</version>
+    </dependency>
+    <!--aspectj依赖-->
+    <dependency>
+      <groupId>org.aspectj</groupId>
+      <artifactId>aspectjrt</artifactId>
+      <version>${aop.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.aspectj</groupId>
+      <artifactId>aspectjweaver</artifactId>
+      <version>${aop.version}</version>
     </dependency>
     <!--jackson包，没有这个包无法用ajax请求-->
     <dependency>

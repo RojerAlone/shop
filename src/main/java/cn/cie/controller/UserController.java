@@ -26,15 +26,17 @@ public class UserController extends AbstractController{
     }
 
     @PostMapping(value = "login")
-    public String login(String username, String password) {
+    @ResponseBody
+    public Result login(String username, String password) {
         Result result = userService.login(username, password);
-        if (result.isSuccess()) {       // 登录成功
-            this.getSession().setAttribute("user", result.getData());
-            return "redirect:/index";
-        } else {                        // 登录失败
-            this.getModel().addAttribute("msg", result.getMsg());
-            return "login";
-        }
+//        if (result.isSuccess()) {       // 登录成功
+//            this.getSession().setAttribute("user", result.getData());
+//            return "redirect:/index";
+//        } else {                        // 登录失败
+//            this.getModel().addAttribute("msg", result.getMsg());
+//            return "login";
+//        }
+        return result;
     }
 
     @GetMapping(value = "register")
@@ -43,14 +45,16 @@ public class UserController extends AbstractController{
     }
 
     @PostMapping(value = "register")
-    public String register(User user) {
+    @ResponseBody
+    public Result register(User user) {
         Result result = userService.register(user);
-        if (result.isSuccess()) {       // 注册成功跳转到登录页面
-            return "login";
-        } else {                        // 失败返回到注册页面
-            this.getModel().addAttribute("msg", result.getMsg());
-            return "register";
-        }
+//        if (result.isSuccess()) {       // 注册成功跳转到登录页面
+//            return "login";
+//        } else {                        // 失败返回到注册页面
+//            this.getModel().addAttribute("msg", result.getMsg());
+//            return "register";
+//        }
+        return result;
     }
 
     @GetMapping(value = "validate")

@@ -10,10 +10,10 @@
     <result column="phone" jdbcType="BIGINT" property="phone" />
     <result column="ctime" jdbcType="TIMESTAMP" property="ctime" />
     <result column="utime" jdbcType="TIMESTAMP" property="utime" />
-    <result column="success" jdbcType="TINYINT" property="success" />
+    <result column="stat" jdbcType="TINYINT" property="stat" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, username, password, nickname, email, phone, ctime, utime, success
+    id, username, password, nickname, email, phone, ctime, utime, stat
   </sql>
 
   <select id="selectById" parameterType="java.lang.Integer" resultMap="BaseResultMap">
@@ -35,7 +35,7 @@
     where email = #{email,jdbcType=VARCHAR}
   </select>
 
-  <insert id="insert" parameterType="cn.cie.entity.User">
+  <insert id="insert" parameterType="cn.cie.entity.User" useGeneratedKeys="true" keyProperty="id">
     insert into user
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="username != null">
@@ -88,8 +88,8 @@
       <if test="phone != null">
         phone = #{phone,jdbcType=BIGINT},
       </if>
-      <if test="success != null">
-        success = #{success,jdbcType=TINYINT},
+      <if test="stat != null">
+        stat = #{stat,jdbcType=TINYINT},
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER}

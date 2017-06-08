@@ -27,7 +27,7 @@
     and success = #{success,jdbcType=TINYINT}
   </select>
 
-  <insert id="insert" parameterType="cn.cie.entity.Order">
+  <insert id="insert" parameterType="cn.cie.entity.Order" useGeneratedKeys="true" keyProperty="id">
     insert into order
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="uid != null">

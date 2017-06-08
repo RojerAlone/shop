@@ -37,7 +37,7 @@
     where id = #{id,jdbcType=INTEGER}
   </delete>
 
-  <insert id="insert" parameterType="cn.cie.entity.Kind">
+  <insert id="insert" parameterType="cn.cie.entity.Kind" useGeneratedKeys="true" keyProperty="id">
     insert into kind
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="name != null">

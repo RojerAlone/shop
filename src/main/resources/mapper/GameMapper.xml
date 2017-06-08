@@ -41,7 +41,7 @@
     where success = #{success,jdbcType=TINYINT}
   </select>
 
-  <insert id="insert" parameterType="cn.cie.entity.Game">
+  <insert id="insert" parameterType="cn.cie.entity.Game" useGeneratedKeys="true" keyProperty="id">
     insert into game
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="creater != null">

@@ -25,7 +25,7 @@
     </where>
   </select>
 
-  <insert id="insert" parameterType="cn.cie.entity.Orderitem">
+  <insert id="insert" parameterType="cn.cie.entity.Orderitem" useGeneratedKeys="true" keyProperty="id">
     insert into orderitem
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="gid != null">

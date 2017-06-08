@@ -32,16 +32,19 @@ public class UserServiceImpl implements UserService {
             return Result.fail(MsgCenter.USER_USERNAME_EXISTS);
         } else if (userMapper.selectByEmail(user.getEmail()) != null) {             // 邮箱已被注册
             return Result.fail(MsgCenter.USER_EMAIL_REGISTERED);
-        } else if (1 == userMapper.insert(user)) {                                  // 注册成功
-            Validatecode coder = new Validatecode();
-            String code = UUID.randomUUID().toString();
-            coder.setUid(user.getId());
-            coder.setCode(code);
-            codeMapper.insert(coder);                                               // 数据库中存入验证码
-            MailUtil.sendValidateMail(user.getEmail(), code);                        // 发送验证邮件
-            return Result.success();
-        } else {                                                                      // 参数错误
-            return Result.fail(MsgCenter.PARAMS_ERROR);
+        } else {
+            user.setPassword(PasswordUtil.pwd2Md5(user.getPassword()));                // 加密密码
+            if (1 == userMapper.insert(user)) {                                      // 注册成功
+                Validatecode coder = new Validatecode();
+                String code = UUID.randomUUID().toString();
+                coder.setUid(user.getId());
+                coder.setCode(code);
+                codeMapper.insert(coder);                                               // 数据库中存入验证码
+                MailUtil.sendValidateMail(user.getEmail(), code);                        // 发送验证邮件
+                return Result.success();
+            } else {                                                                      // 参数错误
+                return Result.fail(MsgCenter.PARAMS_ERROR);
+            }
         }
     }
 

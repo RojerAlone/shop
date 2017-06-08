@@ -18,7 +18,7 @@
     where id = #{id,jdbcType=INTEGER}
   </select>
 
-  <insert id="insert" parameterType="cn.cie.entity.Code">
+  <insert id="insert" parameterType="cn.cie.entity.Code" useGeneratedKeys="true" keyProperty="id">
     insert into code
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="uid != null">
