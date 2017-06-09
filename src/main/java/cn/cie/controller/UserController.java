@@ -3,12 +3,15 @@ package cn.cie.controller;
 import cn.cie.entity.User;
 import cn.cie.services.UserService;
 import cn.cie.common.utils.Result;
+import com.fasterxml.jackson.databind.util.JSONPObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * Created by RojerAlone on 2017/6/6.
@@ -46,8 +49,9 @@ public class UserController extends AbstractController{
 
     @PostMapping(value = "register")
     @ResponseBody
-    public Result register(User user) {
+    public Result register(User user, HttpServletResponse response) {
         Result result = userService.register(user);
+        response.setHeader("Access-Control-Allow-Origin", "*");
 //        if (result.isSuccess()) {       // 注册成功跳转到登录页面
 //            return "login";
 //        } else {                        // 失败返回到注册页面
@@ -63,15 +67,33 @@ public class UserController extends AbstractController{
     }
 
     @PostMapping(value = "validate")
-    public String validate(String code) {
-        int uid = ((User) this.getSession().getAttribute("user")).getId();
-        Result result = userService.validate(uid, code);
-        if (result.isSuccess()) {       // 验证成功返回首页
-            return "redirect:index";
-        } else {                        // 验证失败返回验证页
-            this.getModel().addAttribute("msg", result.getMsg());
-            return "validate";
-        }
+    @ResponseBody
+    public Result validate(Integer uid, String code, HttpServletResponse response) {
+//        int uid = ((User) this.getSession().getAttribute("user")).getId();
+//        Result result = userService.validate(uid, code);
+//        if (result.isSuccess()) {       // 验证成功返回首页
+//            return "redirect:index";
+//        } else {                        // 验证失败返回验证页
+//            this.getModel().addAttribute("msg", result.getMsg());
+//            return "validate";
+//        }
+        response.setHeader("Access-Control-Allow-Origin", "*");
+        return userService.validate(uid, code);
+    }
+
+    @PostMapping(value = "sendMail")
+    @ResponseBody
+    public Result sendMail(Integer uid, HttpServletResponse response) {
+//        int uid = ((User) this.getSession().getAttribute("user")).getId();
+//        Result result = userService.validate(uid, code);
+//        if (result.isSuccess()) {       // 验证成功返回首页
+//            return "redirect:index";
+//        } else {                        // 验证失败返回验证页
+//            this.getModel().addAttribute("msg", result.getMsg());
+//            return "validate";
+//        }
+        response.setHeader("Access-Control-Allow-Origin", "*");
+        return userService.sendMail(uid);
     }
 
     @GetMapping(value = "update")

@@ -16,6 +16,13 @@ public interface UserService {
     public Result register(User user);
 
     /**
+     * 给用户注册的邮箱发送验证码
+     * @param uid
+     * @return
+     */
+    public Result sendMail(Integer uid);
+
+    /**
      * 邮箱验证
      * @param uid
      * @param code

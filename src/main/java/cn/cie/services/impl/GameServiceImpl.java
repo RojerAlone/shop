@@ -32,7 +32,7 @@ public class GameServiceImpl implements GameService{
     public Result<GameDTO> getById(Integer id) {
         Game game = gameMapper.selectById(id);
         if (game == null) {
-            return Result.fail(MsgCenter.PARAMS_ERROR);
+            return Result.fail(MsgCenter.ERROR_PARAMS);
         }
         List<Integer> tagIds = tagmapperMapper.selectByGame(id);
         List<Tag> tags = tagMapper.selectByIds(tagIds);

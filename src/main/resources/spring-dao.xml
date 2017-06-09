@@ -29,7 +29,7 @@
        <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
               <property name="dataSource" ref="dataSource" />
               <!-- MyBatis的配置文件 -->
-              <property name="configLocation" value="classpath:sqlmap.xml" />
+              <property name="configLocation" value="classpath:mybatis-config.xml" />
               <property name="mapperLocations" value="classpath:mapper/*.xml" />
        </bean>
        <!-- mapper批量扫描 -->

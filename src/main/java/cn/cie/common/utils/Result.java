@@ -19,12 +19,18 @@ public class Result<T> {
         this.data = data;
     }
 
+    private Result(boolean success, String msg, T data) {
+        this.success = success;
+        this.msg = msg;
+        this.data = data;
+    }
+
     public static Result success() {
         return new Result(true, MsgCenter.OK);
     }
 
     public static Result success(Object data) {
-        return new Result(true, data);
+        return new Result(true, MsgCenter.OK, data);
     }
 
     public static Result fail(String msg) {

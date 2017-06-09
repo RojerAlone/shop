@@ -19,7 +19,7 @@
     </filter-mapping>
 
     <servlet>
-        <servlet-name>ssm</servlet-name>
+        <servlet-name>shop</servlet-name>
         <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
         <!-- 配置springMVC需要加载的配置文件
             spring-dao.xml,spring-service.xml,spring-web.xml
@@ -31,7 +31,7 @@
         </init-param>
     </servlet>
     <servlet-mapping>
-        <servlet-name>ssm</servlet-name>
+        <servlet-name>shop</servlet-name>
         <!-- 默认匹配所有的请求 -->
         <url-pattern>/</url-pattern>
     </servlet-mapping>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <!--settings要放在typeAliases前边-->
+    <settings>
+        <setting name="useGeneratedKeys" value="true" />
+        <setting name="cacheEnabled" value="true" />
+        <setting name="defaultStatementTimeout" value="3000"/>
+        <!--是否使用驼峰转换-->
+        <setting name="mapUnderscoreToCamelCase" value="true"/>
+    </settings>
+    <typeAliases>
+        <package name="cn.cie.entity" />
+    </typeAliases>
+</configuration>

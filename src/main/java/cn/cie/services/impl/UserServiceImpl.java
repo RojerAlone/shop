@@ -13,7 +13,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.UUID;
+import java.util.regex.Pattern;
 
 /**
  * Created by RojerAlone on 2017/5/31.
@@ -28,42 +30,79 @@ public class UserServiceImpl implements UserService {
 
     @Transactional
     public Result register(User user) {
-        if (userMapper.selectByName(user.getUsername()) != null) {                  // 用户名已经被注册
+        // 验证参数是否合法
+        if (user.getUsername() == null) {
+            return Result.fail(MsgCenter.EMPTY_USERNAME);
+        } else if (user.getPassword() == null) {
+            return Result.fail(MsgCenter.EMPTY_PASSWORD);
+        } else if (16 < user.getPassword().length() || user.getPassword().length() < 6) {
+            return Result.fail(MsgCenter.ERROR_PASSWORD_FORMAT);
+        } else if (user.getEmail() == null) {
+            return Result.fail(MsgCenter.EMPTY_EMAIL);
+        } else if (Pattern.compile("^([a-z0-9A-Z]+[-|_|\\.]?)+[a-z0-9A-Z]@([a-z0-9A-Z]+(-[a-z0-9A-Z]+)?\\.)+[a-zA-Z]{2,}$").
+                matcher(user.getEmail()).find() == false) {   // 判断邮箱格式是否正确
+            return Result.fail(MsgCenter.ERROR_EMAIL);
+        } else if (user.getPhone() == null) {
+            return Result.fail(MsgCenter.EMPTY_PHONE);
+        } else if (Pattern.compile("1[3|5|7|8|]\\d{9}").matcher(user.getPhone().toString()).find() == false) {  // 验证手机号码是否格式正确
+            return Result.fail(MsgCenter.ERROR_PHONE);
+        } else if (userMapper.selectByName(user.getUsername()) != null) {                  // 用户名已经被注册
             return Result.fail(MsgCenter.USER_USERNAME_EXISTS);
         } else if (userMapper.selectByEmail(user.getEmail()) != null) {             // 邮箱已被注册
             return Result.fail(MsgCenter.USER_EMAIL_REGISTERED);
-        } else {
-            user.setPassword(PasswordUtil.pwd2Md5(user.getPassword()));                // 加密密码
-            if (1 == userMapper.insert(user)) {                                      // 注册成功
-                Validatecode coder = new Validatecode();
-                String code = UUID.randomUUID().toString();
-                coder.setUid(user.getId());
-                coder.setCode(code);
-                codeMapper.insert(coder);                                               // 数据库中存入验证码
-                MailUtil.sendValidateMail(user.getEmail(), code);                        // 发送验证邮件
-                return Result.success();
-            } else {                                                                      // 参数错误
-                return Result.fail(MsgCenter.PARAMS_ERROR);
-            }
         }
+
+        user.setPassword(PasswordUtil.pwd2Md5(user.getPassword()));                // 加密密码
+        if (1 == userMapper.insert(user)) {                                      // 注册成功
+            String uuid = UUID.randomUUID().toString();
+            Validatecode code = new Validatecode();
+            code.setUid(user.getId());
+            code.setCode(uuid);
+            codeMapper.insert(code);    // 数据库中存入验证码
+            MailUtil.sendValidateMail(user.getEmail(), uuid); // 发送验证邮件
+            return Result.success(user.getId());
+        }
+        return Result.fail(MsgCenter.ERROR);
+    }
+
+    @Transactional
+    public Result sendMail(Integer uid) {
+        User user = userMapper.selectById(uid);
+        if (user == null) {     // 找不到用户
+            return Result.fail(MsgCenter.USER_NOT_FOUND);
+        } else if (user.getStat() == User.STAT_OK) {    // 用户已经验证过了
+            return Result.fail(MsgCenter.USER_VALIDATED);
+        }
+        Validatecode code = new Validatecode();
+        String uuid = UUID.randomUUID().toString();
+        code.setUid(uid);
+        code.setCode(uuid);
+        codeMapper.insert(code);    // 数据库中存入验证码
+        MailUtil.sendValidateMail(user.getEmail(), uuid); // 发送验证邮件
+        return Result.success();
     }
 
     @Transactional
     public Result validate(Integer uid, String code) {
-        String str = codeMapper.selectByUid(uid);
-        if (str != null && str.length() == 36 && code.equals(str)) {
-            User user = new User();
-            user.setId(uid);
-            user.setStat(User.STAT_OK);
-            if (1 == userMapper.update(user)) {
-                codeMapper.delete(uid);     // 验证成功后删除验证码
-                return Result.success();
-            } else {
-                return Result.fail(MsgCenter.ERROR);
-            }
-        } else {
-            return Result.fail(MsgCenter.USER_EMAIL_CODE_ERROR);
+        User user = userMapper.selectById(uid);
+        if (user == null) {     // 找不到用户
+            return Result.fail(MsgCenter.USER_NOT_FOUND);
+        } else if (user.getStat() == User.STAT_OK) {    // 用户已经验证过了
+            return Result.fail(MsgCenter.USER_VALIDATED);
         }
+        List<String> strs = codeMapper.selectByUid(uid);
+        for (String str : strs) {
+            if (str != null && str.length() == 36 && code.equals(str)) {
+                user.setStat(User.STAT_OK);
+                if (1 == userMapper.update(user)) {
+                    codeMapper.delete(uid);     // 验证成功后删除验证码
+                    return Result.success();
+                } else {
+                    return Result.fail(MsgCenter.ERROR);
+                }
+            }
+        }
+        return Result.fail(MsgCenter.USER_EMAIL_CODE_ERROR);
     }
 
     public Result<User> login(String username, String password) {
