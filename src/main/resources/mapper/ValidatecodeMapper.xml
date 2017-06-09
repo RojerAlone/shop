@@ -12,12 +12,18 @@
     values (#{uid,jdbcType=INTEGER}, #{code,jdbcType=VARCHAR})
   </insert>
 
-  <select id="selectByUid" parameterType="java.lang.Integer">
+  <select id="selectAll" resultMap="BaseResultMap">
+    select uid, code, ctime from validatecode
+  </select>
+  <select id="selectByUid" parameterType="java.lang.Integer" resultType="java.lang.String">
     select code from validatecode where uid = #{uid,jdbcType=INTEGER}
   </select>
 
   <delete id="delete" parameterType="java.lang.Integer">
     delete from validatecode where uid = #{uid,jdbcType=INTEGER}
+  </delete>
+  <delete id="delByCode" parameterType="cn.cie.entity.Validatecode">
+    delete from validatecode where uid = #{uid,jdbcType=INTEGER} and code = #{code,jdbcType=VARCHAR}
   </delete>
 
 </mapper>

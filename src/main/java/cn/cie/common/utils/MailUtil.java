@@ -41,7 +41,7 @@ public class MailUtil {
     public static void sendValidateMail(String user, String code) {
 
         String title = "WePlay注册验证码";
-        String content = "感谢您注册WePlay，您的验证码为 \n" + code + "\n，请注意保存，此验证码只能使用一次。";
+        String content = "感谢您注册WePlay，您的验证码为 \n" + code + "\n，请注意保存，此验证码有效期为 10分钟 ，并且只能使用一次。";
 
         sendMail(user, title, content);
     }

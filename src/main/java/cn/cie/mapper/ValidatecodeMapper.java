@@ -10,6 +10,10 @@ public interface ValidatecodeMapper {
 
     List<String> selectByUid(Integer uid);
 
+    List<Validatecode> selectAll();
+
     int delete(Integer uid);
+
+    int delByCode(Validatecode validatecode);
 
 }

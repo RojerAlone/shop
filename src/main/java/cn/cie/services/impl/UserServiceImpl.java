@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 import java.util.regex.Pattern;
@@ -139,6 +140,17 @@ public class UserServiceImpl implements UserService {
             return Result.success();
         } else {
             return Result.fail("");
+        }
+    }
+
+    public void delValidatecode() {
+        List<Validatecode> codes = codeMapper.selectAll();
+        Date date = new Date();
+        date.setTime(date.getTime() - 1000 * 60 * 10);
+        for (Validatecode code : codes) {
+            if (code.getCtime().before(date)) {
+                codeMapper.delByCode(code);
+            }
         }
     }
 }

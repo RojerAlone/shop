@@ -59,4 +59,9 @@ public interface UserService {
      */
     public Result relieve(Integer uid);
 
+    /**
+     * 删除已经过期了的验证码，验证码有效期为10分钟
+     */
+    public void delValidatecode();
+
 }
