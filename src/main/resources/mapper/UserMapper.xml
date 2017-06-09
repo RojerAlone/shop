@@ -34,6 +34,9 @@
     from user
     where email = #{email,jdbcType=VARCHAR}
   </select>
+  <select id="selectByStat" parameterType="java.lang.Byte" resultMap="BaseResultMap">
+    select id, ctime from user where stat = #{stat,jdbcType=TINYINT}
+  </select>
 
   <insert id="insert" parameterType="cn.cie.entity.User" useGeneratedKeys="true" keyProperty="id">
     insert into user
@@ -94,5 +97,9 @@
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
+
+  <delete id="deleteById" parameterType="java.lang.Integer">
+    delete from user where id = #{id,jdbcType=INTEGER}
+  </delete>
 
 </mapper>

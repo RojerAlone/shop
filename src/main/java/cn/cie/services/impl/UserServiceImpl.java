@@ -153,4 +153,15 @@ public class UserServiceImpl implements UserService {
             }
         }
     }
+
+    public void delNotValidateUser() {
+        List<User> users = userMapper.selectByStat(User.STAT_NOT_VALIDATE);
+        Date date = new Date();
+        date.setTime(date.getTime() - 1000 * 60 * 60);  // 删除一小时前注册但未验证的用户
+        for (User user : users) {
+            if (user.getCtime().before(date)) {
+                userMapper.deleteById(user.getId());
+            }
+        }
+    }
 }

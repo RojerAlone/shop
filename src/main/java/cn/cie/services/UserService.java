@@ -64,4 +64,8 @@ public interface UserService {
      */
     public void delValidatecode();
 
+    /**
+     * 删除没有验证的用户
+     */
+    public void delNotValidateUser();
 }

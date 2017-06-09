@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 /**
  * Created by RojerAlone on 2017/6/9.
  * 定时任务
+ * http://blog.csdn.net/sd4000784/article/details/7745947
  */
 @Component
 public class Scheduler {
@@ -16,9 +17,14 @@ public class Scheduler {
     @Autowired
     private UserService userService;
 
-    @Scheduled(fixedRate = 20000)
+    @Scheduled(fixedRate = 1000 * 30)
     public void delExpiredValidatecode() {
         userService.delValidatecode();
+    }
+
+    @Scheduled(fixedRate = 1000 * 60 * 60)
+    public void delNotValidateUser() {
+        userService.delNotValidateUser();
     }
 
 }
