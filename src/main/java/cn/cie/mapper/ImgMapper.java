@@ -7,5 +7,5 @@ import java.util.List;
 public interface ImgMapper {
     int insert(Img record);
 
-    List<Img> selectByGame(Integer game);
+    List<String> selectByGame(Integer game);
 }

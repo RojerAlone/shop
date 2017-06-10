@@ -5,6 +5,7 @@ import cn.cie.entity.Tag;
 import cn.cie.entity.Tagmapper;
 import cn.cie.entity.dto.GameDTO;
 import cn.cie.mapper.GameMapper;
+import cn.cie.mapper.ImgMapper;
 import cn.cie.mapper.TagMapper;
 import cn.cie.mapper.TagmapperMapper;
 import cn.cie.services.TagService;
@@ -29,6 +30,8 @@ public class TagServiceImpl implements TagService {
     private TagmapperMapper tagmapperMapper;
     @Autowired
     private GameMapper gameMapper;
+    @Autowired
+    private ImgMapper imgMapper;
 
     public Result<List<Tag>> getAll() {
         return Result.success(tagMapper.selectAll());
@@ -93,7 +96,8 @@ public class TagServiceImpl implements TagService {
         for (Game game : games) {
             List<Integer> tagIds = tagmapperMapper.selectByGame(game.getId());     // 获取游戏的标签id
             List<Tag> tags = tagMapper.selectByIds(tagIds);                         // 根据id获取所有的标签信息
-            GameDTO dto = new GameDTO(game, tags);
+            List<String> img = imgMapper.selectByGame(game.getId());                // 获取所有的图片
+            GameDTO dto = new GameDTO(game, tags, img);
             gameDTOS.add(dto);
         }
         return gameDTOS;

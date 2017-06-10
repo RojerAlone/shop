@@ -26,7 +26,7 @@
     </trim>
   </insert>
 
-  <select id="selectByGame" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+  <select id="selectByGame" parameterType="java.lang.Integer" resultType="java.lang.String">
     select img from img where game = #{game,jdbcType=INTEGER}
   </select>
 </mapper>

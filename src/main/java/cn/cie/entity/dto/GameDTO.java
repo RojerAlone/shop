@@ -36,9 +36,11 @@ public class GameDTO {
 
     private List<Tag> tags;
 
+    private List<String> img;
+
     public GameDTO() {}
 
-    public GameDTO(Game game, List<Tag> tags) {
+    public GameDTO(Game game, List<Tag> tags, List<String> img) {
         this.id = game.getId();
         this.creater = game.getCreater();
         this.name = game.getName();
@@ -50,9 +52,10 @@ public class GameDTO {
         this.utime = game.getUtime();
         this.stat = game.getStat();
         this.tags = tags;
+        this.img = img;
     }
 
-    public GameDTO(Game game, List<Kind> kinds, List<Tag> tags) {
+    public GameDTO(Game game, List<Kind> kinds, List<Tag> tags, List<String> img) {
         this.id = game.getId();
         this.creater = game.getCreater();
         this.name = game.getName();
@@ -65,101 +68,58 @@ public class GameDTO {
         this.stat = game.getStat();
         this.kinds = kinds;
         this.tags = tags;
+        this.img = img;
     }
 
     public Integer getId() {
         return id;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
     public String getCreater() {
         return creater;
-    }
-
-    public void setCreater(String creater) {
-        this.creater = creater;
     }
 
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public String getDesc() {
         return desc;
-    }
-
-    public void setDesc(String desc) {
-        this.desc = desc;
     }
 
     public String getSystemcfg() {
         return systemcfg;
     }
 
-    public void setSystemcfg(String systemcfg) {
-        this.systemcfg = systemcfg;
-    }
-
     public Double getPrice() {
         return price;
-    }
-
-    public void setPrice(Double price) {
-        this.price = price;
     }
 
     public Double getDiscount() {
         return discount;
     }
 
-    public void setDiscount(Double discount) {
-        this.discount = discount;
-    }
-
     public Date getCtime() {
         return ctime;
-    }
-
-    public void setCtime(Date ctime) {
-        this.ctime = ctime;
     }
 
     public Date getUtime() {
         return utime;
     }
 
-    public void setUtime(Date utime) {
-        this.utime = utime;
-    }
-
     public Byte getStat() {
         return stat;
-    }
-
-    public void setStat(Byte stat) {
-        this.stat = stat;
     }
 
     public List<Kind> getKinds() {
         return kinds;
     }
 
-    public void setKinds(List<Kind> kinds) {
-        this.kinds = kinds;
-    }
-
     public List<Tag> getTags() {
         return tags;
     }
 
-    public void setTags(List<Tag> tags) {
-        this.tags = tags;
+    public List<String> getImg() {
+        return img;
     }
 }

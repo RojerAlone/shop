@@ -4,6 +4,7 @@ import cn.cie.entity.Game;
 import cn.cie.entity.Tag;
 import cn.cie.entity.dto.GameDTO;
 import cn.cie.mapper.GameMapper;
+import cn.cie.mapper.ImgMapper;
 import cn.cie.mapper.TagMapper;
 import cn.cie.mapper.TagmapperMapper;
 import cn.cie.services.GameService;
@@ -28,6 +29,8 @@ public class GameServiceImpl implements GameService{
     private TagmapperMapper tagmapperMapper;
     @Autowired
     private TagMapper tagMapper;
+    @Autowired
+    private ImgMapper imgMapper;
 
     public Result<GameDTO> getById(Integer id) {
         Game game = gameMapper.selectById(id);
@@ -36,7 +39,8 @@ public class GameServiceImpl implements GameService{
         }
         List<Integer> tagIds = tagmapperMapper.selectByGame(id);
         List<Tag> tags = tagMapper.selectByIds(tagIds);
-        GameDTO res = new GameDTO(game, tags);
+        List<String> img = imgMapper.selectByGame(game.getId());
+        GameDTO res = new GameDTO(game, tags, img);
         return Result.success(res);
     }
 }

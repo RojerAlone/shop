@@ -1,12 +1,12 @@
 package cn.cie.services.impl;
 
-import cn.cie.common.exception.NotFoundException;
 import cn.cie.entity.Game;
 import cn.cie.entity.Kind;
 import cn.cie.entity.Tag;
 import cn.cie.entity.dto.GameDTO;
 import cn.cie.mapper.*;
 import cn.cie.services.KindService;
+import cn.cie.utils.MsgCenter;
 import cn.cie.utils.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,6 +27,8 @@ public class KindServiceImpl implements KindService {
     @Autowired
     private GameMapper gameMapper;
     @Autowired
+    private ImgMapper imgMapper;
+    @Autowired
     private TagMapper tagMapper;
     @Autowired
     private TagmapperMapper tagmapperMapper;
@@ -37,8 +39,8 @@ public class KindServiceImpl implements KindService {
 
     public Result<List<GameDTO>> getGamesByKind(int kind) {
         if (kindMapper.selectById(kind) == null) {
-            throw new NotFoundException();
-//            return Result.fail(MsgCenter.NOT_FOUND);
+//            throw new NotFoundException();
+            return Result.fail(MsgCenter.NOT_FOUND);
         }
         List<Integer> gameIds = kindmapperMapper.selectByKind(kind);
         List<Game> games = gameMapper.selectByIds(gameIds);
@@ -51,7 +53,8 @@ public class KindServiceImpl implements KindService {
         for (Game game : games) {
             List<Integer> tagIds = tagmapperMapper.selectByGame(game.getId());     // 获取游戏的标签id
             List<Tag> tags = tagMapper.selectByIds(tagIds);                         // 根据id获取所有的标签信息
-            GameDTO dto = new GameDTO(game, tags);
+            List<String> img = imgMapper.selectByGame(game.getId());                // 获取所有的图片
+            GameDTO dto = new GameDTO(game, tags, img);
             gameDTOS.add(dto);
         }
         return gameDTOS;
