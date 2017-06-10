@@ -2,14 +2,10 @@ package cn.cie.controller;
 
 import cn.cie.entity.User;
 import cn.cie.services.UserService;
-import cn.cie.common.utils.Result;
-import com.fasterxml.jackson.databind.util.JSONPObject;
+import cn.cie.utils.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -30,7 +26,7 @@ public class UserController extends AbstractController{
 
     @PostMapping(value = "login")
     @ResponseBody
-    public Result login(String username, String password) {
+    public Result login(String username, String password, HttpServletResponse response) {
         Result result = userService.login(username, password);
 //        if (result.isSuccess()) {       // 登录成功
 //            this.getSession().setAttribute("user", result.getData());
@@ -39,6 +35,7 @@ public class UserController extends AbstractController{
 //            this.getModel().addAttribute("msg", result.getMsg());
 //            return "login";
 //        }
+        response.setHeader("Access-Control-Allow-Origin", "*");
         return result;
     }
 
@@ -83,7 +80,7 @@ public class UserController extends AbstractController{
 
     @PostMapping(value = "sendMail")
     @ResponseBody
-    public Result sendMail(Integer uid, HttpServletResponse response) {
+    public Result sendMail(@RequestParam Integer uid, HttpServletResponse response) {
 //        int uid = ((User) this.getSession().getAttribute("user")).getId();
 //        Result result = userService.validate(uid, code);
 //        if (result.isSuccess()) {       // 验证成功返回首页

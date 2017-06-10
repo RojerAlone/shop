@@ -1,6 +1,7 @@
 package cn.cie.mapper;
 
 import cn.cie.entity.Tag;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -10,7 +11,7 @@ public interface TagMapper {
 
     Tag selectById(Integer id);
 
-    List<Tag> selectByIds(List<Integer> ids);
+    List<Tag> selectByIds(@Param(value = "ids") List<Integer> ids);
 
     List<Tag> selectAll();
 

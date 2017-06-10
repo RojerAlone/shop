@@ -7,7 +7,7 @@ import cn.cie.entity.Tag;
 import cn.cie.entity.dto.GameDTO;
 import cn.cie.mapper.*;
 import cn.cie.services.KindService;
-import cn.cie.common.utils.Result;
+import cn.cie.utils.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

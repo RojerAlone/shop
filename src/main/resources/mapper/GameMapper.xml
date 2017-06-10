@@ -11,10 +11,10 @@
     <result column="discount" jdbcType="DOUBLE" property="discount" />
     <result column="ctime" jdbcType="TIMESTAMP" property="ctime" />
     <result column="utime" jdbcType="TIMESTAMP" property="utime" />
-    <result column="success" jdbcType="TINYINT" property="success" />
+    <result column="stat" jdbcType="TINYINT" property="stat" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, creater, name, desc, systemcfg, price, discount, ctime, utime, success
+    id, creater, `name`, `desc`, systemcfg, price, discount, ctime, utime, stat
   </sql>
 
   <select id="selectById" parameterType="java.lang.Integer" resultMap="BaseResultMap">
@@ -38,7 +38,7 @@
     select
     <include refid="Base_Column_List" />
     from game
-    where success = #{success,jdbcType=TINYINT}
+    where stat = #{stat,jdbcType=TINYINT}
   </select>
 
   <insert id="insert" parameterType="cn.cie.entity.Game" useGeneratedKeys="true" keyProperty="id">
@@ -48,10 +48,10 @@
         creater,
       </if>
       <if test="name != null">
-        name,
+        `name`,
       </if>
       <if test="desc != null">
-        desc,
+        `desc`,
       </if>
       <if test="systemcfg != null">
         systemcfg,
@@ -92,10 +92,10 @@
         creater = #{creater,jdbcType=VARCHAR},
       </if>
       <if test="name != null">
-        name = #{name,jdbcType=VARCHAR},
+        `name` = #{name,jdbcType=VARCHAR},
       </if>
       <if test="desc != null">
-        desc = #{desc,jdbcType=VARCHAR},
+        `desc` = #{desc,jdbcType=VARCHAR},
       </if>
       <if test="systemcfg != null">
         systemcfg = #{systemcfg,jdbcType=VARCHAR},
@@ -106,8 +106,8 @@
       <if test="discount != null">
         discount = #{discount,jdbcType=DOUBLE},
       </if>
-      <if test="success != null">
-        success = #{success,jdbcType=TINYINT},
+      <if test="stat != null">
+        stat = #{stat,jdbcType=TINYINT},
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER}

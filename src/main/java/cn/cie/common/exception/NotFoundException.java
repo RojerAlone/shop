@@ -1,6 +1,6 @@
 package cn.cie.common.exception;
 
-import cn.cie.common.utils.MsgCenter;
+import cn.cie.utils.MsgCenter;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 

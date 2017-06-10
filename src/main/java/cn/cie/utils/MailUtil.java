@@ -1,4 +1,4 @@
-package cn.cie.common.utils;
+package cn.cie.utils;
 
 import org.apache.commons.mail.EmailException;
 import org.apache.commons.mail.SimpleEmail;
@@ -9,7 +9,6 @@ import org.apache.commons.mail.SimpleEmail;
 public class MailUtil {
 
     private final static String USERNAME = "rojeralone@163.com";
-    private final static String PASSWORD = "password";           // 需要打开SMTP并使用此授权码登录
 
     /**
      * 发送邮件给指定人，需要主题和内容

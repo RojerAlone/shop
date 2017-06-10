@@ -1,4 +1,4 @@
-package cn.cie.common.utils;
+package cn.cie.utils;
 
 /**
  * Created by RojerAlone on 2017/6/6.

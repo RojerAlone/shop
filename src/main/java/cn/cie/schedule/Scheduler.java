@@ -3,7 +3,6 @@ package cn.cie.schedule;
 import cn.cie.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
-import org.springframework.scheduling.annotation.Schedules;
 import org.springframework.stereotype.Component;
 
 /**
@@ -18,13 +17,18 @@ public class Scheduler {
     private UserService userService;
 
     @Scheduled(fixedRate = 1000 * 30)
-    public void delExpiredValidatecode() {
+    public void delExpirezdValidatecode() {
         userService.delValidatecode();
     }
 
     @Scheduled(fixedRate = 1000 * 60 * 60)
     public void delNotValidateUser() {
         userService.delNotValidateUser();
+    }
+
+    @Scheduled(fixedRate = 1000 * 60 * 10)
+    public void expireToken() {
+        userService.expireToken();
     }
 
 }

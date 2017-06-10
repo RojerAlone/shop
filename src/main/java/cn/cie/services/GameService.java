@@ -1,7 +1,7 @@
 package cn.cie.services;
 
 import cn.cie.entity.dto.GameDTO;
-import cn.cie.common.utils.Result;
+import cn.cie.utils.Result;
 
 /**
  * Created by RojerAlone on 2017/6/8.

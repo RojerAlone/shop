@@ -1,6 +1,6 @@
 package cn.cie.services;
 
-import cn.cie.common.utils.Result;
+import cn.cie.utils.Result;
 import cn.cie.entity.User;
 import org.junit.Test;
 import org.junit.runner.RunWith;

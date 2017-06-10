@@ -1,7 +1,7 @@
 package cn.cie.services;
 
 import cn.cie.entity.User;
-import cn.cie.common.utils.Result;
+import cn.cie.utils.Result;
 
 /**
  * Created by RojerAlone on 2017/5/31.
@@ -13,14 +13,14 @@ public interface UserService {
      * @param user
      * @return
      */
-    public Result register(User user);
+    Result register(User user);
 
     /**
      * 给用户注册的邮箱发送验证码
      * @param uid
      * @return
      */
-    public Result sendMail(Integer uid);
+    Result sendMail(Integer uid);
 
     /**
      * 邮箱验证
@@ -28,7 +28,7 @@ public interface UserService {
      * @param code
      * @return
      */
-    public Result validate(Integer uid, String code);
+    Result validate(Integer uid, String code);
 
     /**
      * 登录
@@ -36,36 +36,41 @@ public interface UserService {
      * @param password
      * @return
      */
-    public Result<User> login(String username, String password);
+    Result<User> login(String username, String password);
 
     /**
      * 更新用户信息
      * @param user
      * @return
      */
-    public boolean updateUserInfo(User user);
+    boolean updateUserInfo(User user);
 
     /**
      * 限制账户操作
      * @param uid
      * @return
      */
-    public Result restrict(Integer uid);
+    Result restrict(Integer uid);
 
     /**
      * 解除账户限制
      * @param uid
      * @return
      */
-    public Result relieve(Integer uid);
+    Result relieve(Integer uid);
 
     /**
      * 删除已经过期了的验证码，验证码有效期为10分钟
      */
-    public void delValidatecode();
+    void delValidatecode();
 
     /**
      * 删除没有验证的用户
      */
-    public void delNotValidateUser();
+    void delNotValidateUser();
+
+    /**
+     * 删除已经过期的token
+     */
+    void expireToken();
 }

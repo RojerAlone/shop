@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.cie.mapper.TokenMapper">
+  <resultMap id="BaseResultMap" type="cn.cie.entity.Token">
+    <result column="uid" jdbcType="INTEGER" property="uid" />
+    <result column="token" jdbcType="VARCHAR" property="token" />
+    <result column="expired_time" jdbcType="TIMESTAMP" property="expiredTime" />
+    <result column="ip" jdbcType="VARCHAR" property="ip" />
+    <result column="device" jdbcType="VARCHAR" property="device" />
+    <result column="ctime" jdbcType="TIMESTAMP" property="ctime" />
+    <result column="stat" jdbcType="TINYINT" property="stat" />
+  </resultMap>
+
+  <sql id="Base_Column_List">
+    uid, token, expired_time, up, device, ctime, stat
+  </sql>
+
+  <insert id="insert" parameterType="cn.cie.entity.Token">
+    insert into token
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="uid != null">
+        uid,
+      </if>
+      <if test="token != null">
+        token,
+      </if>
+      <if test="expiredTime != null">
+        expired_time,
+      </if>
+      <if test="ip != null">
+        ip,
+      </if>
+      <if test="device != null">
+        device,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="uid != null">
+        #{uid,jdbcType=INTEGER},
+      </if>
+      <if test="token != null">
+        #{token,jdbcType=VARCHAR},
+      </if>
+      <if test="expiredTime != null">
+        #{expiredTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="ip != null">
+        #{ip,jdbcType=VARCHAR},
+      </if>
+      <if test="device != null">
+        #{device,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+
+  <select id="selectByToken" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from token
+    where token = #{token,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByUid" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from token
+    where uid = #{uid,jdbcType=INTEGER}
+  </select>
+
+  <update id="updateStatByDate" parameterType="java.util.Date">
+    update token set stat = #{stat,jdbcType=TINYINT}
+    where expired_time &lt; #{date,jdbcType=TIMESTAMP}
+  </update>
+</mapper>

@@ -1,14 +1,16 @@
 package cn.cie.services.impl;
 
+import cn.cie.entity.Token;
 import cn.cie.entity.User;
 import cn.cie.entity.Validatecode;
+import cn.cie.mapper.TokenMapper;
 import cn.cie.mapper.UserMapper;
 import cn.cie.mapper.ValidatecodeMapper;
 import cn.cie.services.UserService;
-import cn.cie.common.utils.MailUtil;
-import cn.cie.common.utils.MsgCenter;
-import cn.cie.common.utils.PasswordUtil;
-import cn.cie.common.utils.Result;
+import cn.cie.utils.MailUtil;
+import cn.cie.utils.MsgCenter;
+import cn.cie.utils.PasswordUtil;
+import cn.cie.utils.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,6 +30,8 @@ public class UserServiceImpl implements UserService {
     private UserMapper userMapper;
     @Autowired
     private ValidatecodeMapper codeMapper;
+    @Autowired
+    private TokenMapper tokenMapper;
 
     @Transactional
     public Result register(User user) {
@@ -50,7 +54,7 @@ public class UserServiceImpl implements UserService {
         } else if (userMapper.selectByName(user.getUsername()) != null) {                  // 用户名已经被注册
             return Result.fail(MsgCenter.USER_USERNAME_EXISTS);
         } else if (userMapper.selectByEmail(user.getEmail()) != null) {             // 邮箱已被注册
-            return Result.fail(MsgCenter.USER_EMAIL_REGISTERED);
+            return Result.fail(MsgCenter.EMAIL_REGISTERED);
         }
 
         user.setPassword(PasswordUtil.pwd2Md5(user.getPassword()));                // 加密密码
@@ -103,14 +107,17 @@ public class UserServiceImpl implements UserService {
                 }
             }
         }
-        return Result.fail(MsgCenter.USER_EMAIL_CODE_ERROR);
+        return Result.fail(MsgCenter.CODE_ERROR);
     }
 
     public Result<User> login(String username, String password) {
+        if (username == null || password == null) {
+            return Result.fail(MsgCenter.EMPTY_LOGIN);
+        }
         User user = userMapper.selectByName(username);
         // 用户名不存在或者密码错误
         if (user == null || !user.getPassword().equals(PasswordUtil.pwd2Md5(password))) {
-            return Result.fail(MsgCenter.USER_LOGIN_ERROR);
+            return Result.fail(MsgCenter.ERROR_LOGIN);
         } else {
             user.setPassword(null);     // 密码设为空后返回
             return Result.success(user);
@@ -163,5 +170,10 @@ public class UserServiceImpl implements UserService {
                 userMapper.deleteById(user.getId());
             }
         }
+    }
+
+    public void expireToken() {
+        Date date = new Date();
+        tokenMapper.updateStatByDate(date, Token.STAT_EXPIRED);
     }
 }
