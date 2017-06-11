@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.servlet.http.HttpServletResponse;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -110,7 +111,7 @@ public class UserServiceImpl implements UserService {
         return Result.fail(MsgCenter.CODE_ERROR);
     }
 
-    public Result<User> login(String username, String password) {
+    public Result<User> login(String username, String password, HttpServletResponse response) {
         if (username == null || password == null) {
             return Result.fail(MsgCenter.EMPTY_LOGIN);
         }
@@ -119,6 +120,7 @@ public class UserServiceImpl implements UserService {
         if (user == null || !user.getPassword().equals(PasswordUtil.pwd2Md5(password))) {
             return Result.fail(MsgCenter.ERROR_LOGIN);
         } else {
+
             user.setPassword(null);     // 密码设为空后返回
             return Result.success(user);
         }

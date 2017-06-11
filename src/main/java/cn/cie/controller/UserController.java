@@ -27,7 +27,7 @@ public class UserController extends AbstractController{
     @PostMapping(value = "login")
     @ResponseBody
     public Result login(String username, String password, HttpServletResponse response) {
-        Result result = userService.login(username, password);
+        Result result = userService.login(username, password, response);
 //        if (result.isSuccess()) {       // 登录成功
 //            this.getSession().setAttribute("user", result.getData());
 //            return "redirect:/index";

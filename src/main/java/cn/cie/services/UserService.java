@@ -3,6 +3,8 @@ package cn.cie.services;
 import cn.cie.entity.User;
 import cn.cie.utils.Result;
 
+import javax.servlet.http.HttpServletResponse;
+
 /**
  * Created by RojerAlone on 2017/5/31.
  */
@@ -36,7 +38,7 @@ public interface UserService {
      * @param password
      * @return
      */
-    Result<User> login(String username, String password);
+    Result<User> login(String username, String password, HttpServletResponse response);
 
     /**
      * 更新用户信息
