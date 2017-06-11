@@ -7,14 +7,12 @@ import cn.cie.mapper.TokenMapper;
 import cn.cie.mapper.UserMapper;
 import cn.cie.mapper.ValidatecodeMapper;
 import cn.cie.services.UserService;
-import cn.cie.utils.MailUtil;
-import cn.cie.utils.MsgCenter;
-import cn.cie.utils.PasswordUtil;
-import cn.cie.utils.Result;
+import cn.cie.utils.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Date;
 import java.util.List;
@@ -33,6 +31,8 @@ public class UserServiceImpl implements UserService {
     private ValidatecodeMapper codeMapper;
     @Autowired
     private TokenMapper tokenMapper;
+    @Autowired
+    private UserHolder userHolder;
 
     @Transactional
     public Result register(User user) {
@@ -120,8 +120,16 @@ public class UserServiceImpl implements UserService {
         if (user == null || !user.getPassword().equals(PasswordUtil.pwd2Md5(password))) {
             return Result.fail(MsgCenter.ERROR_LOGIN);
         } else {
-
-            user.setPassword(null);     // 密码设为空后返回
+            String uuid = UUID.randomUUID().toString().replaceAll("-", "");
+            Token token = new Token();
+            token.setUid(user.getId());
+            token.setExpiredTime(new Date(1000 * 60 * 60 * 24 + System.currentTimeMillis()));
+            token.setToken(uuid);
+            if (1 == tokenMapper.insert(token)) {
+                Cookie cookie = new Cookie("token", uuid);
+                cookie.setPath("/");
+                response.addCookie(cookie);
+            }
             return Result.success(user);
         }
     }
