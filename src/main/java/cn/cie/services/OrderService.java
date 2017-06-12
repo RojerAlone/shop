@@ -19,7 +19,6 @@ public interface OrderService {
 
     /**
      * 取消订单
-     * @param uid
      * @param orderid
      * @return
      */
@@ -60,5 +59,10 @@ public interface OrderService {
      * @return
      */
     Result getCancelOrders(int uid);
+
+    /**
+     * 自动取消15分钟还未支付的订单，定时器每1分钟检查一次
+     */
+    void autoCancelOrder();
 
 }

@@ -13,6 +13,8 @@ public class Code {
 
     private Integer id;
 
+    private Integer item;
+
     private Integer uid;
 
     private String code;
@@ -25,6 +27,14 @@ public class Code {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public Integer getItem() {
+        return item;
+    }
+
+    public void setItem(Integer item) {
+        this.item = item;
     }
 
     public Integer getUid() {

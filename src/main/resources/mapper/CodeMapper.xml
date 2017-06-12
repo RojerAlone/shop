@@ -3,12 +3,13 @@
 <mapper namespace="cn.cie.mapper.CodeMapper">
   <resultMap id="BaseResultMap" type="cn.cie.entity.Code">
     <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="item" jdbcType="INTEGER" property="item" />
     <result column="uid" jdbcType="INTEGER" property="uid" />
     <result column="code" jdbcType="VARCHAR" property="code" />
     <result column="stat" jdbcType="TINYINT" property="stat" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, uid, code, stat
+    id, item, uid, code, stat
   </sql>
 
   <select id="selectById" parameterType="java.lang.Integer" resultMap="BaseResultMap">
@@ -21,6 +22,9 @@
   <insert id="insert" parameterType="cn.cie.entity.Code" useGeneratedKeys="true" keyProperty="id">
     insert into code
     <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="item != null">
+        item,
+      </if>
       <if test="uid != null">
         uid,
       </if>
@@ -29,6 +33,9 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="item != null">
+        #{item,jdbcType=INTEGER},
+      </if>
       <if test="uid != null">
         #{uid,jdbcType=INTEGER},
       </if>
@@ -41,12 +48,6 @@
   <update id="update" parameterType="cn.cie.entity.Code">
     update code
     <set>
-      <if test="uid != null">
-        uid = #{uid,jdbcType=INTEGER},
-      </if>
-      <if test="code != null">
-        code = #{code,jdbcType=VARCHAR},
-      </if>
       <if test="stat != null">
         stat = #{stat,jdbcType=TINYINT},
       </if>
