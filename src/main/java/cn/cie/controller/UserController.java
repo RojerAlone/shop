@@ -3,6 +3,7 @@ package cn.cie.controller;
 import cn.cie.entity.User;
 import cn.cie.services.UserService;
 import cn.cie.utils.Result;
+import cn.cie.utils.UserHolder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -14,49 +15,12 @@ import javax.servlet.http.HttpServletResponse;
  */
 @Controller
 @RequestMapping(value = "user")
-public class UserController extends AbstractController{
+public class UserController extends AbstractController {
 
     @Autowired
     private UserService userService;
-
-    @GetMapping(value = "login")
-    public String login() {
-        return "login";
-    }
-
-    @PostMapping(value = "login")
-    @ResponseBody
-    public Result login(String username, String password, HttpServletResponse response) {
-        Result result = userService.login(username, password, response);
-//        if (result.isSuccess()) {       // 登录成功
-//            this.getSession().setAttribute("user", result.getData());
-//            return "redirect:/index";
-//        } else {                        // 登录失败
-//            this.getModel().addAttribute("msg", result.getMsg());
-//            return "login";
-//        }
-        response.setHeader("Access-Control-Allow-Origin", "*");
-        return result;
-    }
-
-    @GetMapping(value = "register")
-    public String register() {
-        return "register";
-    }
-
-    @PostMapping(value = "register")
-    @ResponseBody
-    public Result register(User user, HttpServletResponse response) {
-        Result result = userService.register(user);
-        response.setHeader("Access-Control-Allow-Origin", "*");
-//        if (result.isSuccess()) {       // 注册成功跳转到登录页面
-//            return "login";
-//        } else {                        // 失败返回到注册页面
-//            this.getModel().addAttribute("msg", result.getMsg());
-//            return "register";
-//        }
-        return result;
-    }
+    @Autowired
+    private UserHolder userHolder;
 
     @GetMapping(value = "validate")
     public String validate() {
@@ -100,7 +64,7 @@ public class UserController extends AbstractController{
 
     @PostMapping(value = "update")
     public String update(User user) {
-        if(userService.updateUserInfo(user)) {
+        if (userService.updateUserInfo(user)) {
             this.getModel().addAttribute("user", user);
             return "userinfo";
         } else {

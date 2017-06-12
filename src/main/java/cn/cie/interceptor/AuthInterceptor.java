@@ -50,7 +50,7 @@ public class AuthInterceptor implements HandlerInterceptor {
             User user = userMapper.selectById(t.getUid());
             userHolder.setUser(user);
         }
-        return false;
+        return true;
     }
 
     public void postHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o, ModelAndView modelAndView) throws Exception {

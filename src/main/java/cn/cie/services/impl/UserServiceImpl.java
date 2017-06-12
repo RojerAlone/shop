@@ -2,6 +2,7 @@ package cn.cie.services.impl;
 
 import cn.cie.entity.Token;
 import cn.cie.entity.User;
+import cn.cie.utils.UserHolder;
 import cn.cie.entity.Validatecode;
 import cn.cie.mapper.TokenMapper;
 import cn.cie.mapper.UserMapper;
@@ -111,7 +112,8 @@ public class UserServiceImpl implements UserService {
         return Result.fail(MsgCenter.CODE_ERROR);
     }
 
-    public Result<User> login(String username, String password, HttpServletResponse response) {
+    @Transactional
+    public Result login(String username, String password) {
         if (username == null || password == null) {
             return Result.fail(MsgCenter.EMPTY_LOGIN);
         }
@@ -125,12 +127,8 @@ public class UserServiceImpl implements UserService {
             token.setUid(user.getId());
             token.setExpiredTime(new Date(1000 * 60 * 60 * 24 + System.currentTimeMillis()));
             token.setToken(uuid);
-            if (1 == tokenMapper.insert(token)) {
-                Cookie cookie = new Cookie("token", uuid);
-                cookie.setPath("/");
-                response.addCookie(cookie);
-            }
-            return Result.success(user);
+            tokenMapper.insert(token);
+            return Result.success(uuid);
         }
     }
 
