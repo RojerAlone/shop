@@ -1,0 +1,68 @@
+@charset "utf-8";
+/* CSS Document */
+
+body{
+	background-color:#183F59;
+}
+
+.headheight{
+	padding-top:20px;
+	padding-bottom:10px;
+}
+.headmid{
+	margin-left:300px;
+	margin-top:100px;
+}
+.nav navbar-nav navbar-right{
+padding:0px;
+margin:0px;
+}
+.form-control{
+	background-color:#316282;
+	border:0px;
+	color:#FFF;
+}
+
+.btn{
+	background-color:#316282;
+	border:0px;
+}
+.daohangyanse{
+	background-color:#356F95;
+	border:none;
+	
+}
+.navbar-default .navbar-nav>li>a{
+	color:#FFF;
+	font-family: "Motiva Sans", Sans-serif;
+}
+.inputmargin{
+	margin-left:230px;
+}
+.gutter_header{
+	color:#66c0f4;
+}
+.list-group-item{
+	background-color:#183F59;
+	color:#66c0f4;
+	font-size: 13px;
+	font-family: "Motiva Sans", Sans-serif;
+	border:0px;
+}
+.bs:hover{
+	color:#FFF;
+}
+.dibu{
+	height:120px;
+	background-color:#101822;
+	color:#8F98A0;
+	text-align:center;
+	padding-top:50px;
+	padding-left:150px;
+	padding-right:150px;
+
+}
+ul li
+{
+list-style-type:none;
+}

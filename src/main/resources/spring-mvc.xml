@@ -9,15 +9,15 @@
 
     <mvc:annotation-driven />
     <mvc:default-servlet-handler />
-    <!--<mvc:interceptors>-->
-        <!--<mvc:interceptor>-->
-            <!--<mvc:mapping path="/*"/>-->
-            <!--<bean class="cn.cie.interceptor.AuthInterceptor" />-->
-        <!--</mvc:interceptor>-->
-    <!--</mvc:interceptors>-->
+    <mvc:interceptors>
+        <mvc:interceptor>
+            <mvc:mapping path="/*"/>
+            <bean class="cn.cie.interceptor.AuthInterceptor" />
+        </mvc:interceptor>
+    </mvc:interceptors>
     <mvc:resources mapping="/img/**" location="WEB-INF/image/" />
     <mvc:resources mapping="/css/**" location="WEB-INF/css/" />
-    <!--<mvc:resources mapping="/js/**" location="WEB-INF/js/" />-->
+    <mvc:resources mapping="/js/**" location="WEB-INF/js/" />
     <!--<mvc:resources mapping="/lib/**" location="WEB-INF/lib/" />-->
     <!--<mvc:resources mapping="/fonts/**" location="WEB-INF/fonts/" />-->
     <!--<mvc:resources mapping="/plugins/**" location="WEB-INF/plugins/" />-->

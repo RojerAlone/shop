@@ -37,6 +37,10 @@ public class Result<T> {
         return new Result(false, msg);
     }
 
+    public static Result fail(String msg, Object data) {
+        return new Result(false, msg, data);
+    }
+
     public boolean isSuccess() {
         return success;
     }

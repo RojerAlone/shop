@@ -6,19 +6,16 @@ import cn.cie.utils.Result;
 import cn.cie.utils.UserHolder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 
 /**
  * Created by RojerAlone on 2017/6/9.
  */
+@CrossOrigin
 @Controller
-public class CommonController extends AbstractController{
+public class CommonController extends AbstractController {
 
     @Autowired
     private UserHolder userHolder;
@@ -32,52 +29,30 @@ public class CommonController extends AbstractController{
 
     @GetMapping(value = "login")
     public String login() {
+        String check = checkLogin();
+        // 如果用户已经登陆，那么跳转到之前的页面
+        if (check != null) {
+            return "redirect:" + check;
+        }
         return "login";
     }
 
-    /**
-     * 每次登陆之前都从session中获取跳转之前的链接referer
-     * 如果为空，登陆成功那么跳转到首页，并且从session中删除referer
-     * 登陆失败跳转到登录页，同时将"/"加入到session中，表示登陆成功后跳转到首页
-     * 如果sesson中有referer，那么登陆成功跳转到referer，并且从session中删除referer
-     *
-     * @param username
-     * @param password
-     * @return
-     */
     @PostMapping(value = "login")
-    public String login(String username, String password, HttpServletResponse response) {
-        String referer = (String) this.getSession().getAttribute("Referer");
-        // 登陆流程中第一次登陆
-        if (referer == null) {
-            String tmp = this.getRequest().getHeader("Referer");
-            if (tmp.startsWith("http://127.0.0.1:8080") || tmp.startsWith("http://localhost:8080/")) {
-                referer = tmp;
-            } else {
-                referer = "/";
-            }
-        }
-        // 用户已经登陆，就跳转
-        if (userHolder.getUser() != null) {
-            return "redirect:" + referer;
-        }
+    @ResponseBody
+    public Result login(String username, String password, HttpServletResponse response) {
         Result result = userService.login(username, password);
         if (result.isSuccess()) {       // 登录成功，token加入到cookie中
             this.getSession().removeAttribute("Referer");   // 登陆成功就将session中的Referer删除
-            Cookie cookie = new Cookie("token", (String) result.getData());
-            cookie.setPath("/");
-            response.addCookie(cookie);
-            return "redirect:" + referer;
-        } else {                        // 登录失败
-            this.getModel().addAttribute("msg", result.getMsg());
-            this.getSession().setAttribute("Referer", referer);     // 添加Referer到session中
-            return "login";
         }
-//        return result;
+        return result;
     }
 
     @GetMapping(value = "register")
     public String register() {
+        String referer = checkLogin();
+        if (referer != null) {
+            return "redirect:" + referer;
+        }
         return "register";
     }
 
@@ -85,14 +60,35 @@ public class CommonController extends AbstractController{
     @ResponseBody
     public Result register(User user, HttpServletResponse response) {
         Result result = userService.register(user);
-//        response.setHeader("Access-Control-Allow-Origin", "*");
-//        if (result.isSuccess()) {       // 注册成功跳转到登录页面
-//            return "login";
-//        } else {                        // 失败返回到注册页面
-//            this.getModel().addAttribute("msg", result.getMsg());
-//            return "register";
-//        }
         return result;
+    }
+
+    /**
+     * 检查用户是否登陆，如果登陆就返回应该跳转到的页面，否则执行接下来的逻辑
+     * 每次登陆之前都从session中获取跳转之前的链接referer
+     * 如果为空，登陆成功那么跳转到首页，并且从session中删除referer
+     * 登陆失败跳转到登录页，同时将"/"加入到session中，表示登陆成功后跳转到首页
+     * 如果sesson中有referer，那么登陆成功跳转到referer，并且从session中删除referer
+     *
+     * @return
+     */
+    private String checkLogin() {
+        // 用户没有登陆，返回null，表示未登录
+        if (userHolder.getUser() == null) {
+            return null;
+        }
+        // 用户已经登陆，获取应该跳转到的页面
+        String referer = (String) this.getSession().getAttribute("Referer");
+        // 登陆流程中第一次登陆
+        if (referer == null) {
+            String tmp = this.getRequest().getHeader("Referer");
+            if (tmp == null || tmp.startsWith("http://127.0.0.1:8080/login") || tmp.startsWith("http://localhost:8080/login")) {
+                referer = "/";
+            } else {
+                referer = tmp;
+            }
+        }
+        return referer;
     }
 
 }

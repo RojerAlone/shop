@@ -24,6 +24,8 @@ public class MsgCenter {
 
     public static final String USER_VALIDATED = "您的邮箱已经验证过了，无需再次验证";
 
+    public static final String USER_HAVE_LOGIN = "您已经登陆，无需再次登陆";
+
     public static final String EMAIL_REGISTERED = "该邮箱已被注册";
 
     public static final String ERROR_EMAIL = "请输入正确的电子邮箱";

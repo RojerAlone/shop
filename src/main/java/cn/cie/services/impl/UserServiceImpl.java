@@ -114,8 +114,8 @@ public class UserServiceImpl implements UserService {
 
     @Transactional
     public Result login(String username, String password) {
-        if (username == null || password == null) {
-            return Result.fail(MsgCenter.EMPTY_LOGIN);
+        if (userHolder.getUser() != null) {
+            return Result.fail(MsgCenter.USER_HAVE_LOGIN);
         }
         User user = userMapper.selectByName(username);
         // 用户名不存在或者密码错误
