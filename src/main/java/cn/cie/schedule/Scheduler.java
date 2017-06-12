@@ -1,5 +1,6 @@
 package cn.cie.schedule;
 
+import cn.cie.services.OrderService;
 import cn.cie.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -15,6 +16,8 @@ public class Scheduler {
 
     @Autowired
     private UserService userService;
+    @Autowired
+    private OrderService orderService;
 
     @Scheduled(fixedRate = 1000 * 30)
     public void delExpirezdValidatecode() {
@@ -29,6 +32,11 @@ public class Scheduler {
     @Scheduled(fixedRate = 1000 * 60 * 10)
     public void expireToken() {
         userService.expireToken();
+    }
+
+    @Scheduled(fixedRate = 1000 * 60)
+    public void cancelOrder() {
+        orderService.autoCancelOrder();
     }
 
 }

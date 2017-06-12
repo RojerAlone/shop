@@ -1,23 +1,21 @@
 package cn.cie.services.impl;
 
-import cn.cie.entity.Game;
-import cn.cie.entity.Order;
-import cn.cie.entity.Orderitem;
-import cn.cie.entity.Ordermapper;
+import cn.cie.entity.*;
 import cn.cie.entity.dto.OrderDTO;
-import cn.cie.mapper.GameMapper;
-import cn.cie.mapper.OrderMapper;
-import cn.cie.mapper.OrderitemMapper;
-import cn.cie.mapper.OrdermapperMapper;
+import cn.cie.entity.dto.OrderItemDTO;
+import cn.cie.mapper.*;
 import cn.cie.services.OrderService;
 import cn.cie.utils.MsgCenter;
 import cn.cie.utils.Result;
+import org.aspectj.weaver.ast.Or;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * Created by RojerAlone on 2017/6/12.
@@ -33,6 +31,8 @@ public class OrderServiceImpl implements OrderService {
     private GameMapper gameMapper;
     @Autowired
     private OrdermapperMapper ordermapperMapper;
+    @Autowired
+    private CodeMapper codeMapper;
 
     @Transactional
     public Result addOrders(int uid, List<Integer> gids) {
@@ -82,8 +82,30 @@ public class OrderServiceImpl implements OrderService {
         return Result.fail(MsgCenter.ERROR);
     }
 
+    @Transactional
     public Result pay(int uid, int orderid) {
-        return null;
+        Order order = orderMapper.selectById(orderid);
+        // 如果orderid错误或者用户与订单不匹配，就返回错误
+        if (order == null || order.getUid() != uid) {
+            return Result.fail(MsgCenter.ERROR_PARAMS);
+        }
+        order.setStat(Order.STAT_PAY);
+        orderMapper.update(order);
+        List<Integer> orderitems = ordermapperMapper.selectByOrder(orderid);
+        List<Orderitem> orderitemList = orderitemMapper.selectByIds(orderitems);
+        for (Orderitem item : orderitemList) {
+            // 生产激活码并插入数据库
+            String uuid = UUID.randomUUID().toString();
+            Code code = new Code();
+            code.setItem(item.getId());
+            code.setUid(uid);
+            code.setCode(uuid);
+            codeMapper.insert(code);
+            // 插入code后更新orderitem的对应codeid
+            item.setCode(code.getId());
+            orderitemMapper.update(item);
+        }
+        return Result.success();
     }
 
     public Result getOrders(int uid) {
@@ -95,20 +117,40 @@ public class OrderServiceImpl implements OrderService {
     }
 
     public Result getPaidOrders(int uid) {
-        return Result.success(parseOrderByStat(uid, Order.STAT_NOT_PAY));
+        return Result.success(parseOrderByStat(uid, Order.STAT_PAY));
     }
 
     public Result getCancelOrders(int uid) {
-        return Result.success(parseOrderByStat(uid, Order.STAT_NOT_PAY));
+        return Result.success(parseOrderByStat(uid, Order.STAT_CANCEL));
     }
 
     public void autoCancelOrder() {
-
+        Date date = new Date();
+        date.setTime(date.getTime() + 1000 * 60 * 15);  // 过期时间为15分钟
+        orderMapper.updateStatByDate(Order.STAT_NOT_PAY, Order.STAT_CANCEL, date);
     }
 
     private List<OrderDTO> parseOrderByStat(Integer uid, Byte stat) {
         List<OrderDTO> res = new ArrayList<OrderDTO>();
-
+        List<Order> orders = orderMapper.selectByUidAndStat(uid, stat);
+        for (Order order : orders) {
+            List<Integer> orderids = ordermapperMapper.selectByOrder(order.getId());    // 获取订单内所有的订单详情id
+            List<Orderitem> orderitemList = orderitemMapper.selectByIds(orderids);      // 根据订单详情id获取订单详情
+            List<OrderItemDTO> orderItemDTOList = new ArrayList<OrderItemDTO>();
+            // 拼接订单详情信息，包括订单对应的游戏和激活码
+            for (Orderitem orderitem : orderitemList) {
+                Game game = gameMapper.selectById(orderitem.getGid());      // 游戏信息
+                Code code;
+                // 如果code不为空那么获取code
+                if (orderitem.getCode() == null) {
+                    code = codeMapper.selectById(orderitem.getCode());     // 激活码信息
+                } else {
+                    code = null;
+                }
+                orderItemDTOList.add(new OrderItemDTO(orderitem, game, code));
+            }
+            res.add(new OrderDTO(order, orderItemDTOList));
+        }
         return res;
     }
 }

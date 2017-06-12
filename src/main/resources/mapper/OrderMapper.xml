@@ -16,19 +16,19 @@
   <select id="selectById" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    from order
+    from `order`
     where id = #{id,jdbcType=INTEGER}
   </select>
   <select id="selectByUidAndStat" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />
-    from order
+    from `order`
     where uid = #{uid,jdbcType=INTEGER}
     and stat = #{stat,jdbcType=TINYINT}
   </select>
 
   <insert id="insert" parameterType="cn.cie.entity.Order" useGeneratedKeys="true" keyProperty="id">
-    insert into order
+    insert into `order`
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="uid != null">
         uid,
@@ -47,7 +47,7 @@
     </trim>
   </insert>
   <update id="update" parameterType="cn.cie.entity.Order">
-    update order
+    update `order`
     <set>
       <if test="price != null">
         price = #{price,jdbcType=DOUBLE},
@@ -57,6 +57,10 @@
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateStatByDate" parameterType="java.util.Date">
+    update `order` set stat = #{newstat,jdbcType=TINYINT}
+    where stat = #{oldstat,jdbcType=TINYINT} and utime &lt; #{date,jdbcType=TIMESTAMP}
   </update>
 
 </mapper>

@@ -37,6 +37,7 @@ public interface OrderService {
      * @param uid
      * @return
      */
+    @Deprecated
     Result getOrders(int uid);
 
     /**

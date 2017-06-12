@@ -56,13 +56,13 @@ public class AuthInterceptor implements HandlerInterceptor {
     public void postHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o, ModelAndView modelAndView) throws Exception {
         // response中添加header允许跨域请求
         httpServletResponse.setHeader("Access-Control-Allow-Origin", "*");
-        System.out.println("postHandle*************************************************************");
+        System.out.println("token拦截  postHandle*************************************************************");
     }
 
     public void afterCompletion(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o, Exception e) throws Exception {
         userHolder.remove();
         // response中添加header允许跨域请求
         httpServletResponse.setHeader("Access-Control-Allow-Origin", "*");
-        System.out.println("after--------------------------------------------------------------------");
+        System.out.println("token拦截  after--------------------------------------------------------------------");
     }
 }

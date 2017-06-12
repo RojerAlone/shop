@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 
 /**
@@ -45,6 +46,21 @@ public class CommonController extends AbstractController {
             this.getSession().removeAttribute("Referer");   // 登陆成功就将session中的Referer删除
         }
         return result;
+    }
+
+    @PostMapping(value = "logout")
+    @ResponseBody
+    public Result logout() {
+        String token = null;
+        // 从请求中获取token
+        if (this.getRequest().getCookies() != null) {
+            for (Cookie cookie : this.getRequest().getCookies()) {
+                if (cookie.getName().equals("token")) {
+                    token = cookie.getValue();
+                }
+            }
+        }
+        return userService.logout(token);
     }
 
     @GetMapping(value = "register")

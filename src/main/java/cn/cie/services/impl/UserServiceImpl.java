@@ -132,6 +132,14 @@ public class UserServiceImpl implements UserService {
         }
     }
 
+    public Result logout(String token) {
+        if (token == null || token.length() != 32) {
+            return Result.success();
+        }
+        tokenMapper.updateStatByToken(Token.STAT_EXPIRED, token);
+        return Result.success();
+    }
+
     public boolean updateUserInfo(User user) {
         return 1 == userMapper.update(user);
     }

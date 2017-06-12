@@ -39,6 +39,12 @@ public interface UserService {
     Result login(String username, String password);
 
     /**
+     * 登出
+     * @return
+     */
+    Result logout(String token);
+
+    /**
      * 更新用户信息
      * @param user
      * @return
