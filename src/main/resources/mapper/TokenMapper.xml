@@ -71,6 +71,6 @@
     where expired_time &lt; #{date,jdbcType=TIMESTAMP}
   </update>
   <update id="updateStatByToken">
-    update toekn set stat = #{stat,jdbcType=TINYINT} where token = #{token,jdbcType=VARCHAR}
+    update token set stat = #{stat,jdbcType=TINYINT} where token = #{token,jdbcType=VARCHAR}
   </update>
 </mapper>

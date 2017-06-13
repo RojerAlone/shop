@@ -2,6 +2,7 @@ package cn.cie.controller;
 
 import cn.cie.entity.User;
 import cn.cie.services.UserService;
+import cn.cie.utils.MsgCenter;
 import cn.cie.utils.Result;
 import cn.cie.utils.UserHolder;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,8 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by RojerAlone on 2017/6/9.
@@ -30,10 +33,10 @@ public class CommonController extends AbstractController {
 
     @GetMapping(value = "login")
     public String login() {
-        String check = checkLogin();
+        String referer = getReferer();
         // 如果用户已经登陆，那么跳转到之前的页面
-        if (check != null) {
-            return "redirect:" + check;
+        if (userHolder.getUser() != null) {
+            return "redirect:" + referer;
         }
         return "login";
     }
@@ -41,11 +44,20 @@ public class CommonController extends AbstractController {
     @PostMapping(value = "login")
     @ResponseBody
     public Result login(String username, String password, HttpServletResponse response) {
-        Result result = userService.login(username, password);
-        if (result.isSuccess()) {       // 登录成功，token加入到cookie中
-            this.getSession().removeAttribute("Referer");   // 登陆成功就将session中的Referer删除
+        String referer = getReferer();
+        // 如果用户已经登陆，那么跳转到之前的页面
+        if (userHolder.getUser() != null) {
+            return Result.fail(MsgCenter.OK, referer);
         }
-        return result;
+        Result result = userService.login(username, password);
+        if (result.isSuccess()) {
+            Map<String, String> map = new HashMap<String, String>();
+            map.put("token", (String) result.getData());
+            map.put("referer", referer);
+            return Result.success(map);
+        } else {
+            return result;
+        }
     }
 
     @PostMapping(value = "logout")
@@ -65,7 +77,7 @@ public class CommonController extends AbstractController {
 
     @GetMapping(value = "register")
     public String register() {
-        String referer = checkLogin();
+        String referer = getReferer();
         if (referer != null) {
             return "redirect:" + referer;
         }
@@ -81,28 +93,24 @@ public class CommonController extends AbstractController {
 
     /**
      * 检查用户是否登陆，如果登陆就返回应该跳转到的页面，否则执行接下来的逻辑
-     * 每次登陆之前都从session中获取跳转之前的链接referer
-     * 如果为空，登陆成功那么跳转到首页，并且从session中删除referer
-     * 登陆失败跳转到登录页，同时将"/"加入到session中，表示登陆成功后跳转到首页
+     * 每次登陆之前都从request的header中获取跳转之前的链接referer
+     * 如果为空或者从别的网站跳转过来的，那么应该跳转到首页
+     * 登陆流程中第一次登陆就会调用本方法获取跳转链接，登陆失败将referer写入session中
+     * 如果是从登录页跳转过来的，可能是登陆出错了，但是跳转到登录页之前的referer在session存着，从session中获取
      * 如果sesson中有referer，那么登陆成功跳转到referer，并且从session中删除referer
-     *
      * @return
      */
-    private String checkLogin() {
-        // 用户没有登陆，返回null，表示未登录
-        if (userHolder.getUser() == null) {
-            return null;
-        }
-        // 用户已经登陆，获取应该跳转到的页面
-        String referer = (String) this.getSession().getAttribute("Referer");
-        // 登陆流程中第一次登陆
-        if (referer == null) {
-            String tmp = this.getRequest().getHeader("Referer");
-            if (tmp == null || tmp.startsWith("http://127.0.0.1:8080/login") || tmp.startsWith("http://localhost:8080/login")) {
-                referer = "/";
-            } else {
-                referer = tmp;
-            }
+    private String getReferer() {
+        String referer = null;
+        String tmp = this.getRequest().getHeader("Referer");
+        // 如果为空或者不是从本站跳转过来的，应该跳转到首页
+        if (tmp == null || !tmp.startsWith("http://localhost:8080") || !tmp.startsWith("http://127.0.0.1:8080")) {
+            referer = "/";
+        } else if (tmp.startsWith("http://127.0.0.1:8080/login") || tmp.startsWith("http://localhost:8080/login")) {
+            referer = (String) this.getSession().getAttribute("Referer");
+        } else {
+            referer = tmp;
+            this.getSession().setAttribute("Referer", referer);
         }
         return referer;
     }
