@@ -18,6 +18,7 @@
         <!--登录拦截-->
         <mvc:interceptor>
             <mvc:mapping path="/order"/>
+            <mvc:mapping path="/user/sendMail" />
             <bean class="cn.cie.interceptor.LoginInterceptor" />
         </mvc:interceptor>
     </mvc:interceptors>

@@ -3,6 +3,12 @@ package cn.cie.entity;
 import java.util.Date;
 
 public class Validatecode {
+
+    /**
+     * 验证码有效期
+     */
+    public static final int TIMEOUT = 60 * 15;
+
     private Integer uid;
 
     private String code;

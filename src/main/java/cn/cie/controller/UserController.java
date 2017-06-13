@@ -2,6 +2,7 @@ package cn.cie.controller;
 
 import cn.cie.entity.User;
 import cn.cie.services.UserService;
+import cn.cie.utils.MsgCenter;
 import cn.cie.utils.Result;
 import cn.cie.utils.UserHolder;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +30,9 @@ public class UserController extends AbstractController {
     @PostMapping(value = "validate")
     @ResponseBody
     public Result validate(String code) {
+        if (userHolder.getUser().getStat() == User.STAT_OK) {    // 用户已经验证过了
+            return Result.fail(MsgCenter.USER_VALIDATED);
+        }
         return userService.validate(userHolder.getUser().getId(), code);
     }
 

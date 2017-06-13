@@ -34,6 +34,8 @@ public class UserServiceImpl implements UserService {
     private TokenMapper tokenMapper;
     @Autowired
     private UserHolder userHolder;
+    @Autowired
+    private RedisUtil redisUtil;
 
     @Transactional
     public Result register(User user) {
@@ -82,31 +84,45 @@ public class UserServiceImpl implements UserService {
         }
         Validatecode code = new Validatecode();
         String uuid = UUID.randomUUID().toString();
-        code.setUid(uid);
-        code.setCode(uuid);
-        codeMapper.insert(code);    // 数据库中存入验证码
+        // 将数据存入redis中，固定时间后过期
+        redisUtil.putEx("validatecode_" + uid, uuid, Validatecode.TIMEOUT);
+//        code.setUid(uid);
+//        code.setCode(uuid);
+//        codeMapper.insert(code);    // 数据库中存入验证码
         MailUtil.sendValidateMail(user.getEmail(), uuid); // 发送验证邮件
         return Result.success();
     }
 
     @Transactional
     public Result validate(Integer uid, String code) {
-        User user = userMapper.selectById(uid);
-        if (user == null) {     // 找不到用户
-            return Result.fail(MsgCenter.USER_NOT_FOUND);
-        } else if (user.getStat() == User.STAT_OK) {    // 用户已经验证过了
-            return Result.fail(MsgCenter.USER_VALIDATED);
-        }
-        List<String> strs = codeMapper.selectByUid(uid);
-        for (String str : strs) {
-            if (str != null && str.length() == 36 && code.equals(str)) {
-                user.setStat(User.STAT_OK);
-                if (1 == userMapper.update(user)) {
-                    codeMapper.delete(uid);     // 验证成功后删除验证码
-                    return Result.success();
-                } else {
-                    return Result.fail(MsgCenter.ERROR);
-                }
+//        User user = userMapper.selectById(uid);
+//        if (user == null) {     // 找不到用户
+//            return Result.fail(MsgCenter.USER_NOT_FOUND);
+//        } else if (user.getStat() == User.STAT_OK) {    // 用户已经验证过了
+//            return Result.fail(MsgCenter.USER_VALIDATED);
+//        }
+//        List<String> strs = codeMapper.selectByUid(uid);
+//        for (String str : strs) {
+//            if (str != null && str.length() == 36 && code.equals(str)) {
+//                user.setStat(User.STAT_OK);
+//                if (1 == userMapper.update(user)) {
+//                    codeMapper.delete(uid);     // 验证成功后删除验证码
+//                    return Result.success();
+//                } else {
+//                    return Result.fail(MsgCenter.ERROR);
+//                }
+//            }
+//        }
+        String uuid = redisUtil.get("validatecode_" + uid);
+        if (code != null && code.length() == 36 && code.equals(uuid)) {
+            User user = userHolder.getUser();
+            user.setStat(User.STAT_OK);
+            if (1 == userMapper.update(user)) {
+                redisUtil.delete("validatecode_" + uid);        // 验证成功后删除验证码
+//                codeMapper.delete(uid);     // 验证成功后删除验证码
+                return Result.success();
+            } else {
+                return Result.fail(MsgCenter.ERROR);
             }
         }
         return Result.fail(MsgCenter.CODE_ERROR);
