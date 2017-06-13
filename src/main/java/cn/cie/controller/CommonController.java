@@ -17,7 +17,7 @@ import java.util.Map;
 /**
  * Created by RojerAlone on 2017/6/9.
  */
-@CrossOrigin
+//@CrossOrigin
 @Controller
 public class CommonController extends AbstractController {
 
@@ -51,9 +51,13 @@ public class CommonController extends AbstractController {
         }
         Result result = userService.login(username, password);
         if (result.isSuccess()) {
+            String token = (String) result.getData();
             Map<String, String> map = new HashMap<String, String>();
-            map.put("token", (String) result.getData());
+            map.put("token", token);
             map.put("referer", referer);
+            // response中添加cookie，以后每次请求都会带上cookie
+            Cookie cookie = new Cookie("token", token);
+            response.addCookie(cookie);
             return Result.success(map);
         } else {
             return result;
