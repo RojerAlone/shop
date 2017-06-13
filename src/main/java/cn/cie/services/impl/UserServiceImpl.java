@@ -113,7 +113,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Transactional
-    public Result login(String username, String password) {
+    public Result login(String username, String password, String ip, String device) {
         User user = userMapper.selectByName(username);
         // 用户名不存在或者密码错误
         if (user == null || !user.getPassword().equals(PasswordUtil.pwd2Md5(password))) {
@@ -124,6 +124,8 @@ public class UserServiceImpl implements UserService {
             token.setUid(user.getId());
             token.setExpiredTime(new Date(1000 * 60 * 60 * 24 + System.currentTimeMillis()));
             token.setToken(uuid);
+            token.setIp(ip);
+            token.setDevice(device);
             tokenMapper.insert(token);
             return Result.success(uuid);
         }

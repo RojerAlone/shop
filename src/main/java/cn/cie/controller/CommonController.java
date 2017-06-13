@@ -49,7 +49,7 @@ public class CommonController extends AbstractController {
         if (userHolder.getUser() != null) {
             return Result.fail(MsgCenter.OK, referer);
         }
-        Result result = userService.login(username, password);
+        Result result = userService.login(username, password, this.getRemoteIp(), this.getUserAgent());
         if (result.isSuccess()) {
             String token = (String) result.getData();
             Map<String, String> map = new HashMap<String, String>();

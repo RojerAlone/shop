@@ -36,7 +36,7 @@ public interface UserService {
      * @param password
      * @return
      */
-    Result login(String username, String password);
+    Result login(String username, String password, String ip, String device);
 
     /**
      * 登出

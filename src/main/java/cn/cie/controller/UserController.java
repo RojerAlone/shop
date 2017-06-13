@@ -8,11 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletResponse;
-
 /**
  * Created by RojerAlone on 2017/6/6.
  */
+@CrossOrigin
 @Controller
 @RequestMapping(value = "user")
 public class UserController extends AbstractController {
@@ -29,32 +28,14 @@ public class UserController extends AbstractController {
 
     @PostMapping(value = "validate")
     @ResponseBody
-    public Result validate(Integer uid, String code, HttpServletResponse response) {
-//        int uid = ((User) this.getSession().getAttribute("user")).getId();
-//        Result result = userService.validate(uid, code);
-//        if (result.isSuccess()) {       // 验证成功返回首页
-//            return "redirect:index";
-//        } else {                        // 验证失败返回验证页
-//            this.getModel().addAttribute("msg", result.getMsg());
-//            return "validate";
-//        }
-        response.setHeader("Access-Control-Allow-Origin", "*");
-        return userService.validate(uid, code);
+    public Result validate(String code) {
+        return userService.validate(userHolder.getUser().getId(), code);
     }
 
     @PostMapping(value = "sendMail")
     @ResponseBody
-    public Result sendMail(@RequestParam Integer uid, HttpServletResponse response) {
-//        int uid = ((User) this.getSession().getAttribute("user")).getId();
-//        Result result = userService.validate(uid, code);
-//        if (result.isSuccess()) {       // 验证成功返回首页
-//            return "redirect:index";
-//        } else {                        // 验证失败返回验证页
-//            this.getModel().addAttribute("msg", result.getMsg());
-//            return "validate";
-//        }
-        response.setHeader("Access-Control-Allow-Origin", "*");
-        return userService.sendMail(uid);
+    public Result sendMail() {
+        return userService.sendMail(userHolder.getUser().getId());
     }
 
     @GetMapping(value = "update")

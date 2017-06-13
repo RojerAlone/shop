@@ -18,7 +18,7 @@ CREATE TABLE IF NOT EXISTS `shop`.`token` (
   `token` VARCHAR(36) NOT NULL COMMENT 'token' ,
   `expired_time` TIMESTAMP NOT NULL COMMENT '过期时间' ,
   `ip` VARCHAR(15) NOT NULL DEFAULT "" COMMENT '访问者IP' ,
-  `device` VARCHAR(50) NOT NULL DEFAULT "" COMMENT '登录的设备' ,
+  `device` VARCHAR(150) NOT NULL DEFAULT "" COMMENT '登录的设备' ,
   `ctime` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '登录时间' ,
   `stat` TINYINT NOT NULL DEFAULT 0 COMMENT '0表示正常，1表示已过期' ,
   UNIQUE INDEX`token_index`(`token`)
