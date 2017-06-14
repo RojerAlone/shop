@@ -2,6 +2,9 @@ package cn.cie.entity;
 
 import java.util.Date;
 
+/**
+ * token，用来标识一个用户
+ */
 public class Token {
 
     /**

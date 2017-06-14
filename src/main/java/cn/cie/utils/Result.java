@@ -2,6 +2,7 @@ package cn.cie.utils;
 
 /**
  * Created by RojerAlone on 2017/6/6.
+ * 后台接口返回结果，标识了是否成功、消息以及返回的数据
  */
 public class Result<T> {
 

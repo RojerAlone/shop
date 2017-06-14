@@ -2,6 +2,9 @@ package cn.cie.entity;
 
 import java.util.Date;
 
+/**
+ * 订单
+ */
 public class Order {
 
     /**

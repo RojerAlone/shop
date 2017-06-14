@@ -64,10 +64,11 @@ public class UserServiceImpl implements UserService {
         user.setPassword(PasswordUtil.pwd2Md5(user.getPassword()));                // 加密密码
         if (1 == userMapper.insert(user)) {                                      // 注册成功
             String uuid = UUID.randomUUID().toString();
-            Validatecode code = new Validatecode();
-            code.setUid(user.getId());
-            code.setCode(uuid);
-            codeMapper.insert(code);    // 数据库中存入验证码
+//            Validatecode code = new Validatecode();
+//            code.setUid(user.getId());
+//            code.setCode(uuid);
+//            codeMapper.insert(code);    // 数据库中存入验证码
+            redisUtil.putEx("validatecode_" + user.getId(), uuid, Validatecode.TIMEOUT);    // 存入redis
             MailUtil.sendValidateMail(user.getEmail(), uuid); // 发送验证邮件
             return Result.success(user.getId());
         }

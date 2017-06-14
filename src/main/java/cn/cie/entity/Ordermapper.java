@@ -1,5 +1,8 @@
 package cn.cie.entity;
 
+/**
+ * 订单-订单详情映射
+ */
 public class Ordermapper {
     private Integer order;
 

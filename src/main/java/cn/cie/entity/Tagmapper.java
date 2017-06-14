@@ -1,5 +1,8 @@
 package cn.cie.entity;
 
+/**
+ * 游戏游戏标签映射
+ */
 public class Tagmapper {
     private Integer game;
 

@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  * Created by RojerAlone on 2017/6/12.
+ * 拦截器，某些功能需要登录才能继续，如果没有登录会被拦截，跳转到登录页
  */
 @Component
 public class LoginInterceptor implements HandlerInterceptor {

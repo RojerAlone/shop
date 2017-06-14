@@ -1,5 +1,8 @@
 package cn.cie.entity;
 
+/**
+ * 游戏激活码
+ */
 public class Code {
 
     /**

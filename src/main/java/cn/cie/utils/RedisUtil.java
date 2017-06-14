@@ -8,6 +8,9 @@ import org.springframework.stereotype.Component;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by RojerAlone on 2017/6/13.
  * 封装了redis操作，用protostuff进行序列化和反序列化
@@ -80,7 +83,7 @@ public class RedisUtil implements InitializingBean {
         Jedis jedis = null;
         try {
             jedis = jedisPool.getResource();
-            byte[] bytes = ProtostuffIOUtil.toByteArray(value, schema, LinkedBuffer.allocate(LinkedBuffer.DEFAULT_BUFFER_SIZE));
+            byte[] bytes = setBytes(value);
             return  jedis.set(key.getBytes(), bytes);
         } finally {
             jedis.close();
@@ -98,7 +101,7 @@ public class RedisUtil implements InitializingBean {
         Jedis jedis = null;
         try {
             jedis = jedisPool.getResource();
-            byte[] bytes = ProtostuffIOUtil.toByteArray(value, schema, LinkedBuffer.allocate(LinkedBuffer.DEFAULT_BUFFER_SIZE));
+            byte[] bytes = setBytes(value);
             return  jedis.setex(key.getBytes(), timeout, bytes);
         } finally {
             jedis.close();
@@ -115,13 +118,7 @@ public class RedisUtil implements InitializingBean {
         try {
             jedis = jedisPool.getResource();
             byte[] bytes = jedis.get(key.getBytes());
-            if (bytes != null) {
-                Object object = (Object)schema.newMessage();
-                ProtostuffIOUtil.mergeFrom(bytes, object, schema);
-                return object;
-            } else {
-                return null;
-            }
+            return getBytes(bytes);
         } finally {
             jedis.close();
         }
@@ -142,10 +139,85 @@ public class RedisUtil implements InitializingBean {
         }
     }
 
+    /**
+     * 数组中添加一条数据
+     * @param key
+     * @param values
+     * @return
+     */
+    public long lpushObject(String key, Object... values) {
+        Jedis jedis = null;
+        try {
+            jedis = jedisPool.getResource();
+            byte[][] bytes = new byte[values.length][];
+            int index = 0;
+            for (Object value : values) {
+                bytes[index] = setBytes(value);
+                index++;
+            }
+            return jedis.lpush(key.getBytes(), bytes);
+        } finally {
+            jedis.close();
+        }
+    }
+
+    /**
+     * 获取数组中所有数据
+     * @param key
+     * @return
+     */
+    public List<Object> lall(String key) {
+        Jedis jedis = null;
+        try {
+            jedis = jedisPool.getResource();
+            // 0表示第一个元素，-1表示最后一个元素
+            List<byte[]> bytes = jedis.lrange(key.getBytes(), 0, -1);
+            List<Object> res = new ArrayList<Object>();
+            for (byte[] b : bytes) {
+                res.add(getBytes(b));
+            }
+            return res;
+        } finally {
+            jedis.close();
+        }
+    }
+
+    /**
+     * 如果要从redis中查询对象，那么必须调用这个方法设置对象的class
+     * @param clazz
+     */
     public void setSchema(Class clazz) {
         this.schema = RuntimeSchema.createFrom(clazz);
     }
 
+    /**
+     * 用protostuff将对象序列化为bytes
+     * @param value
+     * @return
+     */
+    private byte[] setBytes(Object value) {
+        return ProtostuffIOUtil.toByteArray(value, schema, LinkedBuffer.allocate(LinkedBuffer.DEFAULT_BUFFER_SIZE));
+    }
+
+    /**
+     * 从bytes中反序列化为对象
+     * @param bytes
+     * @return
+     */
+    private Object getBytes(byte[] bytes) {
+        if (bytes != null) {
+            Object object = schema.newMessage();
+            ProtostuffIOUtil.mergeFrom(bytes, object, schema);
+            return object;
+        } else {
+            return null;
+        }
+    }
+
+    /**
+     * spring注入之后会自动调用这个方法
+     * @throws Exception
+     */
     public void afterPropertiesSet() throws Exception {
         jedisPool = new JedisPool(REDIS_URL);
     }

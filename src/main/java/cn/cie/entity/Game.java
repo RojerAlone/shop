@@ -2,6 +2,9 @@ package cn.cie.entity;
 
 import java.util.Date;
 
+/**
+ * 游戏
+ */
 public class Game {
 
     /**

@@ -2,6 +2,9 @@ package cn.cie.entity;
 
 import java.util.Date;
 
+/**
+ * 注册时发送到邮箱的验证码，用来验证用户邮箱
+ */
 public class Validatecode {
 
     /**

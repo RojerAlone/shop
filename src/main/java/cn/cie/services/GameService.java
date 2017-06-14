@@ -8,6 +8,11 @@ import cn.cie.utils.Result;
  */
 public interface GameService {
 
+    /**
+     * 根据游戏id获取游戏详细信息
+     * @param id
+     * @return
+     */
     Result<GameDTO> getById(Integer id);
 
 }

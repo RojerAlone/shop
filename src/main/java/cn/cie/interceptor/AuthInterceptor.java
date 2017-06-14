@@ -17,7 +17,7 @@ import java.util.Date;
 
 /**
  * Created by RojerAlone on 2017/6/11.
- * 用户身份验证
+ * 拦截器，根据token获取用户身份
  */
 @Component
 public class AuthInterceptor implements HandlerInterceptor {

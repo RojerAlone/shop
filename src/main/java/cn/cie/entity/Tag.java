@@ -1,5 +1,8 @@
 package cn.cie.entity;
 
+/**
+ * 游戏标签
+ */
 public class Tag {
     private Integer id;
 

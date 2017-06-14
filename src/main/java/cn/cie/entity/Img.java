@@ -1,5 +1,8 @@
 package cn.cie.entity;
 
+/**
+ * 游戏图片
+ */
 public class Img {
     private Integer game;
 

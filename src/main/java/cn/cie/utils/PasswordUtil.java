@@ -4,6 +4,7 @@ import org.springframework.util.DigestUtils;
 
 /**
  * Created by RojerAlone on 2017/6/6.
+ * 将密码进行MD5加密
  */
 public class PasswordUtil {
 

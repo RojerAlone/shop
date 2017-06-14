@@ -7,10 +7,12 @@ import cn.cie.entity.dto.GameDTO;
 import cn.cie.mapper.*;
 import cn.cie.services.KindService;
 import cn.cie.utils.MsgCenter;
+import cn.cie.utils.RedisUtil;
 import cn.cie.utils.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,9 +34,24 @@ public class KindServiceImpl implements KindService {
     private TagMapper tagMapper;
     @Autowired
     private TagmapperMapper tagmapperMapper;
+    @Autowired
+    private RedisUtil redisUtil;
 
     public Result<Kind> getAll() {
-        return Result.success(kindMapper.selectAll());
+        redisUtil.setSchema(Kind.class);
+        List<Object> kinds = redisUtil.lall("kinds");
+        // 如果缓存中没有，从数据库中查询，并且添加到缓存中
+        if (kinds == null || kinds.size() == 0) {
+            System.out.println("null-------------------------------------------------------------");
+            List<Kind> data = kindMapper.selectAll();
+//            Array kindlist = data.toArray();
+            redisUtil.lpushObject("kinds", data.toArray());
+            return Result.success(data);
+        }
+//        if (kinds == null) {
+//            redisUtil.putObject("kinds", kinds);
+//        }
+        return Result.success(kinds);
     }
 
     public Result<List<GameDTO>> getGamesByKind(int kind) {
