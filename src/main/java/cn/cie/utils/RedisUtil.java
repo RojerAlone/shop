@@ -17,7 +17,7 @@ import java.util.List;
  * 如果要插入对象，需要调用setSchema方法指定对象的Class类型
  */
 @Component
-public class RedisUtil implements InitializingBean {
+public class RedisUtil<T> implements InitializingBean {
 
     private JedisPool jedisPool;
 
@@ -80,6 +80,9 @@ public class RedisUtil implements InitializingBean {
      * @return
      */
     public String putObject(String key, Object value) {
+        if (schema == null) {
+            this.setSchema(value.getClass());
+        }
         Jedis jedis = null;
         try {
             jedis = jedisPool.getResource();
@@ -98,6 +101,9 @@ public class RedisUtil implements InitializingBean {
      * @return
      */
     public String putObjectEx(String key, Object value, int timeout) {
+        if (schema == null) {
+            this.setSchema(value.getClass());
+        }
         Jedis jedis = null;
         try {
             jedis = jedisPool.getResource();
@@ -140,12 +146,15 @@ public class RedisUtil implements InitializingBean {
     }
 
     /**
-     * 数组中添加一条数据
+     * 向列表头部添加数据
      * @param key
      * @param values
      * @return
      */
     public long lpushObject(String key, Object... values) {
+        if (schema == null) {
+            this.setSchema(values.getClass());
+        }
         Jedis jedis = null;
         try {
             jedis = jedisPool.getResource();
@@ -162,7 +171,60 @@ public class RedisUtil implements InitializingBean {
     }
 
     /**
-     * 获取数组中所有数据
+     * 向列表尾部添加数据
+     * @param key
+     * @param values
+     * @return
+     */
+    public long rpushObject(String key, Object... values) {
+        if (schema == null) {
+            this.setSchema(values.getClass());
+        }
+        Jedis jedis = null;
+        try {
+            jedis = jedisPool.getResource();
+            byte[][] bytes = new byte[values.length][];
+            int index = 0;
+            for (Object value : values) {
+                bytes[index] = setBytes(value);
+                index++;
+            }
+            return jedis.rpush(key.getBytes(), bytes);
+        } finally {
+            jedis.close();
+        }
+    }
+
+    /**
+     * 向列表尾部添加某个时间点删除的数据
+     * @param key
+     * @param time  unix时间戳
+     * @param values
+     * @return
+     */
+    public long rpushObjectExAtTime(String key, long time, Object... values) {
+        if (schema == null) {
+            this.setSchema(values.getClass());
+        }
+        Jedis jedis = null;
+        try {
+            jedis = jedisPool.getResource();
+            byte[][] bytes = new byte[values.length][];
+            int index = 0;
+            for (Object value : values) {
+                bytes[index] = setBytes(value);
+                index++;
+            }
+            long res = jedis.rpush(key.getBytes(), bytes);
+            jedis.expireAt(key.getBytes(), time);      // 手动设置过期时间
+            return res;
+        } finally {
+            jedis.close();
+        }
+    }
+
+    /**
+     * 获取列表中所有数据
      * @param key
      * @return
      */

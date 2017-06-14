@@ -4,6 +4,7 @@ import cn.cie.entity.Token;
 import cn.cie.entity.User;
 import cn.cie.mapper.TokenMapper;
 import cn.cie.mapper.UserMapper;
+import cn.cie.utils.RedisUtil;
 import cn.cie.utils.UserHolder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -18,6 +19,7 @@ import java.util.Date;
 /**
  * Created by RojerAlone on 2017/6/11.
  * 拦截器，根据token获取用户身份
+ * 先从缓存中查找，如果找不到再从数据库中找
  */
 @Component
 public class AuthInterceptor implements HandlerInterceptor {
@@ -26,6 +28,8 @@ public class AuthInterceptor implements HandlerInterceptor {
     private TokenMapper tokenMapper;
     @Autowired
     private UserMapper userMapper;
+    @Autowired
+    private RedisUtil redisUtil;
     @Autowired
     private UserHolder userHolder;
 
@@ -41,13 +45,21 @@ public class AuthInterceptor implements HandlerInterceptor {
         }
         // 如果获取到了token
         if (token != null) {
-            Token t = tokenMapper.selectByToken(token);
-            // 如果token为空或者已经过期或者状态不正常
-            if (t == null || t.getExpiredTime().before(new Date()) || t.getStat() != Token.STAT_OK) {
-                return true;
+            String userid = redisUtil.get(token);
+            int uid = 0;
+            // 缓存中没有token，从数据库中查找
+            if (userid == null) {
+                Token t = tokenMapper.selectByTokenAndStat(token, Token.STAT_OK);
+                // 如果token为空或者已经过期但是定时任务还没有来得及更改状态
+                if (t == null || t.getExpiredTime().before(new Date())) {
+                    return true;
+                }
+                uid = t.getUid();
+            } else {
+                uid = Integer.valueOf(userid);
             }
             // token有效，将当前用户暂时存放起来，之后在所有的地方都可以通过依赖注入的UserHolder获取当前用户
-            User user = userMapper.selectById(t.getUid());
+            User user = userMapper.selectById(uid);
             userHolder.setUser(user);
         }
         return true;

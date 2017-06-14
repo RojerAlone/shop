@@ -1,8 +1,10 @@
 package cn.cie.controller;
 
 import cn.cie.entity.User;
+import cn.cie.services.GameService;
 import cn.cie.services.UserService;
 import cn.cie.utils.MsgCenter;
+import cn.cie.utils.RedisUtil;
 import cn.cie.utils.Result;
 import cn.cie.utils.UserHolder;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,12 +14,13 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
  * Created by RojerAlone on 2017/6/9.
  */
-//@CrossOrigin
+@CrossOrigin
 @Controller
 public class CommonController extends AbstractController {
 
@@ -25,6 +28,10 @@ public class CommonController extends AbstractController {
     private UserHolder userHolder;
     @Autowired
     private UserService userService;
+    @Autowired
+    private GameService gameService;
+    @Autowired
+    private RedisUtil redisUtil;
 
     @RequestMapping(value = {"/", "/index"})
     public String index() {
@@ -43,13 +50,15 @@ public class CommonController extends AbstractController {
 
     @PostMapping(value = "login")
     @ResponseBody
-    public Result login(String username, String password, HttpServletResponse response) {
+    public Result login(String username, String password,
+                        @RequestParam(value = "remember", defaultValue = "false", required = false) boolean remember,
+                        HttpServletResponse response) {
         String referer = getReferer();
         // 如果用户已经登陆，那么跳转到之前的页面
         if (userHolder.getUser() != null) {
             return Result.fail(MsgCenter.OK, referer);
         }
-        Result result = userService.login(username, password, this.getRemoteIp(), this.getUserAgent());
+        Result result = userService.login(username, password, remember, this.getRemoteIp(), this.getUserAgent());
         if (result.isSuccess()) {
             String token = (String) result.getData();
             Map<String, String> map = new HashMap<String, String>();
@@ -93,6 +102,20 @@ public class CommonController extends AbstractController {
     public Result register(User user, HttpServletResponse response) {
         Result result = userService.register(user);
         return result;
+    }
+
+    /**
+     * 获取每日推荐，随机选取5个游戏，每日生成一次
+     * @return
+     */
+    @RequestMapping(value = "everyday")
+    @ResponseBody
+    public Result everyday() {
+        List<Object> games =  redisUtil.lall("everyday");
+        if (games == null || games.size() == 0) {
+            return gameService.getRandomGames();
+        }
+        return Result.success(games);
     }
 
     /**

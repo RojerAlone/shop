@@ -17,7 +17,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 @ContextConfiguration(value = {"classpath:spring-dao.xml", "classpath:spring-service.xml"})
 public class RedisUtilTest {
 
-    private static final Logger logger = LoggerFactory.getLogger(RedisUtil.class);
+    private final Logger logger = LoggerFactory.getLogger(RedisUtil.class);
 
     @Autowired
     private RedisUtil redis;
@@ -36,7 +36,7 @@ public class RedisUtilTest {
     public void get() throws Exception {
         logger.info(redis.get("key"));
         logger.info(redis.get("ex"));
-        logger.info(redis.get("kinds"));
+//        logger.info(redis.get("kinds"));
     }
 
     @Test
@@ -62,7 +62,7 @@ public class RedisUtilTest {
 
     @Test
     public void delete() throws Exception {
-
+        logger.info("delete : " + redis.delete("ex"));
     }
 
     @Test

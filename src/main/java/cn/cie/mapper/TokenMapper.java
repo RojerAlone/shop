@@ -12,6 +12,8 @@ public interface TokenMapper {
 
     Token selectByToken(String token);
 
+    Token selectByTokenAndStat(@Param(value = "token") String token, @Param(value = "stat") Byte stat);
+
     List<Token> selectByUid(Integer uid);
 
     int updateStatByDate(@Param(value = "date") Date date, @Param(value = "stat") Byte stat);

@@ -13,8 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletResponse;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -130,28 +128,35 @@ public class UserServiceImpl implements UserService {
     }
 
     @Transactional
-    public Result login(String username, String password, String ip, String device) {
+    public Result login(String username, String password, boolean remember, String ip, String device) {
         User user = userMapper.selectByName(username);
         // 用户名不存在或者密码错误
         if (user == null || !user.getPassword().equals(PasswordUtil.pwd2Md5(password))) {
             return Result.fail(MsgCenter.ERROR_LOGIN);
         } else {
             String uuid = UUID.randomUUID().toString().replaceAll("-", "");
-            Token token = new Token();
-            token.setUid(user.getId());
-            token.setExpiredTime(new Date(1000 * 60 * 60 * 24 + System.currentTimeMillis()));
-            token.setToken(uuid);
-            token.setIp(ip);
-            token.setDevice(device);
+                Token token = new Token();
+                token.setUid(user.getId());
+                token.setToken(uuid);
+                token.setIp(ip);
+                token.setDevice(device);
+            // 如果保持登陆，过期时间就为7天，否则为1天
+            if (remember) {
+                token.setExpiredTime(new Date(1000 * 60 * 60 * 24 * 7 + System.currentTimeMillis()));
+            } else {
+                token.setExpiredTime(new Date(1000 * 60 * 60 * 24 + System.currentTimeMillis()));
+            }
             tokenMapper.insert(token);
+            redisUtil.putEx(uuid, String.valueOf(user.getId()), 60 * 60 * 24);
             return Result.success(uuid);
         }
     }
 
     public Result logout(String token) {
         if (token == null || token.length() != 32) {
-            return Result.success();
+            return Result.fail(MsgCenter.ERROR_PARAMS);
         }
+        redisUtil.delete(token);
         tokenMapper.updateStatByToken(Token.STAT_EXPIRED, token);
         return Result.success();
     }

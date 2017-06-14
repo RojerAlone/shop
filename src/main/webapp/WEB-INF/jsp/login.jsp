@@ -121,7 +121,12 @@
                     <input type="text" class="form-control" placeholder="Account" id="name">
                     <h5>密码</h5>
                     <input type="password" class="form-control" placeholder="Password" id="password">
-                    <br/>
+                    <input type="checkbox" id="remember">记住我一周
+                    <br  /><br  />
+
+                    <%--<h5>密码</h5>--%>
+                    <%--<input type="password" class="form-control" placeholder="Password" id="password">--%>
+                    <%--<br/>--%>
                     <button type="submit" class="btnys" onclick="login()"><p class="btys">登录</p></button>
                     <br/>
                     <br/>

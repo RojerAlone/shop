@@ -14,6 +14,8 @@ import org.springframework.stereotype.Service;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -42,15 +44,16 @@ public class KindServiceImpl implements KindService {
         List<Object> kinds = redisUtil.lall("kinds");
         // 如果缓存中没有，从数据库中查询，并且添加到缓存中
         if (kinds == null || kinds.size() == 0) {
-            System.out.println("null-------------------------------------------------------------");
             List<Kind> data = kindMapper.selectAll();
 //            Array kindlist = data.toArray();
-            redisUtil.lpushObject("kinds", data.toArray());
+            redisUtil.rpushObject("kinds", data.toArray());
             return Result.success(data);
         }
 //        if (kinds == null) {
 //            redisUtil.putObject("kinds", kinds);
 //        }
+        // redis底层为栈，因此要翻转顺序保持和插入的顺序一致
+//        Collections.reverse(kinds);
         return Result.success(kinds);
     }
 

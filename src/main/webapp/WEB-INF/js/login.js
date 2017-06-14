@@ -1,7 +1,8 @@
 function login() {
     var name = document.getElementById("name").value;
     var password = document.getElementById("password").value;
-    $.post("/login", {username: name, password: password},
+    var remember = document.getElementById("remember").checked;
+    $.post("/login", {username: name, password: password, remember: remember},
         function (result) {
             if (result.success) {
                 window.location.href = result.data.referer;
