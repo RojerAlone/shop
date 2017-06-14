@@ -20,7 +20,7 @@ public class TagController extends AbstractController{
     @Autowired
     private TagService tagService;
 
-    @GetMapping(value = "/{tag}/games")
+    @PostMapping(value = "/{tag}/games")
     @ResponseBody
     public Result<List<GameDTO>> getGamesByTag(@PathVariable(value = "tag") Integer tag) {
         return tagService.getGamesByTag(tag);

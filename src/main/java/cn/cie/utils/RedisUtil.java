@@ -79,7 +79,7 @@ public class RedisUtil<T> implements InitializingBean {
      * @param value
      * @return
      */
-    public String putObject(String key, Object value) {
+    public String putObject(String key, T value) {
         if (schema == null) {
             this.setSchema(value.getClass());
         }
@@ -100,7 +100,7 @@ public class RedisUtil<T> implements InitializingBean {
      * @param timeout
      * @return
      */
-    public String putObjectEx(String key, Object value, int timeout) {
+    public String putObjectEx(String key, T value, int timeout) {
         if (schema == null) {
             this.setSchema(value.getClass());
         }
@@ -119,7 +119,7 @@ public class RedisUtil<T> implements InitializingBean {
      * @param key
      * @return
      */
-    public Object getObject(String key) {
+    public T getObject(String key) {
         Jedis jedis = null;
         try {
             jedis = jedisPool.getResource();
@@ -151,7 +151,7 @@ public class RedisUtil<T> implements InitializingBean {
      * @param values
      * @return
      */
-    public long lpushObject(String key, Object... values) {
+    public long lpushObject(String key, T... values) {
         if (schema == null) {
             this.setSchema(values.getClass());
         }
@@ -160,7 +160,7 @@ public class RedisUtil<T> implements InitializingBean {
             jedis = jedisPool.getResource();
             byte[][] bytes = new byte[values.length][];
             int index = 0;
-            for (Object value : values) {
+            for (T value : values) {
                 bytes[index] = setBytes(value);
                 index++;
             }
@@ -176,7 +176,7 @@ public class RedisUtil<T> implements InitializingBean {
      * @param values
      * @return
      */
-    public long rpushObject(String key, Object... values) {
+    public long rpushObject(String key, T... values) {
         if (schema == null) {
             this.setSchema(values.getClass());
         }
@@ -185,7 +185,7 @@ public class RedisUtil<T> implements InitializingBean {
             jedis = jedisPool.getResource();
             byte[][] bytes = new byte[values.length][];
             int index = 0;
-            for (Object value : values) {
+            for (T value : values) {
                 bytes[index] = setBytes(value);
                 index++;
             }
@@ -202,7 +202,7 @@ public class RedisUtil<T> implements InitializingBean {
      * @param values
      * @return
      */
-    public long rpushObjectExAtTime(String key, long time, Object... values) {
+    public long rpushObjectExAtTime(String key, long time, T... values) {
         if (schema == null) {
             this.setSchema(values.getClass());
         }
@@ -211,7 +211,7 @@ public class RedisUtil<T> implements InitializingBean {
             jedis = jedisPool.getResource();
             byte[][] bytes = new byte[values.length][];
             int index = 0;
-            for (Object value : values) {
+            for (T value : values) {
                 bytes[index] = setBytes(value);
                 index++;
             }
@@ -228,13 +228,13 @@ public class RedisUtil<T> implements InitializingBean {
      * @param key
      * @return
      */
-    public List<Object> lall(String key) {
+    public List<T> lall(String key) {
         Jedis jedis = null;
         try {
             jedis = jedisPool.getResource();
             // 0表示第一个元素，-1表示最后一个元素
             List<byte[]> bytes = jedis.lrange(key.getBytes(), 0, -1);
-            List<Object> res = new ArrayList<Object>();
+            List<T> res = new ArrayList<T>();
             for (byte[] b : bytes) {
                 res.add(getBytes(b));
             }
@@ -257,7 +257,7 @@ public class RedisUtil<T> implements InitializingBean {
      * @param value
      * @return
      */
-    private byte[] setBytes(Object value) {
+    private byte[] setBytes(T value) {
         return ProtostuffIOUtil.toByteArray(value, schema, LinkedBuffer.allocate(LinkedBuffer.DEFAULT_BUFFER_SIZE));
     }
 
@@ -266,11 +266,11 @@ public class RedisUtil<T> implements InitializingBean {
      * @param bytes
      * @return
      */
-    private Object getBytes(byte[] bytes) {
+    private T getBytes(byte[] bytes) {
         if (bytes != null) {
             Object object = schema.newMessage();
             ProtostuffIOUtil.mergeFrom(bytes, object, schema);
-            return object;
+            return (T) object;
         } else {
             return null;
         }

@@ -66,6 +66,7 @@ public class CommonController extends AbstractController {
             map.put("referer", referer);
             // response中添加cookie，以后每次请求都会带上cookie
             Cookie cookie = new Cookie("token", token);
+            cookie.setPath("/");
             response.addCookie(cookie);
             return Result.success(map);
         } else {
@@ -91,7 +92,7 @@ public class CommonController extends AbstractController {
     @GetMapping(value = "register")
     public String register() {
         String referer = getReferer();
-        if (referer != null) {
+        if (userHolder.getUser() != null) {
             return "redirect:" + referer;
         }
         return "register";
@@ -101,6 +102,10 @@ public class CommonController extends AbstractController {
     @ResponseBody
     public Result register(User user, HttpServletResponse response) {
         Result result = userService.register(user);
+        // 注册成功就自动登录，前台跳转到验证页面
+        if (result.isSuccess()) {
+            return login(user.getUsername(), user.getPassword(), false, response);
+        }
         return result;
     }
 
