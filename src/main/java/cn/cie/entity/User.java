@@ -110,4 +110,19 @@ public class User {
     public void setStat(Byte stat) {
         this.stat = stat;
     }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", nickname='" + nickname + '\'' +
+                ", email='" + email + '\'' +
+                ", phone=" + phone +
+                ", ctime=" + ctime +
+                ", utime=" + utime +
+                ", stat=" + stat +
+                '}';
+    }
 }

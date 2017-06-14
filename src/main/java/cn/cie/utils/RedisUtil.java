@@ -4,46 +4,23 @@ import com.dyuproject.protostuff.LinkedBuffer;
 import com.dyuproject.protostuff.ProtostuffIOUtil;
 import com.dyuproject.protostuff.runtime.RuntimeSchema;
 import org.springframework.beans.factory.InitializingBean;
+import org.springframework.stereotype.Component;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 
-import java.lang.reflect.ParameterizedType;
-import java.lang.reflect.Type;
-
 /**
  * Created by RojerAlone on 2017/6/13.
+ * 封装了redis操作，用protostuff进行序列化和反序列化
+ * 如果要插入对象，需要调用setSchema方法指定对象的Class类型
  */
-public class RedisUtil<T> implements InitializingBean {
-
-    protected Class<T> clazz;
+@Component
+public class RedisUtil implements InitializingBean {
 
     private JedisPool jedisPool;
 
     private static final String REDIS_URL = "redis://localhost:6379/6";
 
     private RuntimeSchema schema;
-
-//    private T clazz;
-
-    @SuppressWarnings("unchecked")
-    public RedisUtil() {
-        @SuppressWarnings("rawtypes")
-        Class clazz = getClass();
-
-//        while (clazz != Object.class) {
-            Type t = clazz.getGenericSuperclass();
-            if (t instanceof ParameterizedType) {
-                Type[] args = ((ParameterizedType) t).getActualTypeArguments();
-                if (args[0] instanceof Class) {
-                    this.clazz = (Class<T>) args[0];
-                    System.out.println(this.clazz);
-//                    break;
-                }
-            }
-//            clazz = clazz.getSuperclass();
-//        }
-        System.out.println(clazz);
-    }
 
     /**
      * 存放一条数据
@@ -99,7 +76,7 @@ public class RedisUtil<T> implements InitializingBean {
      * @param value
      * @return
      */
-    public String putObject(String key, T value) {
+    public String putObject(String key, Object value) {
         Jedis jedis = null;
         try {
             jedis = jedisPool.getResource();
@@ -117,7 +94,7 @@ public class RedisUtil<T> implements InitializingBean {
      * @param timeout
      * @return
      */
-    public String putObjectEx(String key, T value, int timeout) {
+    public String putObjectEx(String key, Object value, int timeout) {
         Jedis jedis = null;
         try {
             jedis = jedisPool.getResource();
@@ -133,13 +110,13 @@ public class RedisUtil<T> implements InitializingBean {
      * @param key
      * @return
      */
-    public T getObject(String key) {
+    public Object getObject(String key) {
         Jedis jedis = null;
         try {
             jedis = jedisPool.getResource();
             byte[] bytes = jedis.get(key.getBytes());
             if (bytes != null) {
-                T object = (T)schema.newMessage();
+                Object object = (Object)schema.newMessage();
                 ProtostuffIOUtil.mergeFrom(bytes, object, schema);
                 return object;
             } else {
@@ -165,11 +142,11 @@ public class RedisUtil<T> implements InitializingBean {
         }
     }
 
-    public void afterPropertiesSet() throws Exception {
-//        RedisUtil<T> obj = new RedisUtil<T>();
+    public void setSchema(Class clazz) {
+        this.schema = RuntimeSchema.createFrom(clazz);
+    }
 
-        System.out.println(this.clazz);
+    public void afterPropertiesSet() throws Exception {
         jedisPool = new JedisPool(REDIS_URL);
-        schema = RuntimeSchema.createFrom(clazz);
     }
 }
