@@ -1,5 +1,6 @@
 package cn.cie.common;
 
+import org.apache.commons.lang3.StringUtils;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -57,5 +58,10 @@ public class CommonTest {
         Date zeroTime = new Date(zero);
         logger.info(String.valueOf(new Timestamp(zero)));
         logger.info(String.valueOf(new Date().before(zeroTime)));
+    }
+
+    @Test
+    public void strlength() {
+        logger.info(String.valueOf(StringUtils.length("rojeralone")));
     }
 }

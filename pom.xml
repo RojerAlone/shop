@@ -165,6 +165,13 @@
       <artifactId>protostuff-runtime</artifactId>
       <version>1.1.1</version>
     </dependency>
+    <!--apache common工具集-->
+    <dependency>
+      <groupId>org.apache.commons</groupId>
+      <artifactId>commons-lang3</artifactId>
+      <version>3.5</version>
+    </dependency>
+
   </dependencies>
 
   <build>

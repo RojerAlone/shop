@@ -13,9 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Date;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 import java.util.regex.Pattern;
 
 /**
@@ -40,6 +38,10 @@ public class UserServiceImpl implements UserService {
         // 验证参数是否合法
         if (user.getUsername() == null) {
             return Result.fail(MsgCenter.EMPTY_USERNAME);
+        } else if (user.getNickname() == null) {
+            return Result.fail(MsgCenter.EMPTY_NICKNAME);
+        } else if (user.getNickname().length() > 10) {
+            return Result.fail(MsgCenter.ERROR_NICINAME);
         } else if (user.getPassword() == null) {
             return Result.fail(MsgCenter.EMPTY_PASSWORD);
         } else if (16 < user.getPassword().length() || user.getPassword().length() < 6) {
@@ -148,7 +150,10 @@ public class UserServiceImpl implements UserService {
             }
             tokenMapper.insert(token);
             redisUtil.putEx(uuid, String.valueOf(user.getId()), 60 * 60 * 24);
-            return Result.success(uuid);
+            Map<String, String> result = new HashMap<String, String>();
+            result.put("token", uuid);
+            result.put("user", user.getNickname());
+            return Result.success(result);
         }
     }
 

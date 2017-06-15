@@ -1,0 +1,22 @@
+@charset "utf-8";
+/* CSS Document */
+.zczt{
+	color:#c6d4df;
+	margin-bottom:20px;
+}
+
+.inputcolor{
+	background:#0E2A3A;
+	border:none;
+}
+
+.btnsz{
+border-color:#67c1f5;
+}
+
+#regist_2{
+	display: block;
+}
+#regist_3{
+	display: none;
+}

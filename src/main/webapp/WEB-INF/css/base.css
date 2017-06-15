@@ -10,7 +10,7 @@ body{
 	padding-bottom:10px;
 }
 .headmid{
-	margin-left:300px;
+	margin-left:500px;
 	margin-top:100px;
 }
 .nav navbar-nav navbar-right{
@@ -60,6 +60,9 @@ margin:0px;
 	padding-top:50px;
 	padding-left:150px;
 	padding-right:150px;
+	position:fixed;bottom:0px;left: 0px;
+	width: 102%;
+
 
 }
 ul li

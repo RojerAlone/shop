@@ -48,36 +48,39 @@ public class GameServiceImpl implements GameService{
     }
 
     public Result<List<GameDTO>> getRandomGames() {
-        List<Game> allgames = gameMapper.selectByStat(Game.STAT_OK);
-        List<GameDTO> res = null;
-        int count = allgames.size();
-        Set<Integer> numSet = new HashSet<Integer>();
-        Random random = new Random();
-        List<Game> games = new ArrayList<Game>();
-        // 如果游戏数量大于5个就随机取5个，否则取全部的
-        if (count > 5) {
-            while (numSet.size() < 5) {
-                numSet.add(random.nextInt(count));
+        // 先从缓存中取数据，如果没有再自动生成
+        List<GameDTO> res =  redisUtil.lall("everyday", GameDTO.class);
+        if (res == null || res.size() == 0) {
+            List<Game> allgames = gameMapper.selectByStat(Game.STAT_OK);
+            int count = allgames.size();
+            Set<Integer> numSet = new HashSet<Integer>();
+            Random random = new Random();
+            List<Game> games = new ArrayList<Game>();
+            // 如果游戏数量大于5个就随机取5个，否则取全部的
+            if (count > 5) {
+                while (numSet.size() < 5) {
+                    numSet.add(random.nextInt(count));
+                }
+                Iterator i = numSet.iterator();
+                while (i.hasNext()) {
+                    games.add(allgames.get((Integer) i.next()));
+                }
+            } else {
+                games = allgames;
             }
-            Iterator i = numSet.iterator();
-            while (i.hasNext()) {
-                games.add(allgames.get((Integer) i.next()));
+            res = paresGameDTO(games);
+            GameDTO[] data = new GameDTO[res.size()];
+            int index = 0;
+            for (GameDTO g : res) {
+                data[index] = g;
+                index++;
             }
-        } else {
-            games = allgames;
+            // 将数据存入缓存中
+            redisUtil.setSchema(GameDTO.class);
+            int tmp = 1000 * 3600 * 24;
+            long zero = (System.currentTimeMillis() / tmp * tmp + tmp - TimeZone.getDefault().getRawOffset()) / 1000;    //明天零点零分零秒的unix时间戳
+            redisUtil.rpushObjectExAtTime("everyday",GameDTO.class, zero, data);
         }
-        res = paresGameDTO(games);
-        GameDTO[] data = new GameDTO[res.size()];
-        int index = 0;
-        for (GameDTO g : res) {
-            data[index] = g;
-            index++;
-        }
-        // 将数据存入缓存中
-        redisUtil.setSchema(GameDTO.class);
-        int tmp = 1000 * 3600 * 24;
-        long zero = (System.currentTimeMillis() / tmp * tmp + tmp - TimeZone.getDefault().getRawOffset()) / 1000;    //明天零点零分零秒的unix时间戳
-        redisUtil.rpushObjectExAtTime("everyday",GameDTO.class, zero, data);
         return Result.success(res);
     }
 

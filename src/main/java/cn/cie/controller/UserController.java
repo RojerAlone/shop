@@ -25,7 +25,7 @@ public class UserController extends AbstractController {
     @GetMapping(value = "validate")
     public String validate() {
         String referer = getReferer();
-        if (userHolder.getUser() != null) {
+        if (userHolder.getUser().getStat() == User.STAT_OK) {
             return "redirect:" + referer;
         }
         return "validate";
@@ -34,6 +34,9 @@ public class UserController extends AbstractController {
     @PostMapping(value = "validate")
     @ResponseBody
     public Result validate(String code) {
+        if (userHolder.getUser() == null) {
+            return Result.fail(MsgCenter.USER_NOT_LOGIN);
+        }
         if (userHolder.getUser().getStat() == User.STAT_OK) {    // 用户已经验证过了
             return Result.fail(MsgCenter.USER_VALIDATED);
         }

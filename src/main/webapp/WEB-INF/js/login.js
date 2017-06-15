@@ -5,6 +5,7 @@ function login() {
     $.post("/login", {username: name, password: password, remember: remember},
         function (result) {
             if (result.success) {
+                window.localStorage.user = result.data.user;
                 window.location.href = result.data.referer;
             }
             else {

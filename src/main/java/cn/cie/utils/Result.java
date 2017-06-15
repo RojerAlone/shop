@@ -8,6 +8,7 @@ public class Result<T> {
 
     private boolean success;
     private String msg;
+    private String user;
     private T data;
 
     private Result(boolean success, String msg) {

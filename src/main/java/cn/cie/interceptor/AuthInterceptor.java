@@ -51,10 +51,20 @@ public class AuthInterceptor implements HandlerInterceptor {
             if (userid == null) {
                 Token t = tokenMapper.selectByTokenAndStat(token, Token.STAT_OK);
                 // 如果token为空或者已经过期但是定时任务还没有来得及更改状态
-                if (t == null || t.getExpiredTime().before(new Date())) {
+                Date now = new Date();
+                if (t == null || t.getExpiredTime().before(now)) {
                     return true;
                 }
+                // token不为空，但是缓存中没有了，将token加入缓存中
                 uid = t.getUid();
+                long oneday = 86400000L;
+                long expired = t.getExpiredTime().getTime() - now.getTime();
+                // 如果token剩余有效期大于1天，加入缓存中的token有效期为1天
+                if (expired > oneday) {
+                    redisUtil.putEx(token, String.valueOf(uid), 60 * 60 * 24);
+                } else {    // 否则有效期为剩下的时间
+                    redisUtil.putEx(token, String.valueOf(uid), (int) (expired / 1000));
+                }
             } else {
                 uid = Integer.valueOf(userid);
             }

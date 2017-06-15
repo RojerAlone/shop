@@ -1,7 +1,6 @@
 package cn.cie.controller;
 
 import cn.cie.entity.User;
-import cn.cie.entity.dto.GameDTO;
 import cn.cie.services.GameService;
 import cn.cie.services.UserService;
 import cn.cie.utils.MsgCenter;
@@ -14,8 +13,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -61,15 +58,20 @@ public class CommonController extends AbstractController {
         }
         Result result = userService.login(username, password, remember, this.getRemoteIp(), this.getUserAgent());
         if (result.isSuccess()) {
-            String token = (String) result.getData();
-            Map<String, String> map = new HashMap<String, String>();
-            map.put("token", token);
-            map.put("referer", referer);
+            Map<String, String> data = (Map<String, String>) result.getData();
+            data.put("referer", referer);
+//            map.put("user", )
             // response中添加cookie，以后每次请求都会带上cookie
-            Cookie cookie = new Cookie("token", token);
+            Cookie cookie = new Cookie("token", data.get("token"));
             cookie.setPath("/");
+            if (remember) {
+                cookie.setMaxAge(60 * 60 * 24 * 7);
+            } else {
+                cookie.setMaxAge(60 * 60 * 24);
+            }
             response.addCookie(cookie);
-            return Result.success(map);
+            data.remove("token");
+            return Result.success(data);
         } else {
             return result;
         }
@@ -103,9 +105,11 @@ public class CommonController extends AbstractController {
     @ResponseBody
     public Result register(User user, HttpServletResponse response) {
         Result result = userService.register(user);
+        String pwd = user.getPassword();
         // 注册成功就自动登录，前台跳转到验证页面
         if (result.isSuccess()) {
-            return login(user.getUsername(), user.getPassword(), false, response);
+            login(user.getUsername(), pwd, false, response);
+            return Result.success();
         }
         return result;
     }
@@ -117,12 +121,7 @@ public class CommonController extends AbstractController {
     @PostMapping(value = "everyday")
     @ResponseBody
     public Result everyday() {
-        redisUtil.setSchema(GameDTO.class);
-        List<Object> games =  redisUtil.lall("everyday", GameDTO.class);
-        if (games == null || games.size() == 0) {
-            return gameService.getRandomGames();
-        }
-        return Result.success(games);
+        return gameService.getRandomGames();
     }
 
     /**

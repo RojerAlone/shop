@@ -18,6 +18,10 @@ public class MsgCenter {
 
     public static final String EMPTY_LOGIN = "用户名或密码不能为空";
 
+    public static final String EMPTY_NICKNAME = "昵称不能为空";
+
+    public static final String ERROR_NICINAME = "昵称长度不能大于10个字符且不能包含非法字符";
+
     public static final String USER_NOT_FOUND = "没有找到指定的用户";
 
     public static final String USER_USERNAME_EXISTS = "该用户名已被注册";
@@ -25,6 +29,8 @@ public class MsgCenter {
     public static final String USER_VALIDATED = "您的邮箱已经验证过了，无需再次验证";
 
     public static final String USER_HAVE_LOGIN = "您已经登陆，无需再次登陆";
+
+    public static final String USER_NOT_LOGIN = "请先登陆";
 
     public static final String EMAIL_REGISTERED = "该邮箱已被注册";
 
