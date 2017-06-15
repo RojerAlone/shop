@@ -37,23 +37,23 @@ public class KindServiceImpl implements KindService {
     @Autowired
     private TagmapperMapper tagmapperMapper;
     @Autowired
-    private RedisUtil redisUtil;
+    private RedisUtil<Kind> redisUtil;
 
     public Result<Kind> getAll() {
         redisUtil.setSchema(Kind.class);
-        List<Object> kinds = redisUtil.lall("kinds");
+        List<Kind> kinds = redisUtil.lall("kinds", Kind.class);
         // 如果缓存中没有，从数据库中查询，并且添加到缓存中
         if (kinds == null || kinds.size() == 0) {
             List<Kind> data = kindMapper.selectAll();
-//            Array kindlist = data.toArray();
-            redisUtil.rpushObject("kinds", data.toArray());
+            Kind[] array = new Kind[data.size()];
+            int index = 0;
+            for (Kind k : data) {
+                array[index] = k;
+                index++;
+            }
+            redisUtil.rpushObject("kinds", Kind.class, array);
             return Result.success(data);
         }
-//        if (kinds == null) {
-//            redisUtil.putObject("kinds", kinds);
-//        }
-        // redis底层为栈，因此要翻转顺序保持和插入的顺序一致
-//        Collections.reverse(kinds);
         return Result.success(kinds);
     }
 

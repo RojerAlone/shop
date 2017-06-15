@@ -80,9 +80,9 @@ public class RedisUtil<T> implements InitializingBean {
      * @return
      */
     public String putObject(String key, T value) {
-        if (schema == null) {
+//        if (schema == null) {
             this.setSchema(value.getClass());
-        }
+//        }
         Jedis jedis = null;
         try {
             jedis = jedisPool.getResource();
@@ -101,9 +101,9 @@ public class RedisUtil<T> implements InitializingBean {
      * @return
      */
     public String putObjectEx(String key, T value, int timeout) {
-        if (schema == null) {
+//        if (schema == null) {
             this.setSchema(value.getClass());
-        }
+//        }
         Jedis jedis = null;
         try {
             jedis = jedisPool.getResource();
@@ -152,9 +152,9 @@ public class RedisUtil<T> implements InitializingBean {
      * @return
      */
     public long lpushObject(String key, T... values) {
-        if (schema == null) {
+//        if (schema == null) {
             this.setSchema(values.getClass());
-        }
+//        }
         Jedis jedis = null;
         try {
             jedis = jedisPool.getResource();
@@ -176,10 +176,10 @@ public class RedisUtil<T> implements InitializingBean {
      * @param values
      * @return
      */
-    public long rpushObject(String key, T... values) {
-        if (schema == null) {
-            this.setSchema(values.getClass());
-        }
+    public long rpushObject(String key, Class clazz, T... values) {
+//        if (schema == null) {
+            this.setSchema(clazz);
+//        }
         Jedis jedis = null;
         try {
             jedis = jedisPool.getResource();
@@ -202,10 +202,10 @@ public class RedisUtil<T> implements InitializingBean {
      * @param values
      * @return
      */
-    public long rpushObjectExAtTime(String key, long time, T... values) {
-        if (schema == null) {
-            this.setSchema(values.getClass());
-        }
+    public long rpushObjectExAtTime(String key, Class clazz, long time, T... values) {
+//        if (schema == null) {
+            this.setSchema(clazz);
+//        }
         Jedis jedis = null;
         try {
             jedis = jedisPool.getResource();
@@ -224,17 +224,18 @@ public class RedisUtil<T> implements InitializingBean {
     }
 
     /**
-     * 获取列表中所有数据
+     * 获取列表中所有数据,ruguo
      * @param key
      * @return
      */
-    public List<T> lall(String key) {
+    public List<T> lall(String key, Class clazz) {
         Jedis jedis = null;
         try {
             jedis = jedisPool.getResource();
             // 0表示第一个元素，-1表示最后一个元素
             List<byte[]> bytes = jedis.lrange(key.getBytes(), 0, -1);
             List<T> res = new ArrayList<T>();
+            this.setSchema(clazz);
             for (byte[] b : bytes) {
                 res.add(getBytes(b));
             }

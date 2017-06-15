@@ -165,28 +165,6 @@ public class UserServiceImpl implements UserService {
         return 1 == userMapper.update(user);
     }
 
-    public Result restrict(Integer uid) {
-        User user = new User();
-        user.setId(uid);
-        user.setStat(User.STAT_RESTRICT);
-        if (1 == userMapper.update(user)) {
-            return Result.success();
-        } else {
-            return Result.fail("");
-        }
-    }
-
-    public Result relieve(Integer uid) {
-        User user = new User();
-        user.setId(uid);
-        user.setStat(User.STAT_OK);
-        if (1 == userMapper.update(user)) {
-            return Result.success();
-        } else {
-            return Result.fail("");
-        }
-    }
-
     public void delValidatecode() {
         List<Validatecode> codes = codeMapper.selectAll();
         Date date = new Date();

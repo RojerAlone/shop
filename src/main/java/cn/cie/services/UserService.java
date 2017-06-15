@@ -56,20 +56,6 @@ public interface UserService {
     boolean updateUserInfo(User user);
 
     /**
-     * 限制账户操作
-     * @param uid
-     * @return
-     */
-    Result restrict(Integer uid);
-
-    /**
-     * 解除账户限制
-     * @param uid
-     * @return
-     */
-    Result relieve(Integer uid);
-
-    /**
      * 删除已经过期了的验证码，验证码有效期为10分钟
      */
     void delValidatecode();

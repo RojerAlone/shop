@@ -33,7 +33,7 @@ public class GameServiceImpl implements GameService{
     @Autowired
     private ImgMapper imgMapper;
     @Autowired
-    private RedisUtil redisUtil;
+    private RedisUtil<GameDTO> redisUtil;
 
     public Result<GameDTO> getById(Integer id) {
         Game game = gameMapper.selectById(id);
@@ -67,11 +67,17 @@ public class GameServiceImpl implements GameService{
             games = allgames;
         }
         res = paresGameDTO(games);
+        GameDTO[] data = new GameDTO[res.size()];
+        int index = 0;
+        for (GameDTO g : res) {
+            data[index] = g;
+            index++;
+        }
         // 将数据存入缓存中
         redisUtil.setSchema(GameDTO.class);
         int tmp = 1000 * 3600 * 24;
         long zero = (System.currentTimeMillis() / tmp * tmp + tmp - TimeZone.getDefault().getRawOffset()) / 1000;    //明天零点零分零秒的unix时间戳
-        redisUtil.rpushObjectExAtTime("everyday", zero, res.toArray());
+        redisUtil.rpushObjectExAtTime("everyday",GameDTO.class, zero, data);
         return Result.success(res);
     }
 

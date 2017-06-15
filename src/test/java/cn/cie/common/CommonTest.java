@@ -1,6 +1,8 @@
 package cn.cie.common;
 
 import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.sql.Timestamp;
 import java.util.*;
@@ -9,6 +11,8 @@ import java.util.*;
  * Created by RojerAlone on 2017/6/10.
  */
 public class CommonTest {
+
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Test
     public void createSql() {
@@ -50,9 +54,8 @@ public class CommonTest {
     public void zeroTime() {
         int tmp = 1000 * 3600 * 24;
         long zero = System.currentTimeMillis() / tmp * tmp + tmp - TimeZone.getDefault().getRawOffset();    //明天零点零分零秒的毫秒数
-        System.out.println(System.currentTimeMillis() / 1000);
         Date zeroTime = new Date(zero);
-        System.out.println(new Timestamp(zero));
-        System.out.println(new Date().before(zeroTime));
+        logger.info(String.valueOf(new Timestamp(zero)));
+        logger.info(String.valueOf(new Date().before(zeroTime)));
     }
 }

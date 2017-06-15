@@ -68,7 +68,7 @@ public class RedisUtilTest {
     @Test
     public void lall() throws Exception {
         redis.setSchema(Kind.class);
-        logger.info("kinds={}" + redis.lall("kinds"));
+//        logger.info("kinds={}" + redis.lall("kinds"));
     }
 
 }

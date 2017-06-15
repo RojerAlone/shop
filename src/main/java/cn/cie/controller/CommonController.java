@@ -1,6 +1,7 @@
 package cn.cie.controller;
 
 import cn.cie.entity.User;
+import cn.cie.entity.dto.GameDTO;
 import cn.cie.services.GameService;
 import cn.cie.services.UserService;
 import cn.cie.utils.MsgCenter;
@@ -113,10 +114,11 @@ public class CommonController extends AbstractController {
      * 获取每日推荐，随机选取5个游戏，每日生成一次
      * @return
      */
-    @RequestMapping(value = "everyday")
+    @PostMapping(value = "everyday")
     @ResponseBody
     public Result everyday() {
-        List<Object> games =  redisUtil.lall("everyday");
+        redisUtil.setSchema(GameDTO.class);
+        List<Object> games =  redisUtil.lall("everyday", GameDTO.class);
         if (games == null || games.size() == 0) {
             return gameService.getRandomGames();
         }

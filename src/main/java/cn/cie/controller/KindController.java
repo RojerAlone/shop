@@ -19,14 +19,14 @@ public class KindController extends AbstractController {
     @Autowired
     private KindService kindService;
 
-    @GetMapping(value = "all")
+    @PostMapping(value = "all")
     @ResponseBody
     public Result allkinds(HttpServletResponse response) {
         Result result = kindService.getAll();
         return result;
     }
 
-    @GetMapping(value = "{kind}/games")
+    @PostMapping(value = "{kind}/games")
     @ResponseBody
     public Result getGamesByKind(@PathVariable(value = "kind") Integer kind, HttpServletResponse response) {
         return kindService.getGamesByKind(kind);

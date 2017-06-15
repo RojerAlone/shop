@@ -65,18 +65,6 @@ public class UserController extends AbstractController {
         }
     }
 
-    @PostMapping(value = "restrict")
-    @ResponseBody
-    public Result restrict(Integer uid) {
-        return userService.restrict(uid);
-    }
-
-    @PostMapping(value = "relieve")
-    @ResponseBody
-    public Result relieve(Integer uid) {
-        return userService.relieve(uid);
-    }
-
     /**
      * 检查用户是否登陆，如果登陆就返回应该跳转到的页面，否则执行接下来的逻辑
      * 每次登陆之前都从request的header中获取跳转之前的链接referer
