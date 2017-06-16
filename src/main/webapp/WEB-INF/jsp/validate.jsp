@@ -7,7 +7,6 @@
     <link href="/css/base.css" rel="stylesheet">
     <link href="/css/login.css" rel="stylesheet">
     <link href="/css/regist.css" rel="stylesheet">
-    <script src="/js/regist.js" type="text/javascript" charset="utf-8"></script>
     <title>用户验证</title>
 </head>
 <body>
@@ -196,10 +195,10 @@
                 <div class="col-xs-offset-1 col-xs-5" id="regist_2">
                     <div class="row zczt">
                         输入您的验证码：<br/>
-                        <input class="inputcolor" type="text" id="code"><input type="button" class="btnsz"
-                                                                               value="重新发送邮件"
-                                                                               style="background-color:#417a9b;"
-                                                                               onclick="time(this)"></div>
+                        <input class="inputcolor" type="text" id="code">
+                        <input id="send" type="button" class="btnsz" value="重新获取验证码"
+                               style="background-color:#417a9b;" onclick="sendMail()">
+                    </div>
                     <div class="form-group">
                         <div class=" col-sm-10">
                             <button type="submit" class="btn btn-default" style="background-color:#417a9b;"
@@ -250,5 +249,6 @@
 <%--jquery要在bootstrap之前引入--%>
 <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
 <script src="https://cdn.bootcss.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js"></script>
+<script src="/js/regist.js" type="text/javascript" charset="utf-8"></script>
 </body>
 </html>

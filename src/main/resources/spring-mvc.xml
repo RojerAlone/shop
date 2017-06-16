@@ -13,14 +13,14 @@
     <mvc:default-servlet-handler />
     <mvc:interceptors>
         <!--根据token获取用户信息-->
-        <mvc:interceptor>
-            <mvc:mapping path="/*"/>
-            <bean class="cn.cie.interceptor.AuthInterceptor" />
-        </mvc:interceptor>
+        <bean class="cn.cie.interceptor.AuthInterceptor" />
+        <!--<mvc:interceptor>-->
+            <!--<mvc:mapping path="/*"/>-->
+        <!--</mvc:interceptor>-->
         <!--登录拦截-->
         <mvc:interceptor>
-            <mvc:mapping path="/order/*"/>
             <mvc:mapping path="/user/*" />
+            <mvc:mapping path="/order/*"/>
             <bean class="cn.cie.interceptor.LoginInterceptor" />
         </mvc:interceptor>
     </mvc:interceptors>

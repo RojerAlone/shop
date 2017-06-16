@@ -20,7 +20,7 @@ public interface UserService {
      * @param uid
      * @return
      */
-    Result sendMail(Integer uid);
+    Result sendMail(User user);
 
     /**
      * 邮箱验证

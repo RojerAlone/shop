@@ -242,7 +242,7 @@
                             获取自动游戏更新以及更多！
                         </li>
                     </ul>
-                    <img src="/images/login.png"/>
+                    <img src="/img/login.png"/>
                 </div>
             </div>
         </div>

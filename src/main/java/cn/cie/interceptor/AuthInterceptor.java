@@ -34,6 +34,7 @@ public class AuthInterceptor implements HandlerInterceptor {
     private UserHolder userHolder;
 
     public boolean preHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o) throws Exception {
+        System.out.println("auth拦截器--------------------------prehandle----------------------------");
         String token = null;
         // 从请求中获取token
         if (httpServletRequest.getCookies() != null) {
@@ -70,16 +71,28 @@ public class AuthInterceptor implements HandlerInterceptor {
             }
             // token有效，将当前用户暂时存放起来，之后在所有的地方都可以通过依赖注入的UserHolder获取当前用户
             User user = userMapper.selectById(uid);
+            if (user == null) {
+                return true;
+            }
             userHolder.setUser(user);
+            // 如果用户登陆成功但是没有验证邮箱，跳转到邮箱验证页面
+            if (user.getStat().equals(User.STAT_NOT_VALIDATE)) {
+                httpServletResponse.sendRedirect("/user/validate");
+                return false;
+            } else if (user.getStat().equals(User.STAT_DEL)) {      // 用户被删除
+                userHolder.remove();
+            }
         }
         return true;
     }
 
     public void postHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o, ModelAndView modelAndView) throws Exception {
-
+        System.out.println("auth拦截器--------------------------post----------------------------");
     }
 
     public void afterCompletion(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o, Exception e) throws Exception {
+        System.out.println("auth拦截器--------------------------after----------------------------");
+
         userHolder.remove();
     }
 }

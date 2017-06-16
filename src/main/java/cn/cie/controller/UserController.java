@@ -25,7 +25,7 @@ public class UserController extends AbstractController {
     @GetMapping(value = "validate")
     public String validate() {
         String referer = getReferer();
-        if (userHolder.getUser().getStat() == User.STAT_OK) {
+        if (userHolder.getUser().getStat().equals(User.STAT_OK)) {
             return "redirect:" + referer;
         }
         return "validate";
@@ -37,7 +37,7 @@ public class UserController extends AbstractController {
         if (userHolder.getUser() == null) {
             return Result.fail(MsgCenter.USER_NOT_LOGIN);
         }
-        if (userHolder.getUser().getStat() == User.STAT_OK) {    // 用户已经验证过了
+        if (userHolder.getUser().getStat().equals(User.STAT_OK)) {    // 用户已经验证过了
             return Result.fail(MsgCenter.USER_VALIDATED);
         }
         Result result = userService.validate(userHolder.getUser().getId(), code);
@@ -50,7 +50,10 @@ public class UserController extends AbstractController {
     @PostMapping(value = "sendMail")
     @ResponseBody
     public Result sendMail() {
-        return userService.sendMail(userHolder.getUser().getId());
+        if (userHolder.getUser() == null) {
+            return Result.fail(MsgCenter.USER_NOT_LOGIN);
+        }
+        return userService.sendMail(userHolder.getUser());
     }
 
     @GetMapping(value = "update")

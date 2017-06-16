@@ -39,8 +39,8 @@ public class CommonController extends AbstractController {
     @GetMapping(value = "login")
     public String login() {
         String referer = getReferer();
-        // 如果用户已经登陆，那么跳转到之前的页面
-        if (userHolder.getUser() != null) {
+        // 如果用户已经登陆并且状态正常，那么跳转到之前的页面
+        if (userHolder.getUser() != null && userHolder.getUser().getStat().equals(User.STAT_OK)) {
             return "redirect:" + referer;
         }
         return "login";
@@ -53,7 +53,7 @@ public class CommonController extends AbstractController {
                         HttpServletResponse response) {
         String referer = getReferer();
         // 如果用户已经登陆，那么跳转到之前的页面
-        if (userHolder.getUser() != null) {
+        if (userHolder.getUser() != null && userHolder.getUser().getStat().equals(User.STAT_OK)) {
             return Result.fail(MsgCenter.OK, referer);
         }
         Result result = userService.login(username, password, remember, this.getRemoteIp(), this.getUserAgent());

@@ -19,7 +19,7 @@
     from `order`
     where id = #{id,jdbcType=INTEGER}
   </select>
-  <select id="selectByUidAndStat" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+  <select id="selectByUidAndStat" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />
     from `order`

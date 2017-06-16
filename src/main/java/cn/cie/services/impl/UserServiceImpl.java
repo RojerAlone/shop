@@ -76,17 +76,18 @@ public class UserServiceImpl implements UserService {
     }
 
     @Transactional
-    public Result sendMail(Integer uid) {
-        User user = userMapper.selectById(uid);
-        if (user == null) {     // 找不到用户
-            return Result.fail(MsgCenter.USER_NOT_FOUND);
-        } else if (user.getStat() == User.STAT_OK) {    // 用户已经验证过了
+    public Result sendMail(User user) {
+//        User user = userMapper.selectById(uid);
+//        if (user == null) {     // 找不到用户
+//            return Result.fail(MsgCenter.USER_NOT_FOUND);
+//        } else
+        if (user.getStat().equals(User.STAT_OK)) {    // 用户已经验证过了
             return Result.fail(MsgCenter.USER_VALIDATED);
         }
         Validatecode code = new Validatecode();
         String uuid = UUID.randomUUID().toString();
         // 将数据存入redis中，固定时间后过期
-        redisUtil.putEx("validatecode_" + uid, uuid, Validatecode.TIMEOUT);
+        redisUtil.putEx("validatecode_" + user.getId(), uuid, Validatecode.TIMEOUT);
 //        code.setUid(uid);
 //        code.setCode(uuid);
 //        codeMapper.insert(code);    // 数据库中存入验证码
@@ -132,16 +133,19 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public Result login(String username, String password, boolean remember, String ip, String device) {
         User user = userMapper.selectByName(username);
-        // 用户名不存在或者密码错误
-        if (user == null || !user.getPassword().equals(PasswordUtil.pwd2Md5(password))) {
+        // 用户名不存在或者密码错误或者用户已经被删除
+        if (user == null || !user.getPassword().equals(PasswordUtil.pwd2Md5(password))
+                || user.getStat().equals(User.STAT_DEL)) {
             return Result.fail(MsgCenter.ERROR_LOGIN);
+        } else if (user.getStat().equals(User.STAT_RESTRICT)) {
+            return Result.fail(MsgCenter.USER_RESTRICT);
         } else {
             String uuid = UUID.randomUUID().toString().replaceAll("-", "");
-                Token token = new Token();
-                token.setUid(user.getId());
-                token.setToken(uuid);
-                token.setIp(ip);
-                token.setDevice(device);
+            Token token = new Token();
+            token.setUid(user.getId());
+            token.setToken(uuid);
+            token.setIp(ip);
+            token.setDevice(device);
             // 如果保持登陆，过期时间就为7天，否则为1天
             if (remember) {
                 token.setExpiredTime(new Date(1000 * 60 * 60 * 24 * 7 + System.currentTimeMillis()));

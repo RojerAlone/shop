@@ -24,7 +24,7 @@ public class Scheduler {
         userService.delValidatecode();
     }
 
-    @Scheduled(fixedRate = 1000 * 60 * 60)
+    @Scheduled(fixedRate = 1000 * 60 * 3)
     public void delNotValidateUser() {
         userService.delNotValidateUser();
     }
