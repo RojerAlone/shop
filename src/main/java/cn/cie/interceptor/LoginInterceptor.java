@@ -20,7 +20,7 @@ public class LoginInterceptor implements HandlerInterceptor {
     private UserHolder userHolder;
 
     public boolean preHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o) throws Exception {
-        System.out.println("login拦截  --------------------prehandle-------------------------");
+//        System.out.println("login拦截  --------------------prehandle-------------------------");
         if (userHolder.getUser() == null) {
             httpServletResponse.sendRedirect("/login");
             return false;
@@ -29,10 +29,10 @@ public class LoginInterceptor implements HandlerInterceptor {
     }
 
     public void postHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o, ModelAndView modelAndView) throws Exception {
-        System.out.println("login拦截  --------------------posthandle-------------------------");
+//        System.out.println("login拦截  --------------------posthandle-------------------------");
     }
 
     public void afterCompletion(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o, Exception e) throws Exception {
-        System.out.println("login拦截  --------------------after-------------------------");
+//        System.out.println("login拦截  --------------------after-------------------------");
     }
 }

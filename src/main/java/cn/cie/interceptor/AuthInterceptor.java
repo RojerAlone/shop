@@ -7,6 +7,7 @@ import cn.cie.mapper.UserMapper;
 import cn.cie.utils.RedisUtil;
 import cn.cie.utils.UserHolder;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
@@ -34,7 +35,12 @@ public class AuthInterceptor implements HandlerInterceptor {
     private UserHolder userHolder;
 
     public boolean preHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o) throws Exception {
-        System.out.println("auth拦截器--------------------------prehandle----------------------------");
+        // 如果请求静态资源直接pass
+        if (httpServletRequest.getRequestURI().matches("^/img/[\\S]+\\.(png|jpg)$") || httpServletRequest.getRequestURI().matches("^/css/[\\S]+\\.css$")
+                || httpServletRequest.getRequestURI().matches("^/js/[\\S]+\\.js$")) {
+            return true;
+        }
+//        System.out.println("auth拦截器--------------------------prehandle----------------------------");
         String token = null;
         // 从请求中获取token
         if (httpServletRequest.getCookies() != null) {
@@ -75,8 +81,12 @@ public class AuthInterceptor implements HandlerInterceptor {
                 return true;
             }
             userHolder.setUser(user);
-            // 如果用户登陆成功但是没有验证邮箱，跳转到邮箱验证页面
-            if (user.getStat().equals(User.STAT_NOT_VALIDATE)) {
+            // 跳过post方法
+            if (httpServletRequest.getMethod().equals("POST")) {
+                return true;
+            }
+            // 如果用户登陆成功但是没有验证邮箱，跳转到邮箱验证页面(防止请求的url就是验证页时会循环跳转)
+            if (user.getStat().equals(User.STAT_NOT_VALIDATE) && !httpServletRequest.getRequestURI().equals("/user/validate")) {
                 httpServletResponse.sendRedirect("/user/validate");
                 return false;
             } else if (user.getStat().equals(User.STAT_DEL)) {      // 用户被删除
@@ -87,12 +97,11 @@ public class AuthInterceptor implements HandlerInterceptor {
     }
 
     public void postHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o, ModelAndView modelAndView) throws Exception {
-        System.out.println("auth拦截器--------------------------post----------------------------");
+//        System.out.println("auth拦截器--------------------------post----------------------------");
     }
 
     public void afterCompletion(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o, Exception e) throws Exception {
-        System.out.println("auth拦截器--------------------------after----------------------------");
-
+//        System.out.println("auth拦截器--------------------------after----------------------------");
         userHolder.remove();
     }
 }

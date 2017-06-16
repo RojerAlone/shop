@@ -68,6 +68,10 @@ public class KindServiceImpl implements KindService {
         return Result.success(gameDTOS);
     }
 
+    public boolean exists(int kind) {
+        return gameMapper.selectById(kind) != null;
+    }
+
     private List<GameDTO> paresGameDTO(List<Game> games) {
         List<GameDTO> gameDTOS = new ArrayList<GameDTO>();
         for (Game game : games) {

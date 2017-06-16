@@ -1,5 +1,6 @@
 package cn.cie.controller;
 
+import cn.cie.exception.NotFoundException;
 import cn.cie.services.KindService;
 import cn.cie.utils.Result;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,9 +27,17 @@ public class KindController extends AbstractController {
         return result;
     }
 
+    @GetMapping(value = "{kind}/games")
+    public String getGames(@PathVariable(value = "kind") Integer kind, HttpServletResponse response) {
+        if (kindService.exists(kind) == false) {
+            throw new NotFoundException();
+        }
+        return "fenlei";
+    }
+
     @PostMapping(value = "{kind}/games")
     @ResponseBody
-    public Result getGamesByKind(@PathVariable(value = "kind") Integer kind, HttpServletResponse response) {
+    public Result getGamesByKind(@PathVariable(value = "kind") Integer kind) {
         return kindService.getGamesByKind(kind);
     }
 

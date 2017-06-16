@@ -1,6 +1,6 @@
 var wait;
 $(function () {
-    wait = 60;
+    wait = 0;
     time();
 })
 function schedule() {

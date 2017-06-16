@@ -24,4 +24,11 @@ public interface KindService {
      */
     Result<List<GameDTO>> getGamesByKind(int kind);
 
+    /**
+     * 检查种类是否存在
+     * @param kind
+     * @return
+     */
+    boolean exists(int kind);
+
 }

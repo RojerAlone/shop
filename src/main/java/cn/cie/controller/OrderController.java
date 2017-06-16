@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import java.util.Arrays;
 
 /**
  * Created by RojerAlone on 2017/6/12.
@@ -29,8 +29,8 @@ public class OrderController extends AbstractController{
 
     @PostMapping(value = "order")
     @ResponseBody
-    public Result order(List<Integer> games) {
-        return orderService.addOrders(userHolder.getUser().getId(), games);
+    public Result order(Integer[] games) {
+        return orderService.addOrders(userHolder.getUser().getId(), Arrays.asList(games));
     }
 
     @PostMapping(value = "{orderid}/cancel")

@@ -15,7 +15,11 @@
         <!--根据token获取用户信息-->
         <bean class="cn.cie.interceptor.AuthInterceptor" />
         <!--<mvc:interceptor>-->
-            <!--<mvc:mapping path="/*"/>-->
+            <!--<mvc:mapping path="/*" />-->
+            <!--<mvc:exclude-mapping path="/img/**" />-->
+            <!--<mvc:exclude-mapping path="/css/**" />-->
+            <!--<mvc:exclude-mapping path="/js/**" />-->
+            <!--<bean class="cn.cie.interceptor.AuthInterceptor" />-->
         <!--</mvc:interceptor>-->
         <!--登录拦截-->
         <mvc:interceptor>

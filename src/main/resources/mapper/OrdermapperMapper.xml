@@ -6,10 +6,10 @@
     <result column="item" jdbcType="INTEGER" property="item" />
   </resultMap>
   <insert id="insert" parameterType="cn.cie.entity.Ordermapper">
-    insert into ordermapper (order, item)
+    insert into ordermapper (`order`, item)
     values (#{order,jdbcType=INTEGER}, #{item,jdbcType=INTEGER})
   </insert>
   <select id="selectByOrder" parameterType="java.lang.Integer" resultType="java.lang.Integer">
-    select item from order where order = #{order, jdbcType=INTEGER}
+    select item from `ordermapper` where `order` = #{order, jdbcType=INTEGER}
   </select>
 </mapper>
