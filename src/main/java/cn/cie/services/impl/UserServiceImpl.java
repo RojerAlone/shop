@@ -132,6 +132,9 @@ public class UserServiceImpl implements UserService {
 
     @Transactional
     public Result login(String username, String password, boolean remember, String ip, String device) {
+        if (username == null || password == null) {
+            return Result.fail(MsgCenter.EMPTY_LOGIN);
+        }
         User user = userMapper.selectByName(username);
         // 用户名不存在或者密码错误或者用户已经被删除
         if (user == null || !user.getPassword().equals(PasswordUtil.pwd2Md5(password))

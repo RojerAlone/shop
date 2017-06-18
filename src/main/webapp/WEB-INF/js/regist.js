@@ -3,11 +3,13 @@ $(function () {
     wait = 0;
     time();
 })
+
 function schedule() {
     setTimeout(function () {
         time()
     }, 1000)
 }
+
 var uid;
 function regist() {
     var yonghuming = document.getElementById("yonghuming").value;
@@ -27,7 +29,6 @@ function regist() {
                 window.location.href = '/user/validate';
             }
         });
-
 };
 
 function time() {
@@ -53,7 +54,7 @@ function sendMail() {
     });
 }
 
-function zhuce() {
+function validate() {
     var code = document.getElementById("code").value;
     $.post("/user/validate", {uid: uid, code: code}, function (result) {
         if (result.success) {
