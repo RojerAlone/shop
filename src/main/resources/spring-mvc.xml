@@ -25,6 +25,7 @@
         <mvc:interceptor>
             <mvc:mapping path="/user/*" />
             <mvc:mapping path="/order/*"/>
+            <!--<mvc:mapping path="/shopcart"/>-->
             <bean class="cn.cie.interceptor.LoginInterceptor" />
         </mvc:interceptor>
     </mvc:interceptors>

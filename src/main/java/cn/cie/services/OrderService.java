@@ -41,6 +41,13 @@ public interface OrderService {
     Result getOrders(int uid);
 
     /**
+     * 判断订单是否存在
+     * @param orderid
+     * @return
+     */
+    boolean exists(int orderid);
+
+    /**
      * 获取待支付订单
      * @param uid
      * @return

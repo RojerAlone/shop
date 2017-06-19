@@ -112,6 +112,11 @@ public class OrderServiceImpl implements OrderService {
         return null;
     }
 
+    public boolean exists(int orderid) {
+        return orderMapper.selectById(orderid) != null;
+    }
+
+
     public Result getNotPayOrders(int uid) {
         return Result.success(parseOrderByStat(uid, Order.STAT_NOT_PAY));
     }
