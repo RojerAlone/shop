@@ -31,6 +31,12 @@
       </foreach>
     </where>
   </select>
+  <select id="selectByName" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from kind
+    where `name` = #{name,jdbcType=VARCHAR}
+  </select>
 
   <delete id="delete" parameterType="java.lang.Integer">
     delete from kind

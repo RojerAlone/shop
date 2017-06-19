@@ -52,4 +52,6 @@ public class MsgCenter {
 
     public static final String ERROR_PASSWORD_FORMAT = "密码应不少于6位且不大于16位";
 
+    public static final String NAME_EXISTS = "该名称已存在";
+
 }

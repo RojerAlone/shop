@@ -17,6 +17,12 @@ public class GameController extends AbstractController {
     @Autowired
     private GameService gameService;
 
+    @GetMapping(value = "{id}")
+    public String gameInfo(@PathVariable(value = "id") Integer id) {
+        this.getModel().addAttribute("id", id);
+        return "gameInfo";
+    }
+
     @PostMapping(value = "{id}")
     @ResponseBody
     public Result selectById(@PathVariable(value = "id") Integer id) {

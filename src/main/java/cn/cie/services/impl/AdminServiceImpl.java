@@ -1,16 +1,20 @@
 package cn.cie.services.impl;
 
 import cn.cie.entity.Game;
+import cn.cie.entity.Kind;
 import cn.cie.entity.User;
 import cn.cie.mapper.GameMapper;
 import cn.cie.mapper.KindMapper;
 import cn.cie.mapper.KindmapperMapper;
 import cn.cie.mapper.UserMapper;
 import cn.cie.services.AdminService;
+import cn.cie.utils.MsgCenter;
 import cn.cie.utils.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -51,20 +55,54 @@ public class AdminServiceImpl implements AdminService {
         }
     }
 
-    public Result addGame(Game game, List<Integer> kinds) {
-        return null;
+    @Transactional
+    public Result addGame(Game game, Integer[] kind) {
+        return Result.success();
     }
 
-    public Result upGame(Integer id) {
-        return null;
+    public Result upGame(Integer id, Date date) {
+        Game game = gameMapper.selectById(id);
+        // 如果没有这个游戏或者游戏的状态已经为已上架就返回参数错误
+        if (game == null || game.getStat().equals(Game.STAT_OK)) {
+            return Result.fail(MsgCenter.ERROR_PARAMS);
+        }
+        game.setStat(Game.STAT_OK);
+        if (date == null) {
+            game.setUtime(new Date());
+        } else {
+            game.setUtime(date);
+        }
+        if (1 == gameMapper.update(game)) {
+            return Result.success();
+        }
+        return Result.fail(MsgCenter.ERROR);
     }
 
     public Result downGame(Integer id) {
-        return null;
+        Game game = gameMapper.selectById(id);
+        // 如果没有这个游戏或者游戏的状态已经为已下架就返回参数错误
+        if (game == null || game.getStat().equals(Game.STAT_OK)) {
+            return Result.fail(MsgCenter.ERROR_PARAMS);
+        }
+        game.setStat(Game.STAT_DEL);
+        if (1 == gameMapper.update(game)) {
+            return Result.success();
+        }
+        return Result.fail(MsgCenter.ERROR);
     }
 
     public Result addKind(String name) {
-        return null;
+        Kind kind = kindMapper.selectByName(name);
+        if (kind != null) {
+            return Result.fail(MsgCenter.NAME_EXISTS);
+        }
+        kind = new Kind();
+        kind.setName(name);
+        if (1 == kindMapper.insert(kind)) {
+            return Result.success();
+        } else {
+            return Result.fail(MsgCenter.ERROR);
+        }
     }
 
 }

@@ -3,7 +3,7 @@ package cn.cie.services;
 import cn.cie.entity.Game;
 import cn.cie.utils.Result;
 
-import java.util.List;
+import java.util.Date;
 
 /**
  * Created by RojerAlone on 2017/6/15.
@@ -28,17 +28,18 @@ public interface AdminService {
     /**
      * 添加游戏
      * @param game
-     * @param kinds
+     * @param kind
      * @return
      */
-    Result addGame(Game game, List<Integer> kinds);
+    Result addGame(Game game, Integer[] kind);
 
     /**
      * 将游戏上架
      * @param id
+     * @param date 上架时间
      * @return
      */
-    Result upGame(Integer id);
+    Result upGame(Integer id, Date date);
 
     /**
      * 下架游戏
