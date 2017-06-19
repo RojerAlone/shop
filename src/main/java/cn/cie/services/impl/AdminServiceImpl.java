@@ -57,6 +57,8 @@ public class AdminServiceImpl implements AdminService {
 
     @Transactional
     public Result addGame(Game game, Integer[] kind) {
+        gameMapper.insert(game);
+//        kindmapperMapper.
         return Result.success();
     }
 

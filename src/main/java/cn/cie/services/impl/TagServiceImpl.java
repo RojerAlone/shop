@@ -33,6 +33,14 @@ public class TagServiceImpl implements TagService {
     @Autowired
     private ImgMapper imgMapper;
 
+    public String getNameById(Integer id) {
+        Tag tag = tagMapper.selectById(id);
+        if (tag == null) {
+            return null;
+        }
+        return tag.getName();
+    }
+
     public Result<List<Tag>> getAll() {
         return Result.success(tagMapper.selectAll());
     }

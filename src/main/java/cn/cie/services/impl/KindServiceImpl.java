@@ -39,6 +39,14 @@ public class KindServiceImpl implements KindService {
     @Autowired
     private RedisUtil<Kind> redisUtil;
 
+    public String getNameById(Integer id) {
+        Kind kind = kindMapper.selectById(id);
+        if (kind == null) {
+            return null;
+        }
+        return kind.getName();
+    }
+
     public Result<Kind> getAll() {
         redisUtil.setSchema(Kind.class);
         List<Kind> kinds = redisUtil.lall("kinds", Kind.class);
@@ -66,10 +74,6 @@ public class KindServiceImpl implements KindService {
         List<Game> games = gameMapper.selectByIds(gameIds);
         List<GameDTO> gameDTOS = paresGameDTO(games);
         return Result.success(gameDTOS);
-    }
-
-    public boolean exists(int kind) {
-        return gameMapper.selectById(kind) != null;
     }
 
     private List<GameDTO> paresGameDTO(List<Game> games) {

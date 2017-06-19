@@ -1,6 +1,7 @@
 package cn.cie.controller;
 
 import cn.cie.entity.dto.GameDTO;
+import cn.cie.exception.NotFoundException;
 import cn.cie.services.TagService;
 import cn.cie.utils.Result;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +23,12 @@ public class TagController extends AbstractController{
 
     @GetMapping(value = "/{tag}/games")
     public String getGames(@PathVariable(value = "tag") Integer tag) {
+        String name = tagService.getNameById(tag);
+        if (name == null) {
+            throw new NotFoundException();
+        }
         this.getModel().addAttribute("id", tag);
+        this.getModel().addAttribute("name", name);
         return "taggames";
     }
 

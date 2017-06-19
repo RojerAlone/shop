@@ -28,11 +28,14 @@ public class KindController extends AbstractController {
     }
 
     @GetMapping(value = "{kind}/games")
-    public String getGames(@PathVariable(value = "kind") Integer kind, HttpServletResponse response) {
-        if (kindService.exists(kind) == false) {
+    public String getGames(@PathVariable(value = "kind") Integer kind) {
+        String name = kindService.getNameById(kind);
+        if (name == null) {
             throw new NotFoundException();
         }
-        return "fenlei";
+        this.getModel().addAttribute("id", kind);
+        this.getModel().addAttribute("name", name);
+        return "kinds";
     }
 
     @PostMapping(value = "{kind}/games")

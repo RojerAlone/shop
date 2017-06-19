@@ -12,6 +12,13 @@ import java.util.List;
 public interface TagService {
 
     /**
+     * 根据标签id获取标签名字，如果不存在返回null
+     * @param id
+     * @return
+     */
+    String getNameById(Integer id);
+
+    /**
      * 获取所有的标签
      * @return
      */

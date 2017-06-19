@@ -12,6 +12,13 @@ import java.util.List;
 public interface KindService {
 
     /**
+     * 根据种类id获取种类名字，如果不存在返回null
+     * @param id
+     * @return
+     */
+    String getNameById(Integer id);
+
+    /**
      * 获取所有的种类
      * @return
      */
@@ -23,12 +30,5 @@ public interface KindService {
      * @return
      */
     Result<List<GameDTO>> getGamesByKind(int kind);
-
-    /**
-     * 检查种类是否存在
-     * @param kind
-     * @return
-     */
-    boolean exists(int kind);
 
 }

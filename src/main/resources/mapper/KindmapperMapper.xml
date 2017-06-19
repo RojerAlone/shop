@@ -9,6 +9,13 @@
     insert into kindmapper (game, kind)
     values (#{game,jdbcType=INTEGER}, #{kind,jdbcType=INTEGER})
   </insert>
+  <insert id="insertBatch" parameterType="list">
+    insert into kindmapper (game, kind)
+    values
+    <foreach collection="kinds" item="kind" separator=",">
+      (#{game,jdbcType=INTEGER}, #{kind})
+    </foreach>
+  </insert>
 
   <select id="selectByKind" parameterType="java.lang.Integer" resultType="java.lang.Integer">
     select game from kindmapper where kind = #{kind,jdbcType=INTEGER}
