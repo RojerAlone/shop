@@ -1,5 +1,6 @@
 package cn.cie.controller;
 
+import cn.cie.exception.NotFoundException;
 import cn.cie.services.GameService;
 import cn.cie.utils.Result;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,9 @@ public class GameController extends AbstractController {
 
     @GetMapping(value = "{id}")
     public String gameInfo(@PathVariable(value = "id") Integer id) {
+        if (gameService.getById(id) == null) {
+            throw new NotFoundException();
+        }
         this.getModel().addAttribute("id", id);
         return "gameInfo";
     }

@@ -27,8 +27,8 @@ public interface AdminService {
 
     /**
      * 添加游戏
-     * @param game
-     * @param kind
+     * @param game 游戏实体，需要游戏名字、开发者、描述、配置、价格
+     * @param kind 游戏种类，数组类型
      * @return
      */
     Result addGame(Game game, Integer[] kind);

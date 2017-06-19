@@ -9,11 +9,13 @@ import cn.cie.mapper.KindmapperMapper;
 import cn.cie.mapper.UserMapper;
 import cn.cie.services.AdminService;
 import cn.cie.utils.MsgCenter;
+import cn.cie.utils.RedisUtil;
 import cn.cie.utils.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -31,6 +33,8 @@ public class AdminServiceImpl implements AdminService {
     private KindMapper kindMapper;
     @Autowired
     private KindmapperMapper kindmapperMapper;
+    @Autowired
+    private RedisUtil redisUtil;
 
 
     public Result restrict(Integer uid) {
@@ -58,7 +62,7 @@ public class AdminServiceImpl implements AdminService {
     @Transactional
     public Result addGame(Game game, Integer[] kind) {
         gameMapper.insert(game);
-//        kindmapperMapper.
+        kindmapperMapper.insertBatch(game.getId(), Arrays.asList(kind));
         return Result.success();
     }
 
@@ -93,6 +97,7 @@ public class AdminServiceImpl implements AdminService {
         return Result.fail(MsgCenter.ERROR);
     }
 
+    @Transactional
     public Result addKind(String name) {
         Kind kind = kindMapper.selectByName(name);
         if (kind != null) {
@@ -101,6 +106,7 @@ public class AdminServiceImpl implements AdminService {
         kind = new Kind();
         kind.setName(name);
         if (1 == kindMapper.insert(kind)) {
+            redisUtil.rpushObject("kinds", Kind.class, kind);   // 添加到缓存中
             return Result.success();
         } else {
             return Result.fail(MsgCenter.ERROR);
