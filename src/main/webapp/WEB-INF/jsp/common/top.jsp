@@ -39,9 +39,10 @@
                     <li><a href="/login">登录</a></li>
                     <li><a href="/register">注册</a></li>
                 </ul>
-                <ul class="nav navbar-nav navbar-right" id = "allogin">
-                    <li><a href="/personal"></a></li>
-                    <li><a href="/shopingcar">购物车</a></li>
+                <ul class="nav navbar-nav navbar-right yingcang" id = "allogin">
+                    <li><a href="/personal" id = "username"></a></li>
+                    <li><a href="/shoppingcart">购物车</a></li>
+                    <li><a onclick="outlogin()">退出登录</a></li>
                 </ul>
             </div>
         </div>

@@ -35,6 +35,33 @@ storage.removeItem("data_"+i);
 location.reload("true");
 }
 
+function orderadd() {
+    var storage = window.localStorage;
+    var gamesid=new Array();
+    var i = storage.getItem("i");
+    var j = 1;
+    var k = 0;
+    //var game = (storage.getItem(("data_"+j)));
+    //var game = JSON.parse(localStorage.getItem("data_" + j));
+    //alert(game.id);
+    for(j=1;j<=i;j++){
+        var game = JSON.parse(localStorage.getItem("data_" + j));
+        gamesid[k] = parseInt(game.id);
+        //alert(gamesid[k]);
+        k++;
+    }
+    //alert(gamesid);
+    $.post({url:"/order/order",
+        traditional: true,
+        data:{games:gamesid},
+        success:function(result){
+        if(result.success){
+            self.location='/order/' + result.data.id + '/payway';
+        }
+    }
+        }
+    )
+}
 
 
 

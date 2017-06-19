@@ -2,8 +2,8 @@
 <html>
 <head>
     <%@ include file="common/head.jsp" %>
-<link href="/css/shopingcar.css" rel="stylesheet">
-<script src="/js/shopingcar.js"></script>
+<link href="/css/shoppingcart.css" rel="stylesheet">
+<script src="/js/shoppingcart.js"></script>
 <title>购物车</title>
 </head>
 <body>
@@ -48,7 +48,7 @@
             <h2 style="color:#CFF" align="right">总价格：￥<span id="prices"></span></h2>
             
             <div align="right" style=" border-top-width:10px;padding:20px">
-            <button type="button" class="btn btn-default btn-lg active" style="background-color:#090">确定购买</button>
+            <button type="button" class="btn btn-default btn-lg active" style="background-color:#090" onclick="orderadd()">确定购买</button>
             </div>
 
            

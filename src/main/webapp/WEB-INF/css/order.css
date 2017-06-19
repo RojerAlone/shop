@@ -1,0 +1,12 @@
+@charset "utf-8";
+/* CSS Document */
+.container{
+	width:970px!important
+}
+
+body{
+	background-color:#183F59;
+}
+.mar{
+    margin-top:50px; 
+}

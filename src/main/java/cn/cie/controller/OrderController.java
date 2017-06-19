@@ -1,5 +1,6 @@
 package cn.cie.controller;
 
+import cn.cie.exception.NotFoundException;
 import cn.cie.services.OrderService;
 import cn.cie.utils.Result;
 import cn.cie.utils.UserHolder;
@@ -24,12 +25,12 @@ public class OrderController extends AbstractController{
 
     @GetMapping(value = "orders")
     public String orders() {
-        return "orders";
+        return "orderdetails";
     }
 
     @PostMapping(value = "order")
     @ResponseBody
-    public Result order(Integer[] games) {
+    public Result order(@RequestParam(value = "games") Integer[] games) {
         return orderService.addOrders(userHolder.getUser().getId(), Arrays.asList(games));
     }
 
@@ -37,6 +38,24 @@ public class OrderController extends AbstractController{
     @ResponseBody
     public Result cancelOrder(@PathVariable(value = "orderid") Integer orderid) {
         return orderService.cancelOrder(userHolder.getUser().getId(), orderid);
+    }
+
+    @GetMapping(value = "{orderid}/payway")
+    public String payway(@PathVariable(value = "orderid") Integer orderid) {
+        if (!orderService.exists(orderid)) {
+            throw new NotFoundException();
+        }
+        this.getModel().addAttribute("id", orderid);
+        return "order_1";
+    }
+
+    @GetMapping(value = "{orderid}/pay")
+    public String pay(@PathVariable(value = "orderid") Integer orderid) {
+        if (!orderService.exists(orderid)) {
+            throw new NotFoundException();
+        }
+        this.getModel().addAttribute("id", orderid);
+        return "order_2";
     }
 
     @PostMapping(value = "{orderid}/pay")

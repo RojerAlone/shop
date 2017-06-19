@@ -60,10 +60,9 @@ margin:0px;
 	padding-top:50px;
 	padding-left:150px;
 	padding-right:150px;
-	position:fixed;bottom:0px;left: 0px;
-	width: 102%;
-
-
+	/*position:fixed;*/
+	/*bottom:0px;left: 0px;*/
+	/*width: 102%;*/
 }
 ul li
 {

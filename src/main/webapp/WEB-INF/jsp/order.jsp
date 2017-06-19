@@ -3,8 +3,8 @@
 
 <head>
     <%@ include file="common/head.jsp" %>
-    <link href="/css/shopingcar.css" rel="stylesheet">
-    <script src="/js/shopingcar.js"></script>
+    <link href="/css/shoppingcart.css" rel="stylesheet">
+    <script src="/js/shopingcart.js"></script>
     <script src="/js/order.js"></script>
     <title>我的订单</title>
 </head>
@@ -55,14 +55,14 @@
             <div id="myTabContent" class="tab-content" ;>
               
               <div class="tab-pane fade" id="yet">
-                <div class="row rowpy"><a href="#"><img src="./img/static/zx_4.png"></a></div>
-                <div class="row rowpy"><a href="#"><img src="./img/static/zx_5.png"></a></div>
-                <div class="row rowpy"><a href="#"><img src="./img/static/zx_6.png"></a></div>
+                <div class="row rowpy"><a href="#"><img src="/img/static/zx_4.png"></a></div>
+                <div class="row rowpy"><a href="#"><img src="/img/static/zx_5.png"></a></div>
+                <div class="row rowpy"><a href="#"><img src="/img/static/zx_6.png"></a></div>
               </div>
               <div class="tab-pane fade" id="cancel">
-                <div class="row rowpy"><a href="#"><img src="./img/static/zx_7.png"></a></div>
-                <div class="row rowpy"><a href="#"><img src="./img/static/zx_8.png"></a></div>
-                <div class="row rowpy"><a href="#"><img src="./img/static/zx_3.png"></a></div>
+                <div class="row rowpy"><a href="#"><img src="/img/static/zx_7.png"></a></div>
+                <div class="row rowpy"><a href="#"><img src="/img/static/zx_8.png"></a></div>
+                <div class="row rowpy"><a href="#"><img src="/img/static/zx_3.png"></a></div>
               </div>
               
             </div>
@@ -73,7 +73,7 @@
                 <br>
                 <h3 style="color:#fff" align="left">交付</h3>
                 <div style="background-color:#000;padding:10px 40px 10px 100px;">
-                    <h4 style="color:#FFF"><a href="#"><img src="./img/static/logo.jpg" width="61" height="50"></a>&nbsp;&nbsp;&nbsp;&nbsp; 所有电子商品将会经有WEPLAY桌面应用程序递送给您</h4>
+                    <h4 style="color:#FFF"><a href="#"><img src="/img/static/logo.jpg" width="61" height="50"></a>&nbsp;&nbsp;&nbsp;&nbsp; 所有电子商品将会经有WEPLAY桌面应用程序递送给您</h4>
                 </div>
                 <br/>
                 <br/>
