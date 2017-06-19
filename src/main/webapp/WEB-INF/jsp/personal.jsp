@@ -24,7 +24,7 @@
         <div class="col-md-4 setmargin divcolor_1">
         <div class="row ziti">编辑</div>
         <div class="row ziti_1 setpadding setmargin"><a href="./personal.jsp">我的个人资料</a></div>
-        <div class="row ziti_1 setmargin"><a href="./shopingcar.jsp">我的购物车</a></div>
+        <div class="row ziti_1 setmargin"><a href="/order/orders">我的订单</a></div>
         </div>
     </div>
 

@@ -4,7 +4,8 @@
 <head>
     <%@ include file="common/head.jsp" %>
     <link href="/css/shoppingcart.css" rel="stylesheet">
-    <script src="/js/shopingcart.js"></script>
+    <link href="/css/order.css" rel="stylesheet">
+    <script src="/js/shoppingcart.js"></script>
     <script src="/js/order.js"></script>
     <title>我的订单</title>
 </head>
@@ -52,7 +53,7 @@
               <li role="presentation"><a href="#yet" data-toggle="tab">未支付</a></li>
               <li role="presentation"><a href="#cancel" data-toggle="tab">已取消</a></li>
             </ul>
-            <div id="myTabContent" class="tab-content" ;>
+            <div id="orderTab" class="tab-content" ;>
               
               <div class="tab-pane fade" id="yet">
                 <div class="row rowpy"><a href="#"><img src="/img/static/zx_4.png"></a></div>

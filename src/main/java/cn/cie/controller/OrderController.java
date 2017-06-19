@@ -25,7 +25,7 @@ public class OrderController extends AbstractController{
 
     @GetMapping(value = "orders")
     public String orders() {
-        return "orderdetails";
+        return "order";
     }
 
     @PostMapping(value = "order")

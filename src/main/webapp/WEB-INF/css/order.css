@@ -10,3 +10,10 @@ body{
 .mar{
     margin-top:50px; 
 }
+td{
+	color: white;
+}
+.td_1{
+	color: white;
+	width: 100px;
+}
