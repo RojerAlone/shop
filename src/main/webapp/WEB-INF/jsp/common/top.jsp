@@ -35,9 +35,13 @@
                         </ul>
                     </li>
                 </ul>
-                <ul class="nav navbar-nav navbar-right">
+                <ul class="nav navbar-nav navbar-right" id = "nologin">
                     <li><a href="/login">登录</a></li>
                     <li><a href="/register">注册</a></li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right" id = "allogin">
+                    <li><a href="/personal"></a></li>
+                    <li><a href="/shopingcar">购物车</a></li>
                 </ul>
             </div>
         </div>

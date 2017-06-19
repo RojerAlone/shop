@@ -2,12 +2,13 @@
 /* CSS Document */
 
 body{
-	background-color:#183F59;
+    background-color:#1B2839;
 }
+
+
 
 .headheight{
 	padding-top:20px;
-	padding-bottom:10px;
 }
 .headmid{
 	margin-left:500px;
@@ -49,9 +50,6 @@ margin:0px;
 	font-family: "Motiva Sans", Sans-serif;
 	border:0px;
 }
-.bs:hover{
-	color:#FFF;
-}
 .dibu{
 	height:120px;
 	background-color:#101822;
@@ -60,14 +58,22 @@ margin:0px;
 	padding-top:50px;
 	padding-left:150px;
 	padding-right:150px;
-	position:fixed;bottom:0px;left: 0px;
-	width: 102%;
-
-
 }
-ul li
-{
-list-style-type:none;
+
+.the0{
+    font-size: larger;
+	margin-left:200px;
+}
+
+tr{
+	font-size:22px;
+	border-bottom-style:solid;
+	border-bottom-width:20px;
+	height:60px;
+	border:20px;
+	border-bottom-color:#FFC;
+	
+
 }
 .yingcang{
 	display: none;

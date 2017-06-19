@@ -1,0 +1,38 @@
+body{
+    background-color:#1B2839;
+}
+.divcolor{
+background-image:url(../images/personalbackground_1.jpg);
+color: #FFF;
+}
+.divcolor_1{
+   background-color: #192533;
+}
+.ziti{
+    color:#8F98A0;
+}
+.ziti_1{
+    color: #FFF;
+}
+.setmargin{
+    margin-top: 20px;
+}
+
+.setmargin_1{
+    margin-left:10px; 
+    border: none;
+}
+
+.setmargin_2{
+    margin-top:50px; 
+}
+.setpadding{
+    background-color: #103651;
+    padding:5px,15px,5px,5px;
+}
+.setbtnpadding{
+    background-color: #103651; 
+    font-size: 16px;
+    border: none;
+    color: #FFF;
+}
