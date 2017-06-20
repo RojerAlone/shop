@@ -17,30 +17,13 @@
                     <li>
                         <a href="/">商城<span class="sr-only">(current)</span></a>
                     </li>
-                    <li>
-                        <a href="#">客服</a>
-                    </li>
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
-                                            aria-haspopup="true" aria-expanded="false">游戏
-                            <span class="caret"></span></a>
-                        <ul class="dropdown-menu">
-                            <li><a href="#">Action</a></li>
-                            <li><a href="#">Another action</a></li>
-                            <li><a href="#">Something else here</a></li>
-                            <li role="separator" class="divider"></li>
-                            <li><a href="#">Separated link</a></li>
-                            <li role="separator" class="divider"></li>
-                            <li><a href="#">One more separated link</a></li>
-                        </ul>
-                    </li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right" id = "nologin">
                     <li><a href="/login">登录</a></li>
                     <li><a href="/register">注册</a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right yingcang" id = "allogin">
-                    <li><a href="/personal" id = "username"></a></li>
+                    <li><a href="/user/personal" id = "username"></a></li>
                     <li><a href="/shoppingcart">购物车</a></li>
                     <li><a onclick="outlogin()">退出登录</a></li>
                 </ul>

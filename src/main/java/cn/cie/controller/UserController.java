@@ -42,7 +42,7 @@ public class UserController extends AbstractController {
         }
         Result result = userService.validate(userHolder.getUser().getId(), code);
         if (result.isSuccess()) {
-            return Result.success(getReferer());
+            return Result.success("/");
         }
         return result;
     }
@@ -96,7 +96,7 @@ public class UserController extends AbstractController {
 
     @GetMapping(value = "findpassword")
     public String findPassword() {
-        return "forgetpassword";
+        return "findpassword";
     }
 
     @PostMapping(value = "sendfetchpwdmail")

@@ -24,7 +24,7 @@ color: #FFF;
 }
 
 .setmargin_2{
-    margin-top:50px; 
+    margin-top:100px;
 }
 .setpadding{
     background-color: #103651;
@@ -35,4 +35,14 @@ color: #FFF;
     font-size: 16px;
     border: none;
     color: #FFF;
+}
+.dibu{
+    margin-top:390px;
+    height:120px;
+    background-color:#101822;
+    color:#8F98A0;
+    text-align:center;
+    padding-top:50px;
+    padding-left:150px;
+    padding-right:150px;
 }

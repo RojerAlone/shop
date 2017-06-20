@@ -185,5 +185,6 @@ function addshopingcar() {
     }
     localStorage.setItem("data_" + i, JSON.stringify(carInfo));
     //alert(img);
+    alert("添加成功！");
 
 }

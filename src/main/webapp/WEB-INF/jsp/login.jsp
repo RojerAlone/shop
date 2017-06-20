@@ -22,7 +22,7 @@
                 <br/><br/>
                 <button type="submit" class="btnys" onclick="login()"><p class="btys">登录</p></button>
                 <br/><br/>
-                <a href="#">忘记密码？</a>
+                <a href="/user/findpassword">忘记密码？</a>
             </div>
             <div class="col-xs-4">
                 <h1 class="btys">创建</h1>
