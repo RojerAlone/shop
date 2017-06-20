@@ -23,4 +23,6 @@ public interface GameService {
      */
     Result<List<GameDTO>> getRandomGames();
 
+//    Result<List<GameDTO>> get
+
 }

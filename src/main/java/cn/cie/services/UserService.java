@@ -55,7 +55,27 @@ public interface UserService {
      */
     Result updateUserInfo(User user);
 
-    Result updatePassword(String password, String code);
+    /**
+     * 更新密码
+     * @param password
+     * @return
+     */
+    Result updatePassword(String password);
+
+    /**
+     * 忘记密码
+     * @param password
+     * @param code
+     * @return
+     */
+    Result forgetPassword(String password, String email, String code);
+
+    /**
+     * 忘记密码时需要给邮箱发送验证码
+     * @param email
+     * @return
+     */
+    Result sendFetchPwdMail(String email);
 
     /**
      * 删除已经过期了的验证码，验证码有效期为10分钟

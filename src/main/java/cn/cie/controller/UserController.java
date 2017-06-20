@@ -90,8 +90,25 @@ public class UserController extends AbstractController {
 
     @PostMapping(value = "updatepassword")
     @ResponseBody
-    public Result updatePassword(String password, String code) {
-        return userService.updatePassword(password, code);
+    public Result updatePassword(String password) {
+        return userService.updatePassword(password);
+    }
+
+    @GetMapping(value = "findpassword")
+    public String findPassword() {
+        return "forgetpassword";
+    }
+
+    @PostMapping(value = "sendfetchpwdmail")
+    @ResponseBody
+    public Result sendFetchPwdMail(String email) {
+        return userService.sendFetchPwdMail(email);
+    }
+
+    @PostMapping(value = "findpassword")
+    @ResponseBody
+    public Result findPassword(String password, String email, String code) {
+        return userService.forgetPassword(password, email, code);
     }
 
     /**

@@ -8,9 +8,9 @@ import java.util.Date;
 public class Validatecode {
 
     /**
-     * 验证码有效期
+     * 验证码有效期，默认为10分钟
      */
-    public static final int TIMEOUT = 60 * 15;
+    public static final int TIMEOUT = 60 * 10;
 
     private Integer uid;
 

@@ -36,6 +36,8 @@ public class MsgCenter {
 
     public static final String EMAIL_REGISTERED = "该邮箱已被注册";
 
+    public static final String EMAIL_NOT_REGISTERED = "该邮箱还未注册";
+
     public static final String ERROR_EMAIL = "请输入正确的电子邮箱";
 
     public static final String CODE_ERROR = "邮箱验证码错误";

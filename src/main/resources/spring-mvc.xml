@@ -25,7 +25,8 @@
         <mvc:interceptor>
             <mvc:mapping path="/user/*" />
             <mvc:mapping path="/order/*"/>
-            <mvc:exclude-mapping path="/user/updatepassword" />
+            <mvc:exclude-mapping path="/user/findpassword" />
+            <mvc:exclude-mapping path="/user/sendfetchpwdmail" />
             <bean class="cn.cie.interceptor.LoginInterceptor" />
         </mvc:interceptor>
     </mvc:interceptors>

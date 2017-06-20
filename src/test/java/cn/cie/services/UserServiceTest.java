@@ -1,5 +1,6 @@
 package cn.cie.services;
 
+import cn.cie.mapper.UserMapper;
 import cn.cie.utils.Result;
 import cn.cie.entity.User;
 import org.junit.Test;
@@ -21,6 +22,8 @@ public class UserServiceTest {
 
     @Autowired
     private UserService userService;
+    @Autowired
+    private UserMapper userMapper;
 
     @Test
     public void register() throws Exception {
@@ -64,6 +67,16 @@ public class UserServiceTest {
 
     @Test
     public void updateUserInfo() throws Exception {
+        try {
+            User user = userMapper.selectById(54);
+//            user.setStat(null);
+            user.setNickname(null);
+            logger.info("user:" + user);
+            logger.info(String.valueOf(userMapper.update(user)));
+            logger.info("user:" + user);
+        } catch (Exception e) {
+            logger.error("error:" + e);
+        }
     }
 
     @Test
