@@ -136,7 +136,7 @@ public class CommonController extends AbstractController {
     /**
      * 检查用户是否登陆，如果登陆就返回应该跳转到的页面，否则执行接下来的逻辑
      * 每次登陆之前都从request的header中获取跳转之前的链接referer
-     * 如果为空或者从别的网站跳转过来的，那么应该跳转到首页
+     * 如果为空（从别的网站跳转过来的），那么应该跳转到首页
      * 登陆流程中第一次登陆就会调用本方法获取跳转链接，登陆失败将referer写入session中
      * 如果是从登录页跳转过来的，可能是登陆出错了，但是跳转到登录页之前的referer在session存着，从session中获取
      * 如果sesson中有referer，那么登陆成功跳转到referer，并且从session中删除referer
@@ -145,15 +145,15 @@ public class CommonController extends AbstractController {
     private String getReferer() {
         String referer = null;
         String tmp = this.getRequest().getHeader("Referer");
-        // 如果为空或者不是从本站跳转过来的，应该跳转到首页
-        if (tmp == null || !tmp.startsWith("http://localhost:8080") || !tmp.startsWith("http://127.0.0.1:8080")) {
+        // 如果为空，不是从本站跳转过来的，应该跳转到首页
+        if (tmp == null) {
             referer = "/";
-        } else if (tmp.startsWith("http://127.0.0.1:8080/login") || tmp.startsWith("http://localhost:8080/login")) {
+        } else if (tmp.endsWith("/login")) {
             referer = (String) this.getSession().getAttribute("Referer");
         } else {
             referer = tmp;
-            this.getSession().setAttribute("Referer", referer);
         }
+        this.getSession().setAttribute("Referer", referer);
         return referer;
     }
 

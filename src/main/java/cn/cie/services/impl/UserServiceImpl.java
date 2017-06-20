@@ -173,8 +173,16 @@ public class UserServiceImpl implements UserService {
         return Result.success();
     }
 
-    public boolean updateUserInfo(User user) {
-        return 1 == userMapper.update(user);
+    public Result updateUserInfo(User user) {
+        if (userHolder.getUser() == null) {
+            return Result.fail(MsgCenter.USER_NOT_LOGIN);
+        }
+        user.setId(userHolder.getUser().getId());
+        user.setStat(null);
+        if (1 == userMapper.update(user)) {
+            return Result.success();
+        }
+        return Result.fail(MsgCenter.ERROR);
     }
 
     public void delValidatecode() {

@@ -17,7 +17,7 @@ public interface UserService {
 
     /**
      * 给用户注册的邮箱发送验证码
-     * @param uid
+     * @param user
      * @return
      */
     Result sendMail(User user);
@@ -53,7 +53,7 @@ public interface UserService {
      * @param user
      * @return
      */
-    boolean updateUserInfo(User user);
+    Result updateUserInfo(User user);
 
     /**
      * 删除已经过期了的验证码，验证码有效期为10分钟

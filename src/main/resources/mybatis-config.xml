@@ -10,6 +10,7 @@
         <setting name="defaultStatementTimeout" value="3000"/>
         <!--是否使用驼峰转换-->
         <setting name="mapUnderscoreToCamelCase" value="true"/>
+        <!--<setting name="logImpl" value="STDOUT_LOGGING" />-->
     </settings>
     <typeAliases>
         <package name="cn.cie.entity" />
