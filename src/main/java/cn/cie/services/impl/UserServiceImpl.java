@@ -9,6 +9,7 @@ import cn.cie.mapper.UserMapper;
 import cn.cie.mapper.ValidatecodeMapper;
 import cn.cie.services.UserService;
 import cn.cie.utils.*;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -36,17 +37,18 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public Result register(User user) {
         // 验证参数是否合法
-        if (user.getUsername() == null) {
+        if (StringUtils.isBlank(user.getUsername())) {
             return Result.fail(MsgCenter.EMPTY_USERNAME);
-        } else if (user.getNickname() == null) {
+        } else if (StringUtils.isBlank(user.getNickname())) {
             return Result.fail(MsgCenter.EMPTY_NICKNAME);
         } else if (user.getNickname().length() > 10) {
             return Result.fail(MsgCenter.ERROR_NICINAME);
-        } else if (user.getPassword() == null) {
+        } else if (StringUtils.isBlank(user.getPassword())) {
             return Result.fail(MsgCenter.EMPTY_PASSWORD);
-        } else if (16 < user.getPassword().length() || user.getPassword().length() < 6) {
+        } else if (16 < user.getPassword().replaceAll(" ", "").length()
+                || user.getPassword().replaceAll(" ", "").length() < 6) {
             return Result.fail(MsgCenter.ERROR_PASSWORD_FORMAT);
-        } else if (user.getEmail() == null) {
+        } else if (StringUtils.isBlank(user.getEmail())) {
             return Result.fail(MsgCenter.EMPTY_EMAIL);
         } else if (Pattern.compile("^([a-z0-9A-Z]+[-|_|\\.]?)+[a-z0-9A-Z]@([a-z0-9A-Z]+(-[a-z0-9A-Z]+)?\\.)+[a-zA-Z]{2,}$").
                 matcher(user.getEmail()).find() == false) {   // 判断邮箱格式是否正确
@@ -178,11 +180,28 @@ public class UserServiceImpl implements UserService {
             return Result.fail(MsgCenter.USER_NOT_LOGIN);
         }
         user.setId(userHolder.getUser().getId());
+        user.setPassword(null);
         user.setStat(null);
         if (1 == userMapper.update(user)) {
             return Result.success();
         }
         return Result.fail(MsgCenter.ERROR);
+    }
+
+    public Result updatePassword(String password, String code) {
+        User user = userHolder.getUser();
+        int uid = user.getId();
+        String uuid = redisUtil.get("validatecode_" + uid);
+        if (code != null && code.length() == 36 && code.equals(uuid)) {
+            user.setPassword(PasswordUtil.pwd2Md5(password));
+            if (1 == userMapper.update(user)) {
+                redisUtil.delete("validatecode_" + uid);        // 验证成功后删除验证码
+                return Result.success();
+            } else {
+                return Result.fail(MsgCenter.ERROR);
+            }
+        }
+        return Result.fail(MsgCenter.CODE_ERROR);
     }
 
     public void delValidatecode() {

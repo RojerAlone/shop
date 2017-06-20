@@ -83,6 +83,17 @@ public class UserController extends AbstractController {
         return userService.updateUserInfo(user);
     }
 
+    @GetMapping(value = "updatepassword")
+    public String updatePassword() {
+        return "updatePassword";
+    }
+
+    @PostMapping(value = "updatepassword")
+    @ResponseBody
+    public Result updatePassword(String password, String code) {
+        return userService.updatePassword(password, code);
+    }
+
     /**
      * 检查用户是否登陆，如果登陆就返回应该跳转到的页面，否则执行接下来的逻辑
      * 每次登陆之前都从request的header中获取跳转之前的链接referer

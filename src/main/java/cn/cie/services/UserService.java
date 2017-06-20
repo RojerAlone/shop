@@ -55,6 +55,8 @@ public interface UserService {
      */
     Result updateUserInfo(User user);
 
+    Result updatePassword(String password, String code);
+
     /**
      * 删除已经过期了的验证码，验证码有效期为10分钟
      */
