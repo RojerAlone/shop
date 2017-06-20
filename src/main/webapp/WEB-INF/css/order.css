@@ -12,8 +12,22 @@ body{
 }
 td{
 	color: white;
+	width: 100px;
 }
 .td_1{
 	color: white;
-	width: 100px;
+	width: 250px;
+}
+.btn{
+	background-color: #1E6E93;
+}
+.setright{
+	float: right;
+}
+.setleft{
+	float: left;
+}
+
+.divwidth{
+	width: 300px;
 }

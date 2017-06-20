@@ -58,7 +58,7 @@
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateStatByDate" parameterType="java.util.Date">
+  <update id="updateStatByDate">
     update `order` set stat = #{newstat,jdbcType=TINYINT}
     where stat = #{oldstat,jdbcType=TINYINT} and utime &lt; #{date,jdbcType=TIMESTAMP}
   </update>

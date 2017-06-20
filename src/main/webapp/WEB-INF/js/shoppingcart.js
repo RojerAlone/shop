@@ -50,6 +50,7 @@ function orderadd() {
         //alert(gamesid[k]);
         k++;
     }
+
     //alert(gamesid);
     $.post({url:"/order/order",
         traditional: true,
@@ -61,6 +62,7 @@ function orderadd() {
     }
         }
     )
+
 }
 
 

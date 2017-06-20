@@ -61,6 +61,11 @@ public class UserController extends AbstractController {
         return "updateUserInfo";
     }
 
+    @GetMapping(value = "personal")
+    public String personal() {
+        return "personal";
+    }
+
     @PostMapping(value = "update")
     public String update(User user) {
         if (userService.updateUserInfo(user)) {

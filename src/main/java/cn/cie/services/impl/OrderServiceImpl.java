@@ -131,8 +131,8 @@ public class OrderServiceImpl implements OrderService {
 
     public void autoCancelOrder() {
         Date date = new Date();
-        date.setTime(date.getTime() + 1000 * 60 * 15);  // 过期时间为15分钟
-        orderMapper.updateStatByDate(Order.STAT_NOT_PAY, Order.STAT_CANCEL, date);
+        date.setTime(date.getTime() - 1000 * 60 * 15);  // 过期时间为15分钟
+        System.out.println(orderMapper.updateStatByDate(Order.STAT_NOT_PAY, Order.STAT_CANCEL, date));
     }
 
     private List<OrderDTO> parseOrderByStat(Integer uid, Byte stat) {

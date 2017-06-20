@@ -6,7 +6,7 @@ $(
         if(username){
             document.getElementById("nologin").style.display = "none";
             document.getElementById("allogin").style.display = "block";
-            document.getElementById("username").innerText =  username + "您好";
+            document.getElementById("username").innerHTML =  "<a href='/user/personal'>"+username + "您好</a>";
         }
     }
 )

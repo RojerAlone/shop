@@ -72,7 +72,7 @@
     where uid = #{uid,jdbcType=INTEGER}
   </select>
 
-  <update id="updateStatByDate" parameterType="java.util.Date">
+  <update id="updateStatByDate">
     update token set stat = #{stat,jdbcType=TINYINT}
     where expired_time &lt; #{date,jdbcType=TIMESTAMP}
   </update>
