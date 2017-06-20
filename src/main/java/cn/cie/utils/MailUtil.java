@@ -55,7 +55,7 @@ public class MailUtil {
     public static void sendFetchPwdMail(String user, String code) {
 
         String title = "WePlay找回密码";
-        String content = "这封邮件是在验证您的WePlay邮箱，用来找回密码，如果不是您本人的操作，请忽略此邮件。\n您的验证码为 \n" + code + "\n，请注意保存，此验证码有效期为 10分钟 ，并且只能使用一次。";
+        String content = "这封邮件是在验证您的WePlay邮箱，用来找回密码，如果不是您本人的操作，请忽略此邮件。\n您的验证码为 \n" + code + "\n请注意保存，此验证码有效期为 10分钟 ，并且只能使用一次。";
 
         sendMail(user, title, content);
     }

@@ -222,20 +222,24 @@ public class UserServiceImpl implements UserService {
     }
 
     public Result forgetPassword(String password, String email, String code) {
-        if (StringUtils.isBlank(password)) {
+        User user = null;
+        if (StringUtils.isBlank(email)) {
+            return Result.fail(MsgCenter.EMPTY_EMAIL);
+        } else if (Pattern.compile("^([a-z0-9A-Z]+[-|_|\\.]?)+[a-z0-9A-Z]@([a-z0-9A-Z]+(-[a-z0-9A-Z]+)?\\.)+[a-zA-Z]{2,}$").
+                matcher(email).find() == false || (user = userMapper.selectByEmail(email)) == null) {   // 判断邮箱格式以及两次邮箱是否一致
+            return Result.fail(MsgCenter.ERROR_EMAIL);
+        } else if (StringUtils.isBlank(password)) {
             return Result.fail(MsgCenter.EMPTY_PASSWORD);
         } else if (16 < password.replaceAll(" ", "").length()
                 || password.replaceAll(" ", "").length() < 6) {
             return Result.fail(MsgCenter.ERROR_PASSWORD_FORMAT);
         }
-        User user = userHolder.getUser();
-        int uid = user.getId();
         String uuid = redisUtil.get(email);
         if (code != null && code.length() == 36 && code.equals(uuid)) {
             user.setPassword(PasswordUtil.pwd2Md5(password.replaceAll(" ", "")));
             if (1 == userMapper.update(user)) {
                 redisUtil.delete(email);        // 验证成功后删除验证码
-                return Result.success();
+                return Result.success(user.getUsername());
             } else {
                 return Result.fail(MsgCenter.ERROR);
             }
@@ -244,6 +248,12 @@ public class UserServiceImpl implements UserService {
     }
 
     public Result sendFetchPwdMail(String email) {
+        if (StringUtils.isBlank(email)) {
+            return Result.fail(MsgCenter.EMPTY_EMAIL);
+        } else if (Pattern.compile("^([a-z0-9A-Z]+[-|_|\\.]?)+[a-z0-9A-Z]@([a-z0-9A-Z]+(-[a-z0-9A-Z]+)?\\.)+[a-zA-Z]{2,}$").
+                matcher(email).find() == false) {   // 判断邮箱格式是否正确
+            return Result.fail(MsgCenter.ERROR_EMAIL);
+        }
         User user = userMapper.selectByEmail(email);
         if (user == null) {
             return Result.fail(MsgCenter.EMAIL_NOT_REGISTERED);
