@@ -2,6 +2,7 @@ package cn.cie.services.impl;
 
 import cn.cie.entity.Game;
 import cn.cie.entity.Kind;
+import cn.cie.entity.Token;
 import cn.cie.entity.User;
 import cn.cie.mapper.GameMapper;
 import cn.cie.mapper.KindMapper;
@@ -9,15 +10,14 @@ import cn.cie.mapper.KindmapperMapper;
 import cn.cie.mapper.UserMapper;
 import cn.cie.services.AdminService;
 import cn.cie.utils.MsgCenter;
+import cn.cie.utils.PasswordUtil;
 import cn.cie.utils.RedisUtil;
 import cn.cie.utils.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by RojerAlone on 2017/6/15.
@@ -36,6 +36,26 @@ public class AdminServiceImpl implements AdminService {
     @Autowired
     private RedisUtil redisUtil;
 
+
+    public Result login(String username, String password) {
+        if (username == null || password == null) {
+            return Result.fail(MsgCenter.EMPTY_LOGIN);
+        } else if (username.equals("admin") == false) {
+            return Result.fail(MsgCenter.LOGIN_NOT_ALLOW);
+        }
+        User user = userMapper.selectByName(username);
+        // 用户名不存在或者密码错误或者用户已经被删除
+        if (user == null || !user.getPassword().equals(PasswordUtil.pwd2Md5(password))
+                || user.getStat().equals(User.STAT_DEL)) {
+            return Result.fail(MsgCenter.ERROR_LOGIN);
+        } else if (user.getStat().equals(User.STAT_RESTRICT)) {
+            return Result.fail(MsgCenter.USER_RESTRICT);
+        } else {
+            String token = UUID.randomUUID().toString().replaceAll("-", "");
+            redisUtil.putEx(token, String.valueOf(user.getId()), 60 * 60 * 24);
+            return Result.success(token);
+        }
+    }
 
     public Result restrict(Integer uid) {
         User user = new User();

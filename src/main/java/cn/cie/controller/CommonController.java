@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -59,11 +60,10 @@ public class CommonController extends AbstractController {
         }
         Result result = userService.login(username, password, remember, this.getRemoteIp(), this.getUserAgent());
         if (result.isSuccess()) {
-            Map<String, String> data = (Map<String, String>) result.getData();
+            Map<String, String> data = new HashMap<String, String>();
             data.put("referer", referer);
-//            map.put("user", )
             // response中添加cookie，以后每次请求都会带上cookie
-            Cookie cookie = new Cookie("token", data.get("token"));
+            Cookie cookie = new Cookie("token", (String) result.getData());
             cookie.setPath("/");
             if (remember) {
                 cookie.setMaxAge(60 * 60 * 24 * 7);
@@ -71,7 +71,6 @@ public class CommonController extends AbstractController {
                 cookie.setMaxAge(60 * 60 * 24);
             }
             response.addCookie(cookie);
-            data.remove("token");
             return Result.success(data);
         } else {
             return result;

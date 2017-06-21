@@ -56,4 +56,6 @@ public class MsgCenter {
 
     public static final String NAME_EXISTS = "该名称已存在";
 
+    public static final String LOGIN_NOT_ALLOW = "没有权限，禁止登陆";
+
 }

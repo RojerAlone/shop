@@ -21,7 +21,7 @@
             <!--<mvc:exclude-mapping path="/js/**" />-->
             <!--<bean class="cn.cie.interceptor.AuthInterceptor" />-->
         <!--</mvc:interceptor>-->
-        <!--登录拦截-->
+        <!--用户登录拦截-->
         <mvc:interceptor>
             <mvc:mapping path="/user/*" />
             <mvc:mapping path="/order/*"/>
@@ -29,13 +29,16 @@
             <mvc:exclude-mapping path="/user/sendfetchpwdmail" />
             <bean class="cn.cie.interceptor.LoginInterceptor" />
         </mvc:interceptor>
+        <!--管理员登陆拦截-->
+        <mvc:interceptor>
+            <mvc:mapping path="/admin/*"/>
+            <mvc:exclude-mapping path="/admin/login"/>
+            <bean class="cn.cie.interceptor.AdminInterceptor" />
+        </mvc:interceptor>
     </mvc:interceptors>
     <mvc:resources mapping="/img/**" location="WEB-INF/image/" />
     <mvc:resources mapping="/css/**" location="WEB-INF/css/" />
     <mvc:resources mapping="/js/**" location="WEB-INF/js/" />
-    <!--<mvc:resources mapping="/lib/**" location="WEB-INF/lib/" />-->
-    <!--<mvc:resources mapping="/fonts/**" location="WEB-INF/fonts/" />-->
-    <!--<mvc:resources mapping="/plugins/**" location="WEB-INF/plugins/" />-->
     <context:component-scan base-package="cn.cie.controller, cn.cie.aop" />
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver" >
         <property name="viewClass" value="org.springframework.web.servlet.view.JstlView" />

@@ -159,10 +159,7 @@ public class UserServiceImpl implements UserService {
             }
             tokenMapper.insert(token);
             redisUtil.putEx(uuid, String.valueOf(user.getId()), 60 * 60 * 24);
-            Map<String, String> result = new HashMap<String, String>();
-            result.put("token", uuid);
-            result.put("user", user.getNickname());
-            return Result.success(result);
+            return Result.success(uuid);
         }
     }
 

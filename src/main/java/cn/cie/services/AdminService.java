@@ -12,6 +12,14 @@ import java.util.Date;
 public interface AdminService {
 
     /**
+     * 管理员登陆
+     * @param username
+     * @param password
+     * @return
+     */
+    Result login(String username, String password);
+
+    /**
      * 限制账户操作
      * @param uid
      * @return
