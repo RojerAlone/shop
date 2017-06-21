@@ -9,10 +9,7 @@ import cn.cie.mapper.KindMapper;
 import cn.cie.mapper.KindmapperMapper;
 import cn.cie.mapper.UserMapper;
 import cn.cie.services.AdminService;
-import cn.cie.utils.MsgCenter;
-import cn.cie.utils.PasswordUtil;
-import cn.cie.utils.RedisUtil;
-import cn.cie.utils.Result;
+import cn.cie.utils.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -57,6 +54,11 @@ public class AdminServiceImpl implements AdminService {
         }
     }
 
+    public Result getUser(int page) {
+        PageUtil pageUtil = new PageUtil(userMapper.selectAllNums(), page);
+        return Result.success(userMapper.selectByPage(pageUtil.getStartPos(), pageUtil.getSize()));
+    }
+
     public Result restrict(Integer uid) {
         User user = new User();
         user.setId(uid);
@@ -72,6 +74,17 @@ public class AdminServiceImpl implements AdminService {
         User user = new User();
         user.setId(uid);
         user.setStat(User.STAT_OK);
+        if (1 == userMapper.update(user)) {
+            return Result.success();
+        } else {
+            return Result.fail("");
+        }
+    }
+
+    public Result delete(Integer uid) {
+        User user = new User();
+        user.setId(uid);
+        user.setStat(User.STAT_DEL);
         if (1 == userMapper.update(user)) {
             return Result.success();
         } else {

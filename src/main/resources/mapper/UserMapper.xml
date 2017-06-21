@@ -37,6 +37,15 @@
   <select id="selectByStat" parameterType="java.lang.Byte" resultMap="BaseResultMap">
     select id, ctime from user where stat = #{stat,jdbcType=TINYINT}
   </select>
+  <select id="selectByPage" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from user where id != 1
+    order by id asc limit #{startPos}, #{size}
+  </select>
+  <select id="selectAllNums" resultType="java.lang.Integer">
+    select count(id) from user where id != 1;
+  </select>
 
   <insert id="insert" parameterType="cn.cie.entity.User" useGeneratedKeys="true" keyProperty="id">
     insert into user

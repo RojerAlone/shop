@@ -1,6 +1,7 @@
 package cn.cie.mapper;
 
 import cn.cie.entity.User;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -13,6 +14,10 @@ public interface UserMapper {
     User selectByName(String username);
 
     User selectByEmail(String email);
+
+    int selectAllNums();
+
+    List<User> selectByPage(@Param(value = "startPos") Integer startPos, @Param(value = "size") Integer size);
 
     List<User> selectByStat(Byte stat);
 

@@ -43,6 +43,12 @@ public class AdminController {
         return "adminpage";
     }
 
+    @PostMapping(value = "getuser")
+    @ResponseBody
+    public Result getUser(@RequestParam(value = "page", required = false, defaultValue = "1")Integer page) {
+        return adminService.getUser(page);
+    }
+
     @PostMapping(value = "restrict")
     @ResponseBody
     public Result restrict(Integer uid) {

@@ -20,6 +20,12 @@ public interface AdminService {
     Result login(String username, String password);
 
     /**
+     * 获取所有的用户
+     * @return
+     */
+    Result getUser(int page);
+
+    /**
      * 限制账户操作
      * @param uid
      * @return
@@ -32,6 +38,13 @@ public interface AdminService {
      * @return
      */
     Result relieve(Integer uid);
+
+    /**
+     * 删除用户
+     * @param uid
+     * @return
+     */
+    Result delete(Integer uid);
 
     /**
      * 添加游戏
