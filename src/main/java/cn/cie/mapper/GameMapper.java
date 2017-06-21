@@ -11,6 +11,10 @@ public interface GameMapper {
 
     Game selectById(Integer id);
 
+    int selectNums();
+
+    List<Game> selectByPage(@Param(value = "startPos") Integer startPos, @Param(value = "size") Integer size);
+
     List<Game> selectByIds(@Param(value = "ids") List<Integer> ids);
 
     List<Game> selectByStat(Byte stat);

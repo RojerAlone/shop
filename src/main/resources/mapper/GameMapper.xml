@@ -23,6 +23,12 @@
     from game
     where id = #{id,jdbcType=INTEGER}
   </select>
+  <select id="selectByPage" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from game
+    order by id asc limit #{startPos}, #{size}
+  </select>
   <select id="selectByIds" parameterType="list" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />
@@ -39,6 +45,9 @@
     <include refid="Base_Column_List" />
     from game
     where stat = #{stat,jdbcType=TINYINT}
+  </select>
+  <select id="selectNums" resultType="java.lang.Integer">
+    select count(*) from game
   </select>
 
   <insert id="insert" parameterType="cn.cie.entity.Game" useGeneratedKeys="true" keyProperty="id">

@@ -23,4 +23,8 @@
   <select id="selectByGame" parameterType="java.lang.Integer" resultType="java.lang.Integer">
     select kind from kindmapper where game = #{game,jdbcType=INTEGER}
   </select>
+
+  <delete id="deleteByGame" parameterType="java.lang.Integer">
+    delete from kindmapper where game = #{game,jdbcType=INTEGER}
+  </delete>
 </mapper>

@@ -15,4 +15,6 @@ public interface KindmapperMapper {
 
     List<Integer> selectByGame(Integer game);
 
+    int deleteByGame(Integer game);
+
 }

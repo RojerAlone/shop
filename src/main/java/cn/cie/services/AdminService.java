@@ -1,9 +1,11 @@
 package cn.cie.services;
 
 import cn.cie.entity.Game;
+import cn.cie.entity.dto.GameDTO;
 import cn.cie.utils.Result;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by RojerAlone on 2017/6/15.
@@ -21,7 +23,8 @@ public interface AdminService {
 
     /**
      * 获取所有的用户
-     * @return
+     * @param page 当前的页数
+     * @return User Page
      */
     Result getUser(int page);
 
@@ -47,12 +50,27 @@ public interface AdminService {
     Result delete(Integer uid);
 
     /**
+     * 获取所有游戏
+     * @param page 获取游戏的页数
+     * @return GameDTO Page
+     */
+    Result getGames(int page);
+
+    /**
      * 添加游戏
      * @param game 游戏实体，需要游戏名字、开发者、描述、配置、价格
      * @param kind 游戏种类，数组类型
      * @return
      */
     Result addGame(Game game, Integer[] kind);
+
+    /**
+     * 更新游戏的种类
+     * @param game
+     * @param kinds
+     * @return
+     */
+    Result updateGameKind(Integer game, List<Integer> kinds);
 
     /**
      * 将游戏上架

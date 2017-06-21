@@ -1,13 +1,8 @@
 package cn.cie.services.impl;
 
-import cn.cie.entity.Game;
-import cn.cie.entity.Kind;
-import cn.cie.entity.Token;
-import cn.cie.entity.User;
-import cn.cie.mapper.GameMapper;
-import cn.cie.mapper.KindMapper;
-import cn.cie.mapper.KindmapperMapper;
-import cn.cie.mapper.UserMapper;
+import cn.cie.entity.*;
+import cn.cie.entity.dto.GameDTO;
+import cn.cie.mapper.*;
 import cn.cie.services.AdminService;
 import cn.cie.utils.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +25,12 @@ public class AdminServiceImpl implements AdminService {
     private KindMapper kindMapper;
     @Autowired
     private KindmapperMapper kindmapperMapper;
+    @Autowired
+    private TagMapper tagMapper;
+    @Autowired
+    private TagmapperMapper tagmapperMapper;
+    @Autowired
+    private ImgMapper imgMapper;
     @Autowired
     private RedisUtil redisUtil;
 
@@ -56,7 +57,10 @@ public class AdminServiceImpl implements AdminService {
 
     public Result getUser(int page) {
         PageUtil pageUtil = new PageUtil(userMapper.selectAllNums(), page);
-        return Result.success(userMapper.selectByPage(pageUtil.getStartPos(), pageUtil.getSize()));
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("user", userMapper.selectByPage(pageUtil.getStartPos(), pageUtil.getSize()));
+        map.put("page", pageUtil);
+        return Result.success(map);
     }
 
     public Result restrict(Integer uid) {
@@ -92,6 +96,15 @@ public class AdminServiceImpl implements AdminService {
         }
     }
 
+    public Result getGames(int page) {
+        PageUtil pageUtil = new PageUtil(gameMapper.selectNums(), page);
+        List<Game> games = gameMapper.selectByPage(pageUtil.getCurrent(), pageUtil.getSize());
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("game", paresGameDTO(games));
+        map.put("page", pageUtil);
+        return Result.success(map);
+    }
+
     @Transactional
     public Result addGame(Game game, Integer[] kind) {
         gameMapper.insert(game);
@@ -99,10 +112,17 @@ public class AdminServiceImpl implements AdminService {
         return Result.success();
     }
 
+    @Transactional
+    public Result updateGameKind(Integer game, List<Integer> kinds) {
+        kindmapperMapper.deleteByGame(game);
+        kindmapperMapper.insertBatch(game, kinds);
+        return Result.success();
+    }
+
     public Result upGame(Integer id, Date date) {
         Game game = gameMapper.selectById(id);
-        // 如果没有这个游戏或者游戏的状态已经为已上架就返回参数错误
-        if (game == null || game.getStat().equals(Game.STAT_OK)) {
+        // 如果没有这个游戏返回参数错误
+        if (game == null) {
             return Result.fail(MsgCenter.ERROR_PARAMS);
         }
         game.setStat(Game.STAT_OK);
@@ -119,8 +139,8 @@ public class AdminServiceImpl implements AdminService {
 
     public Result downGame(Integer id) {
         Game game = gameMapper.selectById(id);
-        // 如果没有这个游戏或者游戏的状态已经为已下架就返回参数错误
-        if (game == null || game.getStat().equals(Game.STAT_OK)) {
+        // 如果没有这个游戏返回参数错误
+        if (game == null) {
             return Result.fail(MsgCenter.ERROR_PARAMS);
         }
         game.setStat(Game.STAT_DEL);
@@ -144,6 +164,18 @@ public class AdminServiceImpl implements AdminService {
         } else {
             return Result.fail(MsgCenter.ERROR);
         }
+    }
+
+    private List<GameDTO> paresGameDTO(List<Game> games) {
+        List<GameDTO> gameDTOS = new ArrayList<GameDTO>();
+        for (Game game : games) {
+            List<Integer> tagIds = tagmapperMapper.selectByGame(game.getId());     // 获取游戏的标签id
+            List<Tag> tags = tagMapper.selectByIds(tagIds);                         // 根据id获取所有的标签信息
+            List<String> img = imgMapper.selectByGame(game.getId());                // 获取所有的图片
+            GameDTO dto = new GameDTO(game, tags, img);
+            gameDTOS.add(dto);
+        }
+        return gameDTOS;
     }
 
 }

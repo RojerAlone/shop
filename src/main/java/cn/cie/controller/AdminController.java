@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
+import java.util.Arrays;
+import java.util.Date;
 
 /**
  * Created by RojerAlone on 2017/6/15.
@@ -45,21 +47,56 @@ public class AdminController {
 
     @PostMapping(value = "getuser")
     @ResponseBody
-    public Result getUser(@RequestParam(value = "page", required = false, defaultValue = "1")Integer page) {
+    public Result getUser(@RequestParam(value = "page", required = false, defaultValue = "1") Integer page) {
         return adminService.getUser(page);
     }
 
-    @PostMapping(value = "restrict")
+    @PostMapping(value = "restrictuser")
     @ResponseBody
     public Result restrict(Integer uid) {
         return adminService.restrict(uid);
     }
 
-    @PostMapping(value = "relieve")
+    @PostMapping(value = "relieveuser")
     @ResponseBody
     public Result relieve(Integer uid) {
         return adminService.relieve(uid);
     }
 
+    @PostMapping(value = "deluser")
+    @ResponseBody
+    public Result delUser(Integer uid) {
+        return adminService.delete(uid);
+    }
+
+    @PostMapping(value = "getgames")
+    @ResponseBody
+    public Result getGames(@RequestParam(value = "page", required = false, defaultValue = "1") Integer page) {
+        return adminService.getGames(page);
+    }
+
+    @PostMapping(value = "updategamekind")
+    @ResponseBody
+    public Result updateGameKind(Integer game, Integer[] kinds) {
+        return adminService.updateGameKind(game, Arrays.asList(kinds));
+    }
+
+    @PostMapping(value = "upgame")
+    @ResponseBody
+    public Result upGame(Integer game, @RequestParam(value = "date", required = false) Date date) {
+        return adminService.upGame(game, date);
+    }
+
+    @PostMapping(value = "downgame")
+    @ResponseBody
+    public Result downGame(Integer game) {
+        return adminService.downGame(game);
+    }
+
+    @PostMapping(value = "addkind")
+    @ResponseBody
+    public Result addKind(String kind) {
+        return adminService.addKind(kind);
+    }
 
 }
