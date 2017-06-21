@@ -48,7 +48,8 @@ function findpassword() {
     else {
         $.post("/user/findpassword", {password:password,email:email,code: code}, function (result) {
             if (result.success) {
-                alert("成功找回！您的用户名是:"+result.data)
+                alert("成功找回！您的用户名是:"+result.data);
+                window.location.href = "/login";
             }
             else {
                 alert(result.msg);

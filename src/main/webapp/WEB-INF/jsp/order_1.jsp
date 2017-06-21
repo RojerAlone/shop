@@ -41,42 +41,35 @@
     <br/>
     <div class="row">
         <div class="col-xs-3">
-            <input type="radio" name="payway" value="zhifubao" class="radio"/><img src="/img/static/zhifubao.png"
-                                                                                   height="50" width="100"
-                                                                                   align="middle"/>
+            <input type="radio" name="payway" value="zhifubao" class="radio"/>
+            <img src="/img/static/zhifubao.png" height="50" width="100" align="middle"/>
         </div>
         <div class="col-xs-3">
-            <input type="radio" name="payway" value="weixin" class="radio"/><img src="/img/static/weixin.png"
-                                                                                 height="50" width="100"
-                                                                                 align="middle"/>
+            <input type="radio" name="payway" value="weixin" class="radio"/>
+            <img src="/img/static/weixin.png" height="50" width="100" align="middle"/>
         </div>
         <div class="col-xs-3">
-            <input type="radio" name="payway" value="zhonghang" class="radio"/><img src="/img/static/yinhang1.png"
-                                                                                    height="50" width="100"
-                                                                                    align="middle"/>
+            <input type="radio" name="payway" value="zhonghang" class="radio"/>
+            <img src="/img/static/yinhang1.png" height="50" width="100" align="middle"/>
         </div>
         <div class="col-xs-3">
-            <input type="radio" name="payway" value="nonghang" class="radio"/><img src="/img/static/yinhang2.png"
-                                                                                   height="50" width="100"
-                                                                                   align="middle"/>
+            <input type="radio" name="payway" value="nonghang" class="radio"/>
+            <img src="/img/static/yinhang2.png" height="50" width="100" align="middle"/>
         </div>
     </div>
     <br/>
     <div class="row">
         <div class="col-xs-3">
-            <input type="radio" name="payway" value="jiaohang" class="radio"/><img src="/img/static/yinhang3.png"
-                                                                                   height="50" width="100"
-                                                                                   align="middle"/>
+            <input type="radio" name="payway" value="jiaohang" class="radio"/>
+            <img src="/img/static/yinhang3.png" height="50" width="100" align="middle"/>
         </div>
         <div class="col-xs-3">
-            <input type="radio" name="payway" value="jianhang" class="radio"/><img src="/img/static/yinhang4.png"
-                                                                                   height="50" width="100"
-                                                                                   align="middle"/>
+            <input type="radio" name="payway" value="jianhang" class="radio"/>
+            <img src="/img/static/yinhang4.png" height="50" width="100" align="middle"/>
         </div>
         <div class="col-xs-3">
-            <input type="radio" name="payway" value="gonghang" class="radio"/><img src="/img/static/yinhang5.png"
-                                                                                   height="50" width="100"
-                                                                                   align="middle"/>
+            <input type="radio" name="payway" value="gonghang" class="radio"/>
+            <img src="/img/static/yinhang5.png" height="50" width="100" align="middle"/>
         </div>
     </div>
     <br/>
@@ -87,8 +80,9 @@
             <h4 align="left">请确保你的银行卡已经开通网银支付功能，否则可能无法支付。</h4>
         </div>
         <div class="col-xs-2">
-            <%--<button type="submit" onclick="pay()">前去支付</button>--%>
-            <a href="/order/${id}/pay"><button>前去支付</button></a>
+            <a href="/order/${id}/pay">
+                <button>前去支付</button>
+            </a>
         </div>
     </div>
 </div>

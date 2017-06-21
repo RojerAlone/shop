@@ -85,7 +85,7 @@ public class UserController extends AbstractController {
 
     @GetMapping(value = "updatepassword")
     public String updatePassword() {
-        return "updatePassword";
+        return "updatepassword";
     }
 
     @PostMapping(value = "updatepassword")

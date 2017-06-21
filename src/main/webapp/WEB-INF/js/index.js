@@ -13,7 +13,7 @@ $(
 );
 function hoverShowDiv(i){	
 	//document.getElementById("divHover"+"_"+i).style.display = "block";
-	document.getElementById("divHover").src="./img/static/zx_"+i+"_1.png";
+	document.getElementById("divHover").src="	/img/static/zx_"+i+"_1.png";
 	//document.getElementById("divHover"+"_"+i).style.top = document.getElementById("smimg_1").style.top + 50;
 	//document.getElementById("divHover"+"_"+i).style.top = document.getElementById("smimg_1").style.left + 50;
 }

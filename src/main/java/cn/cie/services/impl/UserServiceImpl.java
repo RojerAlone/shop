@@ -193,7 +193,7 @@ public class UserServiceImpl implements UserService {
             return Result.fail(MsgCenter.EMPTY_PHONE);
         } else if (Pattern.compile("1[3|5|7|8|]\\d{9}").matcher(user.getPhone().toString()).find() == false) {  // 验证手机号码是否格式正确
             return Result.fail(MsgCenter.ERROR_PHONE);
-        } else if (userMapper.selectByEmail(user.getEmail()) != null) {             // 邮箱已被注册
+        } else if (userMapper.selectByEmail(user.getEmail()) != null && !userHolder.getUser().getEmail().equals(user.getEmail())) {             // 更改邮箱同时邮箱已被注册
             return Result.fail(MsgCenter.EMAIL_REGISTERED);
         }
         user.setId(userHolder.getUser().getId());

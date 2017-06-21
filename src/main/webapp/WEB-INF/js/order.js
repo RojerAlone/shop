@@ -13,7 +13,8 @@ $(
                 //row.className = "row";
                 var time = new Date(result.data[i].ctime).toLocaleString();
                 var prices = result.data[i].total;
-                row.innerHTML = "<td>" + "<div class='dropdown'> <button type='button' class='btn dropdown-toggle' id='dropdownMenu1' data-toggle='dropdown'>"+i+"<span class='caret'></span> </button><ul id = 'ula_"+i+"'class='dropdown-menu' role='menu' aria-labelledby='dropdownMenu1'>" + "</td><td>" + prices + "</td><td>" + time + "</td>";
+                var k = i + 1;
+                row.innerHTML = "<td>" + "<div class='dropdown'> <button type='button' class='btn dropdown-toggle' id='dropdownMenu1' data-toggle='dropdown'>"+k+"<span class='caret'></span> </button><ul id = 'ula_"+i+"'class='dropdown-menu' role='menu' aria-labelledby='dropdownMenu1'>" + "</td><td>" + prices + "</td><td>" + time + "</td>";
                 //row.innerHTML = "<td>" + i + "</td><td>" + prices + "</td><td>" + time + "</td>";
                 orderclass.appendChild(row);
                 i++;
