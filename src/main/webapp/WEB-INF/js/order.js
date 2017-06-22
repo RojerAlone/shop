@@ -11,7 +11,7 @@ $(
             while (result.data.order[i]) {
                 var row = document.createElement("tr");
                 //row.className = "row";
-                var time = new Date(result.data.order[i].ctime).toLocaleString(); 
+                var time = new Date(result.data.order[i].ctime).toLocaleString();
                 var prices = result.data.order[i].total;
                 var k = i + 1;
                 row.innerHTML = "<td>" + "<div class='dropdown'> <button type='button' class='btn dropdown-toggle' id='dropdownMenu1' data-toggle='dropdown'>"+k+"<span class='caret'></span> </button><ul id = 'ula_"+i+"'class='dropdown-menu' role='menu' aria-labelledby='dropdownMenu1'>" + "</td><td>" + prices + "</td><td>" + time + "</td>";
