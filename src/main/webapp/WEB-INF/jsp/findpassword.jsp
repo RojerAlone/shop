@@ -24,7 +24,7 @@
         <!-- 广告 -->
         <div class="col-xs-10 col-sm-10 col-md-10">
 
-            <div class="row zczt"><h1>创建账户</h1></div>
+            <div class="row zczt"><h1>找回密码</h1></div>
             <div class="row zczt" >
                 <div class="col-xs-offset-1 col-xs-5" id="regist_2">
                     <div class="row zczt">
@@ -41,11 +41,6 @@
                         <div class=" col-sm-10">
                             <button type="submit" class="btn btn-default" style="background-color:#417a9b;" onclick="findpassword()">确定</button>
                         </div>
-                    </div>
-                </div>
-                <div class="col-xs-offset-1 col-xs-5" id="regist_3">
-                    <div class="row zczt">
-                        恭喜您注册成功，<a href="index.jsp">点此回到首页</a>
                     </div>
                 </div>
                 <div class="col-xs-6">
