@@ -1,9 +1,10 @@
 package cn.cie.services;
 
 import cn.cie.entity.Game;
-import cn.cie.entity.dto.GameDTO;
 import cn.cie.utils.Result;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 
@@ -60,9 +61,19 @@ public interface AdminService {
      * 添加游戏
      * @param game 游戏实体，需要游戏名字、开发者、描述、配置、价格
      * @param kind 游戏种类，数组类型
+     * @param header 游戏图片
+     * @param pics 至少5张游戏截图
+     * @param path 图片存储路径
      * @return
      */
-    Result addGame(Game game, Integer[] kind);
+    Result addGame(Game game, Integer[] kind, MultipartFile header, MultipartFile[] pics, String path) throws IOException;
+
+    /**
+     * 更新游戏信息
+     * @param game
+     * @return
+     */
+    Result updateGameInfo(Game game);
 
     /**
      * 更新游戏的种类

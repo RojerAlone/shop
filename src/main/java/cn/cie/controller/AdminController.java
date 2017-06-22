@@ -1,13 +1,16 @@
 package cn.cie.controller;
 
+import cn.cie.entity.Game;
 import cn.cie.services.AdminService;
 import cn.cie.utils.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.Date;
 
@@ -17,7 +20,7 @@ import java.util.Date;
 @CrossOrigin
 @Controller
 @RequestMapping(value = "admin")
-public class AdminController {
+public class AdminController extends AbstractController {
 
     @Autowired
     private AdminService adminService;
@@ -73,6 +76,20 @@ public class AdminController {
     @ResponseBody
     public Result getGames(@RequestParam(value = "page", required = false, defaultValue = "1") Integer page) {
         return adminService.getGames(page);
+    }
+
+    @PostMapping(value = "addgame")
+    @ResponseBody
+    public Result addGame(Game game, Integer[] kinds, MultipartFile header,
+                          @RequestParam(value = "pics") MultipartFile[] pics) throws IOException {
+        return adminService.addGame(game, kinds, header, pics,
+                this.getSession().getServletContext().getRealPath("/WEB-INF/image").replaceAll("\\\\", "/"));
+    }
+
+    @PostMapping(value = "updategameinfo")
+    @ResponseBody
+    public Result updateGameInfo(Game game) {
+        return adminService.updateGameInfo(game);
     }
 
     @PostMapping(value = "updategamekind")

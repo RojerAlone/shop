@@ -58,4 +58,6 @@ public class MsgCenter {
 
     public static final String LOGIN_NOT_ALLOW = "没有权限，禁止登陆";
 
+    public static final String ERROR_FILE_TYPE = "不支持的文件类型";
+
 }

@@ -25,6 +25,13 @@
       </if>
     </trim>
   </insert>
+  <insert id="insertBatch" parameterType="list">
+    insert into imgmapper (game, img)
+    values
+    <foreach collection="imgs" item="img" separator=",">
+      (#{game,jdbcType=INTEGER}, #{img})
+    </foreach>
+  </insert>
 
   <select id="selectByGame" parameterType="java.lang.Integer" resultType="java.lang.String">
     select img from img where game = #{game,jdbcType=INTEGER}

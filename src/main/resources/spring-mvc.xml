@@ -45,10 +45,11 @@
         <property name="prefix" value="/WEB-INF/jsp/" />
         <property name="suffix" value=".jsp" />
     </bean>
-    <!--<bean class="org.springframework.web.multipart.commons.CommonsMultipartResolver">-->
-        <!--<property name="defaultEncoding" value="UTF-8" />-->
-        <!--<property name="maxUploadSizePerFile" value="1024000" />-->
-    <!--</bean>-->
+    <!--文件上传-->
+    <bean class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <property name="defaultEncoding" value="UTF-8" />
+        <property name="maxUploadSizePerFile" value="1024000" />
+    </bean>
     <!--<aop:aspectj-autoproxy proxy-target-class="true"/>-->
 
 </beans>

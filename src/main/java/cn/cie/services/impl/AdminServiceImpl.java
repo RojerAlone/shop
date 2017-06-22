@@ -5,10 +5,15 @@ import cn.cie.entity.dto.GameDTO;
 import cn.cie.mapper.*;
 import cn.cie.services.AdminService;
 import cn.cie.utils.*;
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.*;
 
 /**
@@ -106,9 +111,46 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Transactional
-    public Result addGame(Game game, Integer[] kind) {
+    public Result addGame(Game game, Integer[] kind, MultipartFile header, MultipartFile[] pics, String path) throws IOException {
+        // 判断游戏信息
+        if (StringUtils.isBlank(game.getCreater()) || StringUtils.isBlank(game.getName())
+                || StringUtils.isBlank(game.getDesc()) || StringUtils.isBlank(game.getSystemcfg())
+                || game.getPrice() == null || game.getPrice() < 0) {
+            return Result.fail(MsgCenter.ERROR_PARAMS);
+        }
+        // 判断文件类型是否合法
+        System.out.println(header.getContentType());
+        if (!header.getContentType().equalsIgnoreCase("jpg") || !header.getContentType().equalsIgnoreCase("png")) {
+            return Result.fail(MsgCenter.ERROR_FILE_TYPE);
+        }
+        for (MultipartFile pic : pics) {
+            if (!pic.getContentType().equalsIgnoreCase("jpg") || !pic.getContentType().equalsIgnoreCase("png")) {
+                return Result.fail(MsgCenter.ERROR_FILE_TYPE);
+            }
+        }
+
         gameMapper.insert(game);
-        kindmapperMapper.insertBatch(game.getId(), Arrays.asList(kind));
+        if (kind.length > 0) {
+            kindmapperMapper.insertBatch(game.getId(), Arrays.asList(kind));
+        }
+        FileUtils.copyInputStreamToFile(header.getInputStream(), new File(path + "/" + game.getId(), "header" + header.getContentType()));
+        int index = 1;
+        List<String> imgs = new ArrayList<String>();
+        for (MultipartFile pic : pics) {
+            // 拼接写入数据库的图片信息
+            String img = "/" + game.getId() + "/" + index + "." + pic.getContentType();
+            imgs.add(img);
+            FileUtils.copyInputStreamToFile(pic.getInputStream(), new File(path + "/" + game.getId(), index + "." + pic.getContentType()));
+        }
+        imgMapper.insertBatch(game.getId(), imgs);
+        return Result.success();
+    }
+
+    public Result updateGameInfo(Game game) {
+        if (game.getId() == null) {
+            return Result.fail(MsgCenter.ERROR_PARAMS);
+        }
+        gameMapper.update(game);
         return Result.success();
     }
 

@@ -9,6 +9,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -31,8 +32,12 @@ public class KindmapperMapperTest {
         kinds.add(2);
         kinds.add(3);
         kinds.add(4);
-        logger.info(String.valueOf(kindmapperMapper.insertBatch(game, kinds)));
-
+        Integer[] test = new Integer[0];
+        try {
+            kindmapperMapper.insertBatch(game, Arrays.asList(test));
+        } catch (Exception e) {
+            logger.error("错误" + e);
+        }
     }
 
 }
