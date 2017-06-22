@@ -6,16 +6,13 @@ import cn.cie.entity.dto.OrderItemDTO;
 import cn.cie.mapper.*;
 import cn.cie.services.OrderService;
 import cn.cie.utils.MsgCenter;
+import cn.cie.utils.PageUtil;
 import cn.cie.utils.Result;
-import org.aspectj.weaver.ast.Or;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 /**
  * Created by RojerAlone on 2017/6/12.
@@ -117,16 +114,28 @@ public class OrderServiceImpl implements OrderService {
     }
 
 
-    public Result getNotPayOrders(int uid) {
-        return Result.success(parseOrderByStat(uid, Order.STAT_NOT_PAY));
+    public Result getNotPayOrders(int uid, int page) {
+        PageUtil pageUtil = new PageUtil(orderMapper.getOrderNumsByUidAndStat(uid, Order.STAT_NOT_PAY), page);
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("order", parseOrderByStatAndPage(uid, Order.STAT_NOT_PAY, pageUtil));
+        map.put("page", pageUtil);
+        return Result.success(map);
     }
 
-    public Result getPaidOrders(int uid) {
-        return Result.success(parseOrderByStat(uid, Order.STAT_PAY));
+    public Result getPaidOrders(int uid, int page) {
+        PageUtil pageUtil = new PageUtil(orderMapper.getOrderNumsByUidAndStat(uid, Order.STAT_PAY), page);
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("order", parseOrderByStatAndPage(uid, Order.STAT_PAY, pageUtil));
+        map.put("page", pageUtil);
+        return Result.success(map);
     }
 
-    public Result getCancelOrders(int uid) {
-        return Result.success(parseOrderByStat(uid, Order.STAT_CANCEL));
+    public Result getCancelOrders(int uid, int page) {
+        PageUtil pageUtil = new PageUtil(orderMapper.getOrderNumsByUidAndStat(uid, Order.STAT_CANCEL), page);
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("order", parseOrderByStatAndPage(uid, Order.STAT_CANCEL, pageUtil));
+        map.put("page", pageUtil);
+        return Result.success(map);
     }
 
     public void autoCancelOrder() {
@@ -135,9 +144,9 @@ public class OrderServiceImpl implements OrderService {
         orderMapper.updateStatByDate(Order.STAT_NOT_PAY, Order.STAT_CANCEL, date);
     }
 
-    private List<OrderDTO> parseOrderByStat(Integer uid, Byte stat) {
+    private List<OrderDTO> parseOrderByStatAndPage(Integer uid, Byte stat, PageUtil pageUtil) {
         List<OrderDTO> res = new ArrayList<OrderDTO>();
-        List<Order> orders = orderMapper.selectByUidAndStat(uid, stat);
+        List<Order> orders = orderMapper.selectByUidAndStatAndPage(uid, stat, pageUtil.getStartPos(), pageUtil.getSize());
         for (Order order : orders) {
             List<Integer> orderids = ordermapperMapper.selectByOrder(order.getId());    // 获取订单内所有的订单详情id
             List<Orderitem> orderitemList = orderitemMapper.selectByIds(orderids);      // 根据订单详情id获取订单详情

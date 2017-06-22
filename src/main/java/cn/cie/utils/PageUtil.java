@@ -18,8 +18,9 @@ public class PageUtil {
         this.pages = num % size == 0 ? num / size : num / size + 1;
         if (current <= 0) {
             this.current = 1;
+        } else {
+            this.current = current > pages ? pages : current;
         }
-        this.current = current > pages ? pages : current;
         this.startPos = this.size * (this.current - 1);
     }
 
@@ -33,6 +34,11 @@ public class PageUtil {
         this.current = current;
         this.size = 10;
         this.pages = num % size == 0 ? num / size : num / size + 1;
+        if (current <= 0) {
+            this.current = 1;
+        } else {
+            this.current = current > pages ? pages : current;
+        }
         this.startPos = this.size * (current - 1);
     }
 

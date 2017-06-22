@@ -26,6 +26,18 @@
     where uid = #{uid,jdbcType=INTEGER}
     and stat = #{stat,jdbcType=TINYINT}
   </select>
+  <select id="selectByUidAndStatAndPage" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from `order`
+    where uid = #{uid,jdbcType=INTEGER}
+    and stat = #{stat,jdbcType=TINYINT}
+    order by id asc
+    limit #{startPos,jdbcType=INTEGER}, #{size,jdbcType=INTEGER}
+  </select>
+  <select id="getOrderNumsByUidAndStat" resultType="java.lang.Integer">
+    select count(id) from `order` where uid = #{uid,jdbcType=INTEGER} and stat = #{stat,jdbcType=TINYINT}
+  </select>
 
   <insert id="insert" parameterType="cn.cie.entity.Order" useGeneratedKeys="true" keyProperty="id">
     insert into `order`

@@ -52,21 +52,21 @@ public interface OrderService {
      * @param uid
      * @return
      */
-    Result getNotPayOrders(int uid);
+    Result getNotPayOrders(int uid, int page);
 
     /**
      * 获取支付过的订单
      * @param uid
      * @return
      */
-    Result getPaidOrders(int uid);
+    Result getPaidOrders(int uid, int page);
 
     /**
      * 获取取消的订单
      * @param uid
      * @return
      */
-    Result getCancelOrders(int uid);
+    Result getCancelOrders(int uid, int page);
 
     /**
      * 自动取消15分钟还未支付的订单，定时器每1分钟检查一次

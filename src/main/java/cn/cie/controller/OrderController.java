@@ -64,22 +64,22 @@ public class OrderController extends AbstractController{
         return orderService.pay(userHolder.getUser().getId(), orderid);
     }
 
-    @PostMapping(value = "notpay")
+    @PostMapping(value = "notpay/{page}")
     @ResponseBody
-    public Result getNotPayOrders() {
-        return orderService.getNotPayOrders(userHolder.getUser().getId());
+    public Result getNotPayOrders(@PathVariable(value = "page") Integer page) {
+        return orderService.getNotPayOrders(userHolder.getUser().getId(), page);
     }
 
-    @PostMapping(value = "paid")
+    @PostMapping(value = "paid/{page}")
     @ResponseBody
-    public Result getPaidOrders() {
-        return orderService.getPaidOrders(userHolder.getUser().getId());
+    public Result getPaidOrders(@PathVariable(value = "page") Integer page) {
+        return orderService.getPaidOrders(userHolder.getUser().getId(), page);
     }
 
-    @PostMapping(value = "cancel")
+    @PostMapping(value = "cancel/{page}")
     @ResponseBody
-    public Result getCancelOrders() {
-        return orderService.getCancelOrders(userHolder.getUser().getId());
+    public Result getCancelOrders(@PathVariable(value = "page") Integer page) {
+        return orderService.getCancelOrders(userHolder.getUser().getId(), page);
     }
 
 }

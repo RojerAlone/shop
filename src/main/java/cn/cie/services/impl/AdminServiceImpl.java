@@ -98,7 +98,7 @@ public class AdminServiceImpl implements AdminService {
 
     public Result getGames(int page) {
         PageUtil pageUtil = new PageUtil(gameMapper.selectNums(), page);
-        List<Game> games = gameMapper.selectByPage(pageUtil.getCurrent(), pageUtil.getSize());
+        List<Game> games = gameMapper.selectByPage(pageUtil.getStartPos(), pageUtil.getSize());
         Map<String, Object> map = new HashMap<String, Object>();
         map.put("game", paresGameDTO(games));
         map.put("page", pageUtil);
@@ -172,7 +172,9 @@ public class AdminServiceImpl implements AdminService {
             List<Integer> tagIds = tagmapperMapper.selectByGame(game.getId());     // 获取游戏的标签id
             List<Tag> tags = tagMapper.selectByIds(tagIds);                         // 根据id获取所有的标签信息
             List<String> img = imgMapper.selectByGame(game.getId());                // 获取所有的图片
-            GameDTO dto = new GameDTO(game, tags, img);
+            List<Integer> kindIds = kindmapperMapper.selectByGame(game.getId());   // 根据游戏id获取所有的种类id
+            List<Kind> kinds = kindMapper.selectByIds(kindIds);                     // 根据种类id获取种类信息
+            GameDTO dto = new GameDTO(game, kinds, tags, img);
             gameDTOS.add(dto);
         }
         return gameDTOS;

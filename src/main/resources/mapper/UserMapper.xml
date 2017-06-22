@@ -15,6 +15,9 @@
   <sql id="Base_Column_List">
     id, username, password, nickname, email, phone, ctime, utime, stat
   </sql>
+  <sql id="Columns_Without_Pwd">
+    id, username, nickname, email, phone, ctime, utime, stat
+  </sql>
 
   <select id="selectById" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
@@ -39,7 +42,7 @@
   </select>
   <select id="selectByPage" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select
-    <include refid="Base_Column_List" />
+    <include refid="Columns_Without_Pwd" />
     from user where id != 1
     order by id asc limit #{startPos}, #{size}
   </select>
