@@ -18,9 +18,9 @@ body{font-family:Microsoft YaHei,Verdana,Arial,SimSun;color:#666;font-size:14px;
 #footer{height:50px;line-height:50px;background:#5e5e5e;width:100%;position:absolute;z-index:200;bottom:0;text-align:center;}
 #footer p{text-align:center;line-height:50px;color:#fbfbfb;}
 /*****主体部分******/
-#content{ width:100%;top:80px;position:absolute;z-index:10;bottom:50px;}
+#content{ width:100%;top:80px;position:absolute;z-index:10;bottom:50px;overflow-y:auto;}
 /**左侧菜单***/
-.left_menu{float:left;width:300px;background:#32323a;height:100%;position:absolute;top:0;left:0;overflow:auto;border-left:5px solid #f6f6f6;}
+.left_menu{float:left;width:300px;background:#32323a;height:120%;position:absolute;top:0;left:0;overflow:auto;border-left:5px solid #f6f6f6;}
 .left_menu ul li {width:300px; display:inline; }
 .left_menu ul li .list-item a{width:230px;padding-left:110px;text-decoration:none;font-size:14px;color:#f5f5f5;line-height:30px;display:block;}
 .left_menu ul li a.noline { border-bottom:none; }
@@ -48,7 +48,7 @@ body{font-family:Microsoft YaHei,Verdana,Arial,SimSun;color:#666;font-size:14px;
 .right-nav li img{position:relative;top:17px;left:15px;}
 .right-nav li a{color:#464646;}
 .right-nav li a:hover{color:#00a5a5; text-decoration:underline;}
-.main{width:100%;height:100%;background:#f6f6f6;overflow:auto;}
+main{width:100%;height:100%;background:#f6f6f6;overflow:auto;}
 
 .yema li{
 	display:inline;
@@ -67,10 +67,23 @@ tr th{
 .divsetcenter{
 	margin-left: 30%;
 }
+.setmargin{
+	margin-left: 1%;
+	margin-top: 1%;
+}
+.setmargin_0{
+	margin-top:200px;
+}
 #right_0{
 	display: none;
 }
 #right_1{
+	display: none;
+}
+#right_2{
+	display: none;
+}
+#right_3{
 	display: none;
 }
 .modal-backdrop {

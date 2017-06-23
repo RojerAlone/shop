@@ -26,13 +26,16 @@
             <li>
                 <h4 class="M2"><span></span>种类管理</h4>
                 <div class="list-item none">
-                    <a href="#">信息展示</a>
+                    <a href="#" onclick="showright_3()">信息展示</a>
                 </div>
             </li>
             <li>
                 <h4 class="M3"><span></span>游戏管理</h4>
                 <div class="list-item none">
                     <a href="#" onclick="showright_1()">信息展示</a>
+                </div>
+                <div class="list-item none">
+                    <a href="#" onclick="showright_2()">添加游戏</a>
                 </div>
             </li>
 
@@ -141,6 +144,104 @@
         </div>
     </div>
 
+    <div class="m-right" id="right_2">
+        <div class="main setmargin">
+            <form method="post" name="game_info" id="game_info" enctype="multipart/form-data">
+
+
+                <h5 >开发商</h5>
+                <input type="text "  class="form-control" placeholder="Create" id="addgamecreater" name="creater">
+
+
+
+                <h5 >游戏名称</h5>
+                <input type="text"  class="form-control" placeholder="Name" id="addgamename" name="name">
+
+
+
+                <h5 >游戏描述</h5>
+                <textarea   class="form-control" placeholder="Desc" id="addgamedesc" name="desc"></textarea>
+
+
+
+                <h5 >系统配置</h5>
+                <textarea class="form-control" placeholder="Systemcfg" id="addgamesyscfg" name="systemcfg"></textarea>
+
+
+
+                <h5 >游戏价格</h5>
+                <input type="text"  class="form-control" placeholder="Price" id="addgameprice" name="price">
+
+
+
+                <h5 >游戏折扣</h5>
+                <input type="text"  class="form-control" placeholder="Discont" id="addgamediscount" name="discount">
+
+
+
+
+                <h5 >上架状态</h5>
+                <input type="text"  class="form-control" placeholder="Stat" id="addgamestat" name="stat">
+
+
+
+                <h5 >上传游戏封面</h5>
+                <input type="file"  id="doc_0" style="width:150px;"  accept="image/*" onchange="setImagePreviews_0();" name="header">
+                <div id="dd_0" ></div>
+
+
+            <div class=" setmargin_0">
+                <h5 >上传游戏截图</h5>
+                    <input type="file"   id="doc" multiple="multiple"  style="width:150px;" onchange="setImagePreviews();" accept="image/*" name="pics">
+                    <div id="dd" ></div>
+            </div>
+            </form>
+
+            <div class=" setmargin_0">
+                <button type="submit" onclick="addgame()" >确认添加</button>
+                <button type="reset" >重置内容</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="m-right" id="right_3">
+        <div class="main">
+            <div class="container">
+                <div class="row clearfix">
+                    <div class="col-md-12 column">
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th>
+                                    种类编号
+                                </th>
+                                <th>
+                                    种类名
+                                </th>
+                                <th>
+                                    操作
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody id="kind_all">
+
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span12">
+                            <div class="pagination pagination-right yema divsetcenter" >
+                                <ul id="paging_3">
+
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
 
 </div>
 

@@ -69,14 +69,28 @@ $(
                     if(stat == "0"){
                         stat = "未上架";
                     }
-                    tr.innerHTML = "<td>" + j + "</td><td>"
-                        + result.data.game[i].name + "</td><td>"
+                    tr.innerHTML = "<td>" + j + "</td><td id='gname_"+gid+"'>"
+                        + result.data.game[i].name + "</td><td id='gprice_"+gid+"'>"
                         + result.data.game[i].price + "</td><td id='gstat_"+j+"'>"
                         + stat+"</td><td><button class='btn' onclick='upgame("+gid+","+j+")'>"
                         + "上架" + "</button><button class='btn' onclick='downgame("+gid+","+j+")'>"
                         + "下架" + "<button type='button' class='btn' data-toggle='modal' data-target='#myModal' onclick='getgameinfo("+gid+")'>"+
                         "修改信息"+
-                        "</button>" + text + "</td>";
+                        "</button>" + text +
+                        "<p>编号"+"<input type='text' class='inputmargin_2'id='gameid"+"'></p><br>"+
+                        "<p>游戏"+"<input type='text' class='inputmargin_2'id='gamename"+"'></p><br>"+
+                        "<p>价格"+"<input type='text'class='inputmargin_2' id='gameprice"+"'></p><br>"+
+                        "<p>开发商"+"<input type='text'class='inputmargin_1' id='gamecreater"+"'></p><br>"+
+                        "<p>描述"+"<textarea  rows='5'  class='inputmargin_2' id='gamedesc"+"'></textarea></p><br>"+
+                        "<p>配置"+"<textarea  rows='5'  class='inputmargin_2' id='sys"+"'></textarea></p><br>"+
+                        "</div>"+
+                        "<div class='modal-footer' id='savebtn'>"+
+                        "<button type='button' class='btn btn-default' data-dismiss='modal'>取消</button>"+
+                        "<button type='button' class='btn btn-primary' onclick='savegameupdate("+")'>保存</button>"+
+                        "</div>"+
+                        "</div>"+
+                        "</div>"+
+                        "</div>"+"</td>";
                     gameInfo.appendChild(tr);
                 }
             }
@@ -104,6 +118,22 @@ $(
             li_last.innerHTML = "<a href='#'onclick='getgeame("+next+")'>&raquo;</a>";
             ul.appendChild(li_last);
         })
+
+        //种类管理
+        var kind_all = document.getElementById("kind_all");
+        $.post("/kind/all",function (result) {
+            var i = 0;
+            while(result.data[i]){
+                j = i + 1;
+                var tr = document.createElement("tr");
+                tr.innerHTML = "<td id='kindid_"+j+"'>"
+                    + result.data[i].id + "</td><td id='kindname_"+j+"'>"
+                    + result.data[i].name + "</td><td><button class='btn' onclick='restrict("+")'>"
+                    + "限制登录" + "</button>";
+                i++;
+                kind_all.appendChild(tr);
+            }
+        })
     }
 
 )
@@ -127,14 +157,28 @@ function getgeame(pagenum) {
                 if(stat == "0"){
                     stat = "未上架";
                 }
-                tr.innerHTML = "<td>" + j + "</td><td>"
-                    + result.data.game[i].name + "</td><td>"
+                tr.innerHTML = "<td>" + j + "</td><td id='gname_"+gid+"'>"
+                    + result.data.game[i].name + "</td><td id='gprice_"+gid+"'>"
                     + result.data.game[i].price + "</td><td id='gstat_"+j+"'>"
                     + stat+"</td><td><button class='btn' onclick='upgame("+gid+","+j+")'>"
                     + "上架" + "</button><button class='btn' onclick='downgame("+gid+","+j+")'>"
                     + "下架" + "<button type='button' class='btn' data-toggle='modal' data-target='#myModal' onclick='getgameinfo("+gid+")'>"+
                     "修改信息"+
-                    "</button>" + text +"</td>";
+                    "</button>" + text +
+                    "<p>编号"+"<input type='text' class='inputmargin_2'id='gameid"+"'></p><br>"+
+                    "<p>游戏"+"<input type='text' class='inputmargin_2'id='gamename"+"'></p><br>"+
+                    "<p>价格"+"<input type='text'class='inputmargin_2' id='gameprice"+"'></p><br>"+
+                    "<p>开发商"+"<input type='text'class='inputmargin_1' id='gamecreater"+"'></p><br>"+
+                    "<p>描述"+"<textarea  rows='5'  class='inputmargin_2' id='gamedesc"+"'></textarea></p><br>"+
+                    "<p>配置"+"<textarea  rows='5'  class='inputmargin_2' id='sys"+"'></textarea></p><br>"+
+                    "</div>"+
+                    "<div class='modal-footer' id='savebtn'>"+
+                    "<button type='button' class='btn btn-default' data-dismiss='modal'>取消</button>"+
+                    "<button type='button' class='btn btn-primary' onclick='savegameupdate("+")'>保存</button>"+
+                    "</div>"+
+                    "</div>"+
+                    "</div>"+
+                    "</div>"+"</td>";
                 gameInfo.appendChild(tr);
             }
         }
@@ -233,12 +277,27 @@ function downgame(gid,j) {
 function showright_0() {
     document.getElementById("right_0").style.display = "block";
     document.getElementById("right_1").style.display = "none";
+    document.getElementById("right_2").style.display = "none";
+    document.getElementById("right_3").style.display = "none";
 }
 function showright_1() {
     document.getElementById("right_0").style.display = "none";
     document.getElementById("right_1").style.display = "block";
+    document.getElementById("right_2").style.display = "none";
+    document.getElementById("right_3").style.display = "none";
 }
-
+function  showright_2() {
+    document.getElementById("right_0").style.display = "none";
+    document.getElementById("right_1").style.display = "none";
+    document.getElementById("right_2").style.display = "block";
+    document.getElementById("right_3").style.display = "none";
+}
+function showright_3() {
+    document.getElementById("right_0").style.display = "none";
+    document.getElementById("right_1").style.display = "none";
+    document.getElementById("right_2").style.display = "none";
+    document.getElementById("right_3").style.display = "block";
+}
 
 
 
@@ -301,27 +360,195 @@ var text = "<div class='modal fade' id='myModal' tabindex='-1' role='dialog' ari
     "<button type='button' class='close' data-dismiss='modal' aria-label='Close'><span aria-hidden='true'>&times;</span></button>"+
     "<h4 class='modal-title' id='myModalLabel'>游戏信息</h4>"+
     "</div>"+
-    "<div class='modal-body'>"+
-    "<p>游戏"+"<input type='text' class='inputmargin_2'id='gamename"+"'></p><br>"+
-    "<p>价格"+"<input type='text'class='inputmargin_2' id='gameprice"+"'></p><br>"+
-    "<p>开发商"+"<input type='text'class='inputmargin_1' id='gamecreater"+"'></p><br>"+
-    "<p>描述"+"<textarea  rows='5'  class='inputmargin_2' id='gamedesc"+"'></textarea></p><br>"+
-    "<p>配置"+"<textarea  rows='5'  class='inputmargin_2' id='sys"+"'></textarea></p><br>"+
-    "</div>"+
-    "<div class='modal-footer'>"+
-    "<button type='button' class='btn btn-default' data-dismiss='modal'>Close</button>"+
-    "<button type='button' class='btn btn-primary'>Save changes</button>"+
-    "</div>"+
-    "</div>"+
-    "</div>"+
-    "</div>";
+    "<div class='modal-body'>"
+    // "<button type='button' class='btn btn-primary'>保存</button>"+
+    // "</div>"+
+    // "</div>"+
+    // "</div>"+
+    // "</div>";
 
 function getgameinfo(gid) {
     $.post("/game/"+gid,function (result) {
+        document.getElementById("gameid").value = result.data.id;
         document.getElementById("gamename").value = result.data.name;
         document.getElementById("gameprice").value = result.data.price;
         document.getElementById("gamecreater").value = result.data.creater;
         document.getElementById("gamedesc").value = result.data.desc;
         document.getElementById("sys").value = result.data.systemcfg;
     })
+}
+
+function savegameupdate() {
+    var gid = document.getElementById("gameid").value;
+    var gamename = document.getElementById("gamename").value;
+    var gameprice = document.getElementById("gameprice").value;
+    var gamedesc = document.getElementById("gamedesc").value;
+    var gamecreater = document.getElementById("gamecreater").value;
+    var sys = document.getElementById("sys").value;
+    $.post("/admin/updategameinfo",{id:gid,creater:gamecreater,name:gamename,desc:gamedesc,systemcfg:sys,price:gameprice},function (result) {
+        if(result.success){
+            alert("修改成功！");
+        }
+        else {
+            alert(result.msg);
+        }
+
+    })
+    document.getElementById("gname_"+gid).innerHTML = gamename;
+    document.getElementById("gprice_"+gid).innerHTML = gameprice;
+    $('#myModal').modal('hide');
+}
+
+function setImagePreviews(avalue) {
+    //获取选择图片的对象
+    var docObj = document.getElementById("doc");
+    //后期显示图片区域的对象
+    var dd = document.getElementById("dd");
+    dd.innerHTML = "";
+    //得到所有的图片文件
+    var fileList = docObj.files;
+    //循环遍历
+    for (var i = 0; i < fileList.length; i++) {
+        //动态添加html元素
+        dd.innerHTML += "<div style='float:left' > <img id='img" + i + "'  /> </div>";
+        //获取图片imgi的对象
+        var imgObjPreview = document.getElementById("img"+i);
+
+        if (docObj.files && docObj.files[i]) {
+            //火狐下，直接设img属性
+            imgObjPreview.style.display = 'block';
+            imgObjPreview.style.width = '200px';
+            imgObjPreview.style.height = '180px';
+            //imgObjPreview.src = docObj.files[0].getAsDataURL();
+            //火狐7以上版本不能用上面的getAsDataURL()方式获取，需要以下方式
+            imgObjPreview.src = window.URL.createObjectURL(docObj.files[i]);   //获取上传图片文件的物理路径
+        }
+        else {
+            //IE下，使用滤镜
+            docObj.select();
+            var imgSrc = document.selection.createRange().text;
+            //alert(imgSrc)
+            var localImagId = document.getElementById("img" + i);
+            //必须设置初始大小
+            localImagId.style.width = "200px";
+            localImagId.style.height = "180px";
+            //图片异常的捕捉，防止用户修改后缀来伪造图片
+            try {
+                localImagId.style.filter = "progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod=scale)";
+                localImagId.filters.item("DXImageTransform.Microsoft.AlphaImageLoader").src = imgSrc;
+            }
+            catch (e) {
+                alert("您上传的图片格式不正确，请重新选择!");
+                return false;
+            }
+            imgObjPreview.style.display = 'none';
+            document.selection.empty();
+        }
+    }
+    return true;
+}
+function setImagePreviews_0(avalue) {
+    //获取选择图片的对象
+    var docObj = document.getElementById("doc_0");
+    //后期显示图片区域的对象
+    var dd = document.getElementById("dd_0");
+    dd.innerHTML = "";
+    //得到所有的图片文件
+    var fileList = docObj.files;
+    //循环遍历
+    for (var i = 0; i < fileList.length; i++) {
+        //动态添加html元素
+        dd.innerHTML += "<div style='float:left' > <img id='img_" + i + "'  /> </div>";
+        //获取图片imgi的对象
+        var imgObjPreview = document.getElementById("img_"+i);
+
+        if (docObj.files && docObj.files[i]) {
+            //火狐下，直接设img属性
+            imgObjPreview.style.display = 'block';
+            imgObjPreview.style.width = '200px';
+            imgObjPreview.style.height = '180px';
+            //imgObjPreview.src = docObj.files[0].getAsDataURL();
+            //火狐7以上版本不能用上面的getAsDataURL()方式获取，需要以下方式
+            imgObjPreview.src = window.URL.createObjectURL(docObj.files[i]);   //获取上传图片文件的物理路径
+        }
+        else {
+            //IE下，使用滤镜
+            docObj.select();
+            var imgSrc = document.selection.createRange().text;
+            //alert(imgSrc)
+            var localImagId = document.getElementById("img_" + i);
+            //必须设置初始大小
+            localImagId.style.width = "200px";
+            localImagId.style.height = "180px";
+            //图片异常的捕捉，防止用户修改后缀来伪造图片
+            try {
+                localImagId.style.filter = "progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod=scale)";
+                localImagId.filters.item("DXImageTransform.Microsoft.AlphaImageLoader").src = imgSrc;
+            }
+            catch (e) {
+                alert("您上传的图片格式不正确，请重新选择!");
+                return false;
+            }
+            imgObjPreview.style.display = 'none';
+            document.selection.empty();
+        }
+    }
+    return true;
+}
+
+function addgame() {
+    // var creater = document.getElementById("addgamecreater").value;
+    // var name = document.getElementById("addgamename").value;
+    // var desc = document.getElementById("addgamedesc").value;
+    // var syscfg = document.getElementById("addgamesyscfg").value;
+    // var price = document.getElementById("addgameprice").value;
+    // var discount = document.getElementById("addgamediscount").value;
+    // // // // var cover = document.getElementById("doc_0").value;
+    // // // // var pictures = document.getElementById("doc").value;
+    // // // var cover = document.getElementById("doc_0").files[0];
+    // // // var pictures = document.getElementById("doc").files[0];
+    //  $.post("/admin/addgame",{creater:creater,name:name,desc:desc,price:price,discount:discount,systemcfg:syscfg},function () {
+    // })
+
+
+
+
+    // var form = new FormData();
+    // form.append("creater",creater);
+    // form.append("name",name);
+    // form.append("desc",desc);
+    // form.append("systemcfg",syscfg);
+    // form.append("price",price);
+    // form.append("discount",discount);
+    // form.append("kinds",'0');
+    // // form.append("header",cover);
+    // // form.append("pics",pictures);
+    // var xhr = new XMLHttpRequest();
+    // xhr.open("POST", "/admin/addgame", true);
+    // xhr.send(form);
+
+    var oData = new FormData(document.forms.namedItem("gameinfo"));
+    // oData.append("kinds",'0');
+    var Req = new XMLHttpRequest();
+    Req.open("POST", "/admin/addgame",true);
+    Req.send(oData);
+
+    // var form = document.getElementById("game_info");
+    // var formdata = new FormData(form);
+    // formdata.append("kinds",'0');
+    // // var Req = new XMLHttpRequest();
+    // // Req.open("POST", "/admin/addgame",true);
+    // // Req.send(formdata);
+    // $.ajax({
+    //     url: '/admin/addgame',
+    //     type: 'POST',
+    //     datatype: 'json',
+    //     data: formdata,
+    //     cache:false,
+    //     traditional: true,
+    //     contentType: false,
+    //     processData: false,
+    //     success: function (data) {},
+    //     error: function () {}
+    // });
 }

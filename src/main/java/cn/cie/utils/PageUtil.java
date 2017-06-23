@@ -21,7 +21,7 @@ public class PageUtil {
         } else {
             this.current = current > pages ? pages : current;
         }
-        this.startPos = this.size * (this.current - 1);
+        this.startPos = this.size * (this.current - 1) < 0 ? 0 : this.size * (this.current - 1);
     }
 
     /**
@@ -38,7 +38,7 @@ public class PageUtil {
         } else {
             this.current = current > pages ? pages : current;
         }
-        this.startPos = this.size * (this.current - 1);
+        this.startPos = this.size * (this.current - 1) < 0 ? 0 : this.size * (this.current - 1);
     }
 
     public int getNum() {
