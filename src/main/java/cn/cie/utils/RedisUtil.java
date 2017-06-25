@@ -171,6 +171,28 @@ public class RedisUtil<T> implements InitializingBean {
     }
 
     /**
+     * 从队列头部出队一个元素，如果没有，则会阻塞 timeout 秒后返回null
+     * 如果 timeout 为0，那么会一直阻塞直到有元素
+     * @param timeout 阻塞的时间，单位为秒
+     * @param key
+     * @param clazz
+     * @return
+     */
+    public T blpopObject(int timeout, String key, Class clazz) {
+        this.setSchema(clazz);
+        Jedis jedis = null;
+        try {
+            List<byte[]> bytes = jedis.blpop(timeout, key.getBytes());
+            if (bytes == null || bytes.size() == 0) {
+                return null;
+            }
+            return getBytes(bytes.get(1));
+        } finally {
+            jedis.close();
+        }
+    }
+
+    /**
      * 向列表尾部添加数据
      * @param key
      * @param values
@@ -235,6 +257,9 @@ public class RedisUtil<T> implements InitializingBean {
             // 0表示第一个元素，-1表示最后一个元素
             List<byte[]> bytes = jedis.lrange(key.getBytes(), 0, -1);
             List<T> res = new ArrayList<T>();
+            if (bytes == null || bytes.size() == 0) {
+                return res;
+            }
             this.setSchema(clazz);
             for (byte[] b : bytes) {
                 res.add(getBytes(b));

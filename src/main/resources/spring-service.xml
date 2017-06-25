@@ -19,6 +19,6 @@
     <!--开启定时任务注解扫描-->
     <task:annotation-driven />
     <!--指定要扫描的包-->
-    <context:component-scan base-package="cn.cie.services, cn.cie.schedule, cn.cie.utils" />
+    <context:component-scan base-package="cn.cie.services, cn.cie.schedule, cn.cie.utils, cn.cie.event" />
 
 </beans>
