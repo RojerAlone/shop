@@ -182,6 +182,7 @@ public class RedisUtil<T> implements InitializingBean {
         this.setSchema(clazz);
         Jedis jedis = null;
         try {
+            jedis = jedisPool.getResource();
             List<byte[]> bytes = jedis.blpop(timeout, key.getBytes());
             if (bytes == null || bytes.size() == 0) {
                 return null;

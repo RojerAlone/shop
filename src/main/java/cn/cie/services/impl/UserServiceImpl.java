@@ -99,7 +99,7 @@ public class UserServiceImpl implements UserService {
 //        code.setCode(uuid);
 //        codeMapper.insert(code);    // 数据库中存入验证码
         // 将邮件发送事件添加到异步事件队列中去
-        eventProducer.product(new EventModel(EventType.SEND_VALIDATE_EMAIL).setExts("user", user.getEmail()).setExts("code", uuid));
+        eventProducer.product(new EventModel(EventType.SEND_VALIDATE_EMAIL).setExts("mail", user.getEmail()).setExts("code", uuid));
 //        MailUtil.sendValidateMail(user.getEmail(), uuid); // 发送验证邮件
         return Result.success();
     }
@@ -265,7 +265,7 @@ public class UserServiceImpl implements UserService {
         String uuid = UUID.randomUUID().toString();
         // 将数据存入redis中，固定时间后过期
         redisUtil.putEx(email, uuid, Validatecode.TIMEOUT);
-        eventProducer.product(new EventModel(EventType.SEND_FIND_PWD_EMAIL).setExts("user", user.getEmail()).setExts("code", uuid));
+        eventProducer.product(new EventModel(EventType.SEND_FIND_PWD_EMAIL).setExts("mail", user.getEmail()).setExts("code", uuid));
 //        MailUtil.sendFetchPwdMail(email, uuid);
         return Result.success();
     }

@@ -41,7 +41,10 @@ public class GameServiceImpl implements GameService{
             return Result.fail(MsgCenter.ERROR_PARAMS);
         }
         List<Integer> tagIds = tagmapperMapper.selectByGame(id);
-        List<Tag> tags = tagMapper.selectByIds(tagIds);
+        List<Tag> tags = null;
+        if (tagIds.size() != 0) {
+            tags = tagMapper.selectByIds(tagIds);
+        }
         List<String> img = imgMapper.selectByGame(game.getId());
         GameDTO res = new GameDTO(game, tags, img);
         return Result.success(res);
