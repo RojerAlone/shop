@@ -64,4 +64,10 @@ public class CommonTest {
     public void strlength() {
         logger.info(String.valueOf(StringUtils.length("rojeralone")));
     }
+
+    @Test
+    public void equals() {
+        String type = "image/png";
+        logger.info(String.valueOf(type.equalsIgnoreCase("image/png")));
+    }
 }

@@ -119,28 +119,44 @@ public class AdminServiceImpl implements AdminService {
             return Result.fail(MsgCenter.ERROR_PARAMS);
         }
         // 判断文件类型是否合法
-        System.out.println(header.getContentType());
-        if (!header.getContentType().equalsIgnoreCase("jpg") || !header.getContentType().equalsIgnoreCase("png")) {
+        if (!header.getContentType().equalsIgnoreCase("image/jpeg") && !header.getContentType().equalsIgnoreCase("image/png")) {
             return Result.fail(MsgCenter.ERROR_FILE_TYPE);
         }
         for (MultipartFile pic : pics) {
-            if (!pic.getContentType().equalsIgnoreCase("jpg") || !pic.getContentType().equalsIgnoreCase("png")) {
+            if (!pic.getContentType().equalsIgnoreCase("image/jpeg") && !pic.getContentType().equalsIgnoreCase("image/png")) {
                 return Result.fail(MsgCenter.ERROR_FILE_TYPE);
             }
         }
 
         gameMapper.insert(game);
-        if (kind.length > 0) {
+        if (kind != null && kind.length > 0) {
             kindmapperMapper.insertBatch(game.getId(), Arrays.asList(kind));
         }
-        FileUtils.copyInputStreamToFile(header.getInputStream(), new File(path + "/" + game.getId(), "header" + header.getContentType()));
+        Img image = new Img();
+        image.setGame(game.getId());
+        String headertype = null;
+        if (header.getContentType().equalsIgnoreCase("image/jpeg")) {
+            headertype = "jpg";
+        } else if (header.getContentType().equalsIgnoreCase("image/png")) {
+            headertype = "png";
+        }
+        image.setImg("/" + game.getId() + "/header." + headertype);
+        imgMapper.insert(image);
+        FileUtils.copyInputStreamToFile(header.getInputStream(), new File(path + "/" + game.getId(), "header." + headertype));
         int index = 1;
         List<String> imgs = new ArrayList<String>();
         for (MultipartFile pic : pics) {
+            String type = null;
+            if (pic.getContentType().equalsIgnoreCase("image/jpeg")) {
+                type = "jpg";
+            } else if (pic.getContentType().equalsIgnoreCase("image/png")) {
+                type = "png";
+            }
             // 拼接写入数据库的图片信息
-            String img = "/" + game.getId() + "/" + index + "." + pic.getContentType();
+            String img = "/" + game.getId() + "/" + index + "." + type;
             imgs.add(img);
-            FileUtils.copyInputStreamToFile(pic.getInputStream(), new File(path + "/" + game.getId(), index + "." + pic.getContentType()));
+            FileUtils.copyInputStreamToFile(pic.getInputStream(), new File(path + "/" + game.getId(), index + "." + type));
+            index++;
         }
         imgMapper.insertBatch(game.getId(), imgs);
         return Result.success();
@@ -220,11 +236,17 @@ public class AdminServiceImpl implements AdminService {
     private List<GameDTO> paresGameDTO(List<Game> games) {
         List<GameDTO> gameDTOS = new ArrayList<GameDTO>();
         for (Game game : games) {
+            List<Tag> tags = null;
+            List<Kind> kinds = null;
             List<Integer> tagIds = tagmapperMapper.selectByGame(game.getId());     // 获取游戏的标签id
-            List<Tag> tags = tagMapper.selectByIds(tagIds);                         // 根据id获取所有的标签信息
+            if (tagIds.size() != 0) {
+                tags = tagMapper.selectByIds(tagIds);                               // 根据id获取所有的标签信息
+            }
             List<String> img = imgMapper.selectByGame(game.getId());                // 获取所有的图片
             List<Integer> kindIds = kindmapperMapper.selectByGame(game.getId());   // 根据游戏id获取所有的种类id
-            List<Kind> kinds = kindMapper.selectByIds(kindIds);                     // 根据种类id获取种类信息
+            if (kindIds.size() != 0) {
+                kinds = kindMapper.selectByIds(kindIds);                             // 根据种类id获取种类信息
+            }
             GameDTO dto = new GameDTO(game, kinds, tags, img);
             gameDTOS.add(dto);
         }

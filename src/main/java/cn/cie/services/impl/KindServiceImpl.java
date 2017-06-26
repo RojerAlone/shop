@@ -79,8 +79,11 @@ public class KindServiceImpl implements KindService {
     private List<GameDTO> paresGameDTO(List<Game> games) {
         List<GameDTO> gameDTOS = new ArrayList<GameDTO>();
         for (Game game : games) {
+            List<Tag> tags = null;
             List<Integer> tagIds = tagmapperMapper.selectByGame(game.getId());     // 获取游戏的标签id
-            List<Tag> tags = tagMapper.selectByIds(tagIds);                         // 根据id获取所有的标签信息
+            if (tagIds.size() != 0) {
+                tags = tagMapper.selectByIds(tagIds);                         // 根据id获取所有的标签信息
+            }
             List<String> img = imgMapper.selectByGame(game.getId());                // 获取所有的图片
             GameDTO dto = new GameDTO(game, tags, img);
             gameDTOS.add(dto);
