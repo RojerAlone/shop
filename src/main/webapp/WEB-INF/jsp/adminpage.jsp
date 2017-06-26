@@ -222,6 +222,11 @@
                                     操作
                                 </th>
                             </tr>
+                            <tr>
+                                <th>0</th>
+                                <th><input type="text" id="addkindinput"></th>
+                                <th><button class="btn" onclick="addkind()">添加 </button></th>
+                            </tr>
                             </thead>
                             <tbody id="kind_all">
 

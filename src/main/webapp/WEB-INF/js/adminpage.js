@@ -74,10 +74,22 @@ $(
                         + result.data.game[i].price + "</td><td id='gstat_"+j+"'>"
                         + stat+"</td><td><button class='btn' onclick='upgame("+gid+","+j+")'>"
                         + "上架" + "</button><button class='btn' onclick='downgame("+gid+","+j+")'>"
-                        + "下架" + "<button type='button' class='btn' data-toggle='modal' data-target='#myModal' onclick='getgameinfo("+gid+")'>"+
-                        "修改信息"+
+                        + "下架" + "</button><button type='button' class='btn' data-toggle='modal' data-target='#myModal_1' onclick='getgamekind("+gid+")'>"
+                        + "修改种类" + "</button>" +text_1 +
+                        "<p>编号"+"<input type='text' readOnly='true' class='inputmargin_2'id='gamekindid"+"'></p><br>"+
+                        "<p><div id='gamekind'>种类"+"</div></p><br>"+
+                        "</div>"+
+                        "<div class='modal-footer' id='savebtn'>"+
+                        "<button type='button' class='btn btn-default' data-dismiss='modal'>取消</button>"+
+                        "<button type='button' class='btn btn-primary' onclick='savekinds("+")'>保存</button>"+
+                        "</div>"+
+                        "</div>"+
+                        "</div>"+
+                        "</div>"+
+                        "<button type='button' class='btn' data-toggle='modal' data-target='#myModal' onclick='getgameinfo("+gid+")'>"
+                        + "修改信息"+
                         "</button>" + text +
-                        "<p>编号"+"<input type='text' class='inputmargin_2'id='gameid"+"'></p><br>"+
+                        "<p>编号"+"<input type='text' readOnly='true'class='inputmargin_2'id='gameid"+"'></p><br>"+
                         "<p>游戏"+"<input type='text' class='inputmargin_2'id='gamename"+"'></p><br>"+
                         "<p>价格"+"<input type='text'class='inputmargin_2' id='gameprice"+"'></p><br>"+
                         "<p>开发商"+"<input type='text'class='inputmargin_1' id='gamecreater"+"'></p><br>"+
@@ -162,10 +174,22 @@ function getgeame(pagenum) {
                     + result.data.game[i].price + "</td><td id='gstat_"+j+"'>"
                     + stat+"</td><td><button class='btn' onclick='upgame("+gid+","+j+")'>"
                     + "上架" + "</button><button class='btn' onclick='downgame("+gid+","+j+")'>"
-                    + "下架" + "<button type='button' class='btn' data-toggle='modal' data-target='#myModal' onclick='getgameinfo("+gid+")'>"+
-                    "修改信息"+
+                    + "下架" + "</button><button type='button' class='btn' data-toggle='modal' data-target='#myModal_1' onclick='getgamekind("+gid+")'>"
+                    + "修改种类" + "</button>" +text_1 +
+                    "<p>编号"+"<input type='text' readOnly='true' class='inputmargin_2'id='gamekindid"+"'></p><br>"+
+                    "<p><div id='gamekind'>种类"+"</div></p><br>"+
+                    "</div>"+
+                    "<div class='modal-footer' id='savebtn'>"+
+                    "<button type='button' class='btn btn-default' data-dismiss='modal'>取消</button>"+
+                    "<button type='button' class='btn btn-primary' onclick='savekinds("+")'>保存</button>"+
+                    "</div>"+
+                    "</div>"+
+                    "</div>"+
+                    "</div>"+
+                    "<button type='button' class='btn' data-toggle='modal' data-target='#myModal' onclick='getgameinfo("+gid+")'>"
+                    + "修改信息"+
                     "</button>" + text +
-                    "<p>编号"+"<input type='text' class='inputmargin_2'id='gameid"+"'></p><br>"+
+                    "<p>编号"+"<input type='text' readOnly='true' class='inputmargin_2'id='gameid"+"'></p><br>"+
                     "<p>游戏"+"<input type='text' class='inputmargin_2'id='gamename"+"'></p><br>"+
                     "<p>价格"+"<input type='text'class='inputmargin_2' id='gameprice"+"'></p><br>"+
                     "<p>开发商"+"<input type='text'class='inputmargin_1' id='gamecreater"+"'></p><br>"+
@@ -274,6 +298,64 @@ function downgame(gid,j) {
         }
     })
 }
+//获取游戏种类
+function getgamekind(gid) {
+    document.getElementById("gamekindid").value = gid;
+    var kinds = new Array();
+    $.post("/kind/all",function (result) {
+        var i = 0;
+        document.getElementById("gamekind").innerHTML = "种类";
+        while(result.data[i]) {
+            document.getElementById("gamekind").innerHTML += "<br>"+"<input type='checkbox' id='kindbox_"+gid+"_"+i+"'>" + result.data[i].name;
+            kinds[i] = result.data[i].name;
+            i++;
+        }
+    })
+    $.post("/admin/getgamekind",{game:gid},function (result) {
+        var i = 0;
+        var j = 0;
+        while(result.data[i].name){
+            while(kinds[j]){
+            if(result.data[i].name == kinds[j]) {
+            document.getElementById("kindbox_"+gid+"_"+j).checked = "true";
+            }
+                j++;
+            }
+            i++;
+            j=0;
+        }
+        i = 0;
+    })
+}
+//保存游戏种类
+function savekinds(){
+    var i=0;
+    var j=0;
+    var kid = document.getElementById("gamekindid").value;
+    var check = document.getElementById("kindbox_" + kid + "_" + i);
+    var kinds = new Array();
+    while(check) {
+        if(check.checked){
+            kinds[j] = parseInt(i+1);
+            j++;
+        }
+        i++;
+        check = document.getElementById("kindbox_" + kid + "_" + i);
+    }
+    $.ajax({
+        type:"post",
+        url:"/admin/updategamekind",
+        traditional: true,
+        data:{game:kid,kinds:kinds},
+        success:function(result){
+            if(result.success){
+            alert("修改成功！");
+        }else
+        alert(result.msg);
+    }
+    })
+    $('#myModal_1').modal('hide');
+}
 function showright_0() {
     document.getElementById("right_0").style.display = "block";
     document.getElementById("right_1").style.display = "none";
@@ -361,11 +443,15 @@ var text = "<div class='modal fade' id='myModal' tabindex='-1' role='dialog' ari
     "<h4 class='modal-title' id='myModalLabel'>游戏信息</h4>"+
     "</div>"+
     "<div class='modal-body'>"
-    // "<button type='button' class='btn btn-primary'>保存</button>"+
-    // "</div>"+
-    // "</div>"+
-    // "</div>"+
-    // "</div>";
+
+var text_1 = "<div class='modal fade' id='myModal_1' tabindex='-1' role='dialog' aria-labelledby='myModalLabel'>"+
+    "<div class='modal-dialog' role='document'>"+
+    "<div class='modal-content'>"+
+    "<div class='modal-header'>"+
+    "<button type='button' class='close' data-dismiss='modal' aria-label='Close'><span aria-hidden='true'>&times;</span></button>"+
+    "<h4 class='modal-title' id='myModalLabel'>游戏种类</h4>"+
+    "</div>"+
+    "<div class='modal-body'>"
 
 function getgameinfo(gid) {
     $.post("/game/"+gid,function (result) {
@@ -497,41 +583,44 @@ function setImagePreviews_0(avalue) {
 }
 
 function addgame() {
-    // var creater = document.getElementById("addgamecreater").value;
-    // var name = document.getElementById("addgamename").value;
-    // var desc = document.getElementById("addgamedesc").value;
-    // var syscfg = document.getElementById("addgamesyscfg").value;
-    // var price = document.getElementById("addgameprice").value;
-    // var discount = document.getElementById("addgamediscount").value;
-    // // // // var cover = document.getElementById("doc_0").value;
-    // // // // var pictures = document.getElementById("doc").value;
-    // // // var cover = document.getElementById("doc_0").files[0];
-    // // // var pictures = document.getElementById("doc").files[0];
+    var form = new FormData();
+    var creater = document.getElementById("addgamecreater").value;
+    var name = document.getElementById("addgamename").value;
+    var desc = document.getElementById("addgamedesc").value;
+    var syscfg = document.getElementById("addgamesyscfg").value;
+    var price = document.getElementById("addgameprice").value;
+    var discount = document.getElementById("addgamediscount").value;
+    // var cover = document.getElementById("doc_0").value;
+    // var pictures = document.getElementById("doc").value;
+    var cover = document.getElementById("doc_0").files[0];
+    var i=0;
+    while(document.getElementById("doc").files[i]) {
+        form.append("pics",document.getElementById("doc").files[i]);
+        // pictures[i] = document.getElementById("doc").files[i];
+        i++;
+    }
     //  $.post("/admin/addgame",{creater:creater,name:name,desc:desc,price:price,discount:discount,systemcfg:syscfg},function () {
     // })
 
 
+    form.append("creater",creater);
+    form.append("name",name);
+    form.append("desc",desc);
+    form.append("systemcfg",syscfg);
+    form.append("price",price);
+    form.append("discount",discount);
+    form.append("kinds",'1');
+    form.append("header",cover);
+    // form.append("pics",pictures);
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", "/admin/addgame", true);
+    xhr.send(form);
 
-
-    // var form = new FormData();
-    // form.append("creater",creater);
-    // form.append("name",name);
-    // form.append("desc",desc);
-    // form.append("systemcfg",syscfg);
-    // form.append("price",price);
-    // form.append("discount",discount);
-    // form.append("kinds",'0');
-    // // form.append("header",cover);
-    // // form.append("pics",pictures);
-    // var xhr = new XMLHttpRequest();
-    // xhr.open("POST", "/admin/addgame", true);
-    // xhr.send(form);
-
-    var oData = new FormData(document.forms.namedItem("gameinfo"));
+    // var oData = new FormData(document.forms.namedItem("gameinfo"));
     // oData.append("kinds",'0');
-    var Req = new XMLHttpRequest();
-    Req.open("POST", "/admin/addgame",true);
-    Req.send(oData);
+    // var Req = new XMLHttpRequest();
+    // Req.open("POST", "/admin/addgame",true);
+    // Req.send(oData);
 
     // var form = document.getElementById("game_info");
     // var formdata = new FormData(form);
@@ -551,4 +640,16 @@ function addgame() {
     //     success: function (data) {},
     //     error: function () {}
     // });
+}
+
+function addkind() {
+    var kind = document.getElementById("addkindinput").value;
+    $.post("/admin/addkind",{kind:kind},function (result) {
+        if(result.success){
+            alert("添加成功！");
+        }
+        else {
+            alert(result.msg);
+        }
+    })
 }
