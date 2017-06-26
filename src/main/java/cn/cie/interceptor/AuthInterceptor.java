@@ -98,6 +98,9 @@ public class AuthInterceptor implements HandlerInterceptor {
 
     public void postHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o, ModelAndView modelAndView) throws Exception {
 //        System.out.println("auth拦截器--------------------------post----------------------------");
+        if (modelAndView == null) {
+            return;
+        }
         if (httpServletRequest.getMethod().equals("GET") && userHolder.getUser() != null) {
             modelAndView.getModel().put("user", userHolder.getUser().getNickname());
         }
