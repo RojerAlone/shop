@@ -34,7 +34,7 @@ public class KindmapperMapperTest {
         kinds.add(4);
         Integer[] test = new Integer[0];
         try {
-            kindmapperMapper.insertBatch(game, Arrays.asList(test));
+            kindmapperMapper.insertKindBatch(game, Arrays.asList(test));
         } catch (Exception e) {
             logger.error("错误" + e);
         }

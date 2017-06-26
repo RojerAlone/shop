@@ -34,8 +34,9 @@ public class TagController extends AbstractController{
 
     @PostMapping(value = "/{tag}/games")
     @ResponseBody
-    public Result<List<GameDTO>> getGamesByTag(@PathVariable(value = "tag") Integer tag) {
-        return tagService.getGamesByTag(tag);
+    public Result<List<GameDTO>> getGamesByTag(@PathVariable(value = "tag") Integer tag,
+                                               @RequestParam(value = "page", required = false, defaultValue = "1") Integer page) {
+        return tagService.getGamesByTag(tag, page);
 //        if (result.isSuccess()) {
 //            this.getModel().addAttribute("games", (List<GameDTO>) result.getData());
 //        } else if (result.getMsg().equals(MsgCenter.NOT_FOUND)) {

@@ -25,10 +25,11 @@ public interface KindService {
     Result<Kind> getAll();
 
     /**
-     * 根据种类获取所有的游戏，包括游戏信息和游戏的种类，不包括标签
+     * 根据种类获取所有的游戏，包括游戏信息和游戏的种类、标签
      * @param kind
+     * @param page
      * @return
      */
-    Result<List<GameDTO>> getGamesByKind(int kind);
+    Result<List<GameDTO>> getGamesByKind(int kind, int page);
 
 }

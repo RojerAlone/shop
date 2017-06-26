@@ -40,6 +40,31 @@
       </foreach>
     </where>
   </select>
+  <select id="selectByIdsAndStat" parameterType="list" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from game
+    <where>
+      id in
+      <foreach collection="ids" item="id" separator="," open="(" close=")">
+        #{id}
+      </foreach>
+      and stat = #{stat,jdbcType=TINYINT}
+    </where>
+  </select>
+  <select id="selectByIdsAndStatAndPage" parameterType="list" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from game
+    <where>
+      id in
+      <foreach collection="ids" item="id" separator="," open="(" close=")">
+        #{id}
+      </foreach>
+      and stat = #{stat,jdbcType=TINYINT}
+    </where>
+    limit #{startPos}, #{size}
+  </select>
   <select id="selectByStat" parameterType="java.lang.Byte" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />

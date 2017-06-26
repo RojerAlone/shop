@@ -1,48 +1,56 @@
-body{
-    background-color:#1B2839;
+body {
+    background-color: #1B2839;
 }
-.divcolor{
-background-image:url(../img/static/personalbackground_1.jpg);
-color: #FFF;
-}
-.divcolor_1{
-   background-color: #192533;
-}
-.ziti{
-    color:#8F98A0;
-}
-.ziti_1{
+
+.divcolor {
+    background-image: url(../img/static/personalbackground_1.jpg);
     color: #FFF;
 }
-.setmargin{
+
+.divcolor_1 {
+    background-color: #192533;
+}
+
+.ziti {
+    color: #8F98A0;
+}
+
+.ziti_1 {
+    color: #FFF;
+}
+
+.setmargin {
     margin-top: 20px;
 }
 
-.setmargin_1{
-    margin-left:10px; 
+.setmargin_1 {
+    margin-left: 10px;
     border: none;
 }
 
-.setmargin_2{
-    margin-top:100px;
+.setmargin_2 {
+    margin-top: 100px;
 }
-.setpadding{
+
+.setpadding {
     background-color: #103651;
-    padding:5px,15px,5px,5px;
+    padding: 5px, 15px, 5px, 5px;
 }
-.setbtnpadding{
-    background-color: #103651; 
+
+.setbtnpadding {
+    background-color: #103651;
     font-size: 16px;
     border: none;
     color: #FFF;
 }
-.dibu{
-    margin-top:390px;
-    height:120px;
-    background-color:#101822;
-    color:#8F98A0;
-    text-align:center;
-    padding-top:50px;
-    padding-left:150px;
-    padding-right:150px;
+
+.dibu {
+    margin-top: 390px;
+    height: 120px;
+    background-color: #101822;
+    color: #8F98A0;
+    text-align: center;
+    padding-top: 50px;
+    padding-left: 150px;
+    padding-right: 150px;
 }

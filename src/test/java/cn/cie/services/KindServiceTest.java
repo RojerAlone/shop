@@ -32,7 +32,7 @@ public class KindServiceTest {
     public void getGamesByKind() throws Exception {
         int kind = 1;
         try {
-            Result<List<GameDTO>> result = kindService.getGamesByKind(kind);
+            Result<List<GameDTO>> result = kindService.getGamesByKind(kind, 1);
             if (result.isSuccess()) {
                 logger.info("查询结果为：{}" + result.getData());
             } else {

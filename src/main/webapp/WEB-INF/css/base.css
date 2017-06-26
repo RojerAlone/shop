@@ -1,73 +1,82 @@
 @charset "utf-8";
 /* CSS Document */
 
-body{
-	background-color:#183F59;
+body {
+    background-color: #183F59;
 }
 
-.headheight{
-	padding-top:20px;
-	padding-bottom:10px;
-}
-.headmid{
-	margin-left:500px;
-	margin-top:100px;
-}
-.nav navbar-nav navbar-right{
-padding:0px;
-margin:0px;
-}
-.form-control{
-	background-color:#316282;
-	border:0px;
-	color:#FFF;
+.headheight {
+    padding-top: 20px;
+    padding-bottom: 10px;
 }
 
-.btn{
-	background-color:#316282;
-	border:0px;
+.headmid {
+    margin-left: 500px;
+    margin-top: 100px;
 }
-.daohangyanse{
-	background-color:#356F95;
-	border:none;
-	
+
+.nav navbar-nav navbar-right {
+    padding: 0px;
+    margin: 0px;
+    font-size: 30px;
 }
-.navbar-default .navbar-nav>li>a{
-	color:#FFF;
-	font-family: "Motiva Sans", Sans-serif;
+
+.form-control {
+    background-color: #316282;
+    border: 0px;
+    color: #FFF;
 }
-.inputmargin{
-	margin-left:230px;
+
+.btn {
+    background-color: #316282;
+    border: 0px;
 }
-.gutter_header{
-	color:#66c0f4;
+
+.daohangyanse {
+    background-color: #356F95;
+    border: none;
+
 }
-.list-group-item{
-	background-color:#183F59;
-	color:#66c0f4;
-	font-size: 13px;
-	font-family: "Motiva Sans", Sans-serif;
-	border:0px;
+
+.navbar-default .navbar-nav > li > a {
+    color: #FFF;
+    font-family: "Motiva Sans", Sans-serif;
 }
-.bs:hover{
-	color:#FFF;
+
+.inputmargin {
+    margin-left: 230px;
 }
-.dibu{
-	height:120px;
-	background-color:#101822;
-	color:#8F98A0;
-	text-align:center;
-	padding-top:50px;
-	padding-left:150px;
-	padding-right:150px;
-	/*position:fixed;*/
-	/*bottom:0px;left: 0px;*/
-	/*width: 102%;*/
+
+.gutter_header {
+    color: #66c0f4;
 }
-ul li
-{
-list-style-type:none;
+
+.list-group-item {
+    background-color: #183F59;
+    color: #66c0f4;
+    font-size: 13px;
+    font-family: "Motiva Sans", Sans-serif;
+    border: 0px;
 }
-.yingcang{
-	display: none;
+
+.bs:hover {
+    color: #FFF;
+}
+
+.dibu {
+    height: 120px;
+    background-color: #101822;
+    color: #8F98A0;
+    text-align: center;
+    padding-top: 50px;
+    padding-left: 150px;
+    padding-right: 150px;
+}
+
+ul li {
+    list-style-type: none;
+}
+
+.yingcang {
+    display: none;
 }

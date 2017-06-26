@@ -9,12 +9,16 @@ public interface KindmapperMapper {
 
     int insert(Kindmapper record);
 
-    int insertBatch(@Param(value = "game") Integer game, @Param(value = "kinds") List<Integer> kinds);
+    int insertKindBatch(@Param(value = "game") Integer game, @Param(value = "kinds") List<Integer> kinds);
+
+    int insertGameBatch(@Param(value = "kind") Integer kind, @Param(value = "games") List<Integer> games);
 
     List<Integer> selectByKind(Integer kind);
 
     List<Integer> selectByGame(Integer game);
 
     int deleteByGame(Integer game);
+
+    int deleteByKind(Integer kind);
 
 }

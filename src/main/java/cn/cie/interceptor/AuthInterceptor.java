@@ -40,7 +40,6 @@ public class AuthInterceptor implements HandlerInterceptor {
                 || httpServletRequest.getRequestURI().matches("^/js/[\\S]+\\.js$")) {
             return true;
         }
-//        System.out.println("auth拦截器--------------------------prehandle----------------------------");
         String token = null;
         // 从请求中获取token
         if (httpServletRequest.getCookies() != null) {
@@ -97,7 +96,6 @@ public class AuthInterceptor implements HandlerInterceptor {
     }
 
     public void postHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o, ModelAndView modelAndView) throws Exception {
-//        System.out.println("auth拦截器--------------------------post----------------------------");
         if (modelAndView == null) {
             return;
         }
@@ -107,7 +105,6 @@ public class AuthInterceptor implements HandlerInterceptor {
     }
 
     public void afterCompletion(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o, Exception e) throws Exception {
-//        System.out.println("auth拦截器--------------------------after----------------------------");
         userHolder.remove();
     }
 }

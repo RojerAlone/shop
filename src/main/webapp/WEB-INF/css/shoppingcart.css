@@ -1,80 +1,86 @@
 @charset "utf-8";
 /* CSS Document */
 
-body{
-    background-color:#1B2839;
+body {
+    background-color: #1B2839;
 }
 
-
-
-.headheight{
-	padding-top:20px;
-}
-.headmid{
-	margin-left:500px;
-	margin-top:100px;
-}
-.nav navbar-nav navbar-right{
-padding:0px;
-margin:0px;
-}
-.form-control{
-	background-color:#316282;
-	border:0px;
-	color:#FFF;
+.headheight {
+    padding-top: 20px;
 }
 
-.btn{
-	background-color:#316282;
-	border:0px;
-}
-.daohangyanse{
-	background-color:#356F95;
-	border:none;
-	
-}
-.navbar-default .navbar-nav>li>a{
-	color:#FFF;
-	font-family: "Motiva Sans", Sans-serif;
-}
-.inputmargin{
-	margin-left:230px;
-}
-.gutter_header{
-	color:#66c0f4;
-}
-.list-group-item{
-	background-color:#183F59;
-	color:#66c0f4;
-	font-size: 13px;
-	font-family: "Motiva Sans", Sans-serif;
-	border:0px;
-}
-.dibu{
-	height:120px;
-	background-color:#101822;
-	color:#8F98A0;
-	text-align:center;
-	padding-top:50px;
-	padding-left:150px;
-	padding-right:150px;
+.headmid {
+    margin-left: 500px;
+    margin-top: 100px;
 }
 
-.the0{
+.nav navbar-nav navbar-right {
+    padding: 0px;
+    margin: 0px;
+}
+
+.form-control {
+    background-color: #316282;
+    border: 0px;
+    color: #FFF;
+}
+
+.btn {
+    background-color: #316282;
+    border: 0px;
+}
+
+.daohangyanse {
+    background-color: #356F95;
+    border: none;
+
+}
+
+.navbar-default .navbar-nav > li > a {
+    color: #FFF;
+    font-family: "Motiva Sans", Sans-serif;
+}
+
+.inputmargin {
+    margin-left: 230px;
+}
+
+.gutter_header {
+    color: #66c0f4;
+}
+
+.list-group-item {
+    background-color: #183F59;
+    color: #66c0f4;
+    font-size: 13px;
+    font-family: "Motiva Sans", Sans-serif;
+    border: 0px;
+}
+
+.dibu {
+    height: 120px;
+    background-color: #101822;
+    color: #8F98A0;
+    text-align: center;
+    padding-top: 50px;
+    padding-left: 150px;
+    padding-right: 150px;
+}
+
+.the0 {
     font-size: larger;
-	margin-left:200px;
+    margin-left: 200px;
 }
 
-tr{
-	font-size:22px;
-	border-bottom-style:solid;
-	border-bottom-width:20px;
-	height:60px;
-	border:20px;
-	border-bottom-color:#FFC;
-	
-
+tr {
+    font-size: 22px;
+    border-bottom-style: solid;
+    border-bottom-width: 20px;
+    height: 60px;
+    border: 20px;
+    border-bottom-color: #FFC;
 }
-.yingcang{
-	display: none;
+
+.yingcang {
+    display: none;
 }

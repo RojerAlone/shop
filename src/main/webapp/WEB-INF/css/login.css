@@ -1,39 +1,42 @@
 @charset "utf-8";
 /* CSS Document */
-.logowz{
-	margin-right:100px; 
-	margin-left:350px; 
-}
-.logoztdx{
-	font-size: 25px;
-}
-.bjys{
-	background-color: rgba(0,0,0,0.2);
+.logowz {
+    margin-right: 100px;
+    margin-left: 350px;
 }
 
-.ztys{
-	color:#c6d4df;
+.logoztdx {
+    font-size: 25px;
 }
 
-.btys{
-	color:#67c1f5;
-}
-.btnys{
-	background:rgba( 103, 193, 245, 0.2 );
-	color:#c6d4df;
-	border:none;
-	padding:5px 15px 0px;
+.bjys {
+    background-color: rgba(0, 0, 0, 0.2);
 }
 
-.container{
-	height:650px;
+.ztys {
+    color: #c6d4df;
 }
 
-.dlkwz{
-	margin-top: 90px;
+.btys {
+    color: #67c1f5;
 }
 
-.imgdx{
-	max-height: 100%;;
-	max-width: 100%;
+.btnys {
+    background: rgba(103, 193, 245, 0.2);
+    color: #c6d4df;
+    border: none;
+    padding: 5px 15px 0px;
+}
+
+.container {
+    height: 650px;
+}
+
+.dlkwz {
+    margin-top: 90px;
+}
+
+.imgdx {
+    max-height: 100%;;
+    max-width: 100%;
 }

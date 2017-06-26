@@ -32,12 +32,6 @@ public class CommonController extends AbstractController {
     @Autowired
     private RedisUtil redisUtil;
 
-
-    @GetMapping(value = "test")
-    public String test() {
-        return "test";
-    }
-
     @RequestMapping(value = {"/", "/index"})
     public String index() {
         this.getModel().addAttribute("str", "str");

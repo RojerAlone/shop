@@ -17,6 +17,11 @@ public interface GameMapper {
 
     List<Game> selectByIds(@Param(value = "ids") List<Integer> ids);
 
+    List<Game> selectByIdsAndStat(@Param(value = "ids") List<Integer> ids, @Param(value = "stat") Byte stat);
+
+    List<Game> selectByIdsAndStatAndPage(@Param(value = "ids") List<Integer> ids, @Param(value = "stat") Byte stat,
+                                         @Param(value = "startPos") Integer startPos, @Param(value = "size") Integer size);
+
     List<Game> selectByStat(Byte stat);
 
     int update(Game record);

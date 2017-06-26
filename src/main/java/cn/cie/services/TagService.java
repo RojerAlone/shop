@@ -50,8 +50,9 @@ public interface TagService {
     /**
      * 根据标签获取所有游戏
      * @param tag
+     * @param page
      * @return
      */
-    Result<List<GameDTO>> getGamesByTag(Integer tag);
+    Result<List<GameDTO>> getGamesByTag(Integer tag, Integer page);
 
 }

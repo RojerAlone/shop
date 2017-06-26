@@ -129,4 +129,10 @@ public class AdminController extends AbstractController {
         return adminService.addKind(kind);
     }
 
+    @PostMapping(value = "managerkind")
+    @ResponseBody
+    public Result managerKind(Integer kind, Integer[] games) {
+        return adminService.managerKind(kind, Arrays.asList(games));
+    }
+
 }

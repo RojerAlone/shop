@@ -40,8 +40,9 @@ public class KindController extends AbstractController {
 
     @PostMapping(value = "{kind}/games")
     @ResponseBody
-    public Result getGamesByKind(@PathVariable(value = "kind") Integer kind) {
-        return kindService.getGamesByKind(kind);
+    public Result getGamesByKind(@PathVariable(value = "kind") Integer kind, @RequestParam(value = "page",
+            required = false, defaultValue = "1") Integer page) {
+        return kindService.getGamesByKind(kind, page);
     }
 
 }

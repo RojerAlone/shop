@@ -10,13 +10,16 @@ import cn.cie.mapper.TagMapper;
 import cn.cie.mapper.TagmapperMapper;
 import cn.cie.services.TagService;
 import cn.cie.utils.MsgCenter;
+import cn.cie.utils.PageUtil;
 import cn.cie.utils.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by RojerAlone on 2017/6/7.
@@ -88,15 +91,21 @@ public class TagServiceImpl implements TagService {
         }
     }
 
-    public Result<List<GameDTO>> getGamesByTag(Integer tag) {
+    public Result<List<GameDTO>> getGamesByTag(Integer tag, Integer page) {
         // 没有这个标签，返回404
         if (tagMapper.selectById(tag) == null) {
             return Result.fail(MsgCenter.NOT_FOUND);
         }
         List<Integer> gameIds = tagmapperMapper.selectByTag(tag);                  // 根据标签获取所有的游戏ID
-        List<Game> games = gameMapper.selectByIds(gameIds);                         // 根据游戏ID获取游戏实体
-        List<GameDTO> gameDTOS = paresGameDTO(games);
-        return Result.success(gameDTOS);
+        List<Game> games = gameMapper.selectByIdsAndStat(gameIds, Game.STAT_OK);
+        PageUtil pageUtil = new PageUtil(games.size(), page);
+        // 假分页
+        int size = pageUtil.getStartPos() + 10 > games.size() - 1 ? games.size() : pageUtil.getStartPos() + 10;
+        List<GameDTO> gameDTOS = paresGameDTO(games.subList(pageUtil.getStartPos(), size));
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("game", gameDTOS);
+        map.put("page", pageUtil);
+        return Result.success(map);
     }
 
     private List<GameDTO> paresGameDTO(List<Game> games) {

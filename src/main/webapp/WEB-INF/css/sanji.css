@@ -1,107 +1,144 @@
 @charset "utf-8";
 /* CSS Document */
 
-body{
-	background-color:#183F59;
+body {
+    background-color: #183F59;
 }
 
-.headheight{
-	padding-top:20px;
-	padding-bottom:10px;
-}
-.headmid{
-	margin-left:500px;
-	margin-top:100px;
-}
-.nav navbar-nav navbar-right{
-padding:0px;
-margin:0px;
-}
-.form-control{
-	background-color:#316282;
-	border:0px;
-	color:#FFF;
+.headheight {
+    padding-top: 20px;
+    padding-bottom: 10px;
 }
 
-.btn{
-	background-color:#316282;
-	border:0px;
+.headmid {
+    margin-left: 500px;
+    margin-top: 100px;
 }
-.daohangyanse{
-	background-color:#356F95;
-	border:none;
-	
+
+.nav navbar-nav navbar-right {
+    padding: 0px;
+    margin: 0px;
 }
-.navbar-default .navbar-nav>li>a{
-	color:#FFF;
-	font-family: "Motiva Sans", Sans-serif;
+
+.form-control {
+    background-color: #316282;
+    border: 0px;
+    color: #FFF;
 }
-.inputmargin{
-	margin-left:230px;
+
+.btn {
+    background-color: #316282;
+    border: 0px;
 }
-.gutter_header{
-	color:#66c0f4;
+
+.daohangyanse {
+    background-color: #356F95;
+    border: none;
+
 }
-.list-group-item{
-	background-color:#183F59;
-	color:#66c0f4;
-	font-size: 13px;
-	font-family: "Motiva Sans", Sans-serif;
-	border:0px;
+
+.navbar-default .navbar-nav > li > a {
+    color: #FFF;
+    font-family: "Motiva Sans", Sans-serif;
 }
-.dibu{
-	height:120px;
-	background-color:#101822;
-	color:#8F98A0;
-	text-align:center;
-	padding-top:50px;
-	padding-left:150px;
-	padding-right:150px;
+
+.inputmargin {
+    margin-left: 230px;
 }
-.table_color{
-	color:red;}
-.bs:hover{
-	color:#FFF;
+
+.gutter_header {
+    color: #66c0f4;
 }
-ul{
+
+.list-group-item {
+    background-color: #183F59;
+    color: #66c0f4;
+    font-size: 13px;
+    font-family: "Motiva Sans", Sans-serif;
+    border: 0px;
+}
+
+.dibu {
+    height: 120px;
+    background-color: #101822;
+    color: #8F98A0;
+    text-align: center;
+    padding-top: 50px;
+    padding-left: 150px;
+    padding-right: 150px;
+}
+
+.table_color {
+    color: red;
+}
+
+.bs:hover {
+    color: #FFF;
+}
+
+ul {
     list-style-type: none;
-	margin:0; 
-	padding:0;
+    margin: 0;
+    padding: 0;
 }
-.deletecolpadding{
+
+.deletecolpadding {
     padding-left: 0px;
-    
-}
-.tags{
-	margin-right: 10px;
-}
-#carousel_3{ width:500px; 
-height:75px; /* 定义显示窗口的大小 */
- border:1px solid #000; 
- overflow:hidden; 
- }
-#carousel_3 ul{ width:1000px;} /* 定义全部图片的宽度和 */
-#carousel_3 li{ width:126px; height:65px; float:left;} /* 单张图片的所在位置的大小，宽度就是图片宽度加左右边距 */
-#carousel_3 img{ width:116px; height:65px; margin:5px;} /* 单张图片的尺寸，及外边距 */
-
-.btn_1{
-	background-color:#316282;
-	border:0px;
-	width: 15px;
-	padding-left:5px; 
-	padding-top:28px;;
-	padding-bottom:28px; 
-	margin-top:2px;  
 
 }
-.deletelrpadding{
-	padding-left:0px;
-	padding-right:0px;
+
+.tags {
+    margin-right: 10px;
 }
-.addmargin{
-	margin-left:10px;
-	margin-top:10px;  
+
+#carousel_3 {
+    width: 500px;
+    height: 75px; /* 定义显示窗口的大小 */
+    border: 1px solid #000;
+    overflow: hidden;
 }
-.yingcang{
-	display: none;
+
+#carousel_3 ul {
+    width: 1000px;
+}
+
+/* 定义全部图片的宽度和 */
+#carousel_3 li {
+    width: 126px;
+    height: 65px;
+    float: left;
+}
+
+/* 单张图片的所在位置的大小，宽度就是图片宽度加左右边距 */
+#carousel_3 img {
+    width: 116px;
+    height: 65px;
+    margin: 5px;
+}
+
+/* 单张图片的尺寸，及外边距 */
+
+.btn_1 {
+    background-color: #316282;
+    border: 0px;
+    width: 15px;
+    padding-left: 5px;
+    padding-top: 28px;;
+    padding-bottom: 28px;
+    margin-top: 2px;
+
+}
+
+.deletelrpadding {
+    padding-left: 0px;
+    padding-right: 0px;
+}
+
+.addmargin {
+    margin-left: 10px;
+    margin-top: 10px;
+}
+
+.yingcang {
+    display: none;
 }

@@ -9,11 +9,18 @@
     insert into kindmapper (game, kind)
     values (#{game,jdbcType=INTEGER}, #{kind,jdbcType=INTEGER})
   </insert>
-  <insert id="insertBatch" parameterType="list">
+  <insert id="insertKindBatch" parameterType="list">
     insert into kindmapper (game, kind)
     values
     <foreach collection="kinds" item="kind" separator=",">
-      (#{game,jdbcType=INTEGER}, #{kind})
+      (#{game,jdbcType=INTEGER}, #{kind,jdbcType=INTEGER})
+    </foreach>
+  </insert>
+  <insert id="insertGameBatch" parameterType="list">
+    insert into kindmapper (kind, game)
+    values
+    <foreach collection="games" item="game" separator=",">
+      (#{kind,jdbcType=INTEGER}, #{game,jdbcType=INTEGER})
     </foreach>
   </insert>
 
@@ -26,5 +33,8 @@
 
   <delete id="deleteByGame" parameterType="java.lang.Integer">
     delete from kindmapper where game = #{game,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByKind" parameterType="java.lang.Integer">
+    delete from kindmapper where kind = #{kind,jdbcType=INTEGER}
   </delete>
 </mapper>

@@ -112,4 +112,12 @@ public interface AdminService {
      */
     Result addKind(String name);
 
+    /**
+     * 管理种类对应的游戏
+     * @param kind
+     * @param games
+     * @return
+     */
+    Result managerKind(Integer kind, List<Integer> games);
+
 }

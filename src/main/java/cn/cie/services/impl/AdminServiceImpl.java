@@ -130,7 +130,7 @@ public class AdminServiceImpl implements AdminService {
 
         gameMapper.insert(game);
         if (kind != null && kind.length > 0) {
-            kindmapperMapper.insertBatch(game.getId(), Arrays.asList(kind));
+            kindmapperMapper.insertKindBatch(game.getId(), Arrays.asList(kind));
         }
         Img image = new Img();
         image.setGame(game.getId());
@@ -182,7 +182,7 @@ public class AdminServiceImpl implements AdminService {
     @Transactional
     public Result updateGameKind(Integer game, List<Integer> kinds) {
         kindmapperMapper.deleteByGame(game);
-        kindmapperMapper.insertBatch(game, kinds);
+        kindmapperMapper.insertKindBatch(game, kinds);
         return Result.success();
     }
 
@@ -231,6 +231,13 @@ public class AdminServiceImpl implements AdminService {
         } else {
             return Result.fail(MsgCenter.ERROR);
         }
+    }
+
+    @Transactional
+    public Result managerKind(Integer kind, List<Integer> games) {
+        kindmapperMapper.deleteByKind(kind);
+        kindmapperMapper.insertGameBatch(kind, games);
+        return Result.success();
     }
 
     private List<GameDTO> paresGameDTO(List<Game> games) {

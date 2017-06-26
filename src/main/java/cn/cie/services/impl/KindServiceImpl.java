@@ -7,16 +7,14 @@ import cn.cie.entity.dto.GameDTO;
 import cn.cie.mapper.*;
 import cn.cie.services.KindService;
 import cn.cie.utils.MsgCenter;
+import cn.cie.utils.PageUtil;
 import cn.cie.utils.RedisUtil;
 import cn.cie.utils.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by RojerAlone on 2017/6/6.
@@ -65,15 +63,20 @@ public class KindServiceImpl implements KindService {
         return Result.success(kinds);
     }
 
-    public Result<List<GameDTO>> getGamesByKind(int kind) {
+    public Result<List<GameDTO>> getGamesByKind(int kind, int page) {
         if (kindMapper.selectById(kind) == null) {
-//            throw new NotFoundException();
             return Result.fail(MsgCenter.NOT_FOUND);
         }
         List<Integer> gameIds = kindmapperMapper.selectByKind(kind);
-        List<Game> games = gameMapper.selectByIds(gameIds);
-        List<GameDTO> gameDTOS = paresGameDTO(games);
-        return Result.success(gameDTOS);
+        List<Game> games = gameMapper.selectByIdsAndStat(gameIds, Game.STAT_OK);
+        PageUtil pageUtil = new PageUtil(games.size(), page);
+        // 假分页
+        int size = pageUtil.getStartPos() + 10 > games.size() - 1 ? games.size() : pageUtil.getStartPos() + 10;
+        List<GameDTO> gameDTOS = paresGameDTO(games.subList(pageUtil.getStartPos(), size));
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("game", gameDTOS);
+        map.put("page", pageUtil);
+        return Result.success(map);
     }
 
     private List<GameDTO> paresGameDTO(List<Game> games) {
@@ -82,7 +85,7 @@ public class KindServiceImpl implements KindService {
             List<Tag> tags = null;
             List<Integer> tagIds = tagmapperMapper.selectByGame(game.getId());     // 获取游戏的标签id
             if (tagIds.size() != 0) {
-                tags = tagMapper.selectByIds(tagIds);                         // 根据id获取所有的标签信息
+                tags = tagMapper.selectByIds(tagIds);                               // 根据id获取所有的标签信息
             }
             List<String> img = imgMapper.selectByGame(game.getId());                // 获取所有的图片
             GameDTO dto = new GameDTO(game, tags, img);
