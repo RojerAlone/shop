@@ -76,6 +76,13 @@ public interface AdminService {
     Result updateGameInfo(Game game);
 
     /**
+     * 获取游戏种类
+     * @param game
+     * @return
+     */
+    Result getGameKind(Integer game);
+
+    /**
      * 更新游戏的种类
      * @param game
      * @param kinds

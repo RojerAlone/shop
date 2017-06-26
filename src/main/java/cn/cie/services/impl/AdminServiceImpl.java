@@ -154,6 +154,15 @@ public class AdminServiceImpl implements AdminService {
         return Result.success();
     }
 
+    public Result getGameKind(Integer game) {
+        if (gameMapper.selectById(game) == null) {
+            return Result.fail(MsgCenter.ERROR_PARAMS);
+        }
+        List<Integer> kindIds = kindmapperMapper.selectByGame(game);
+        List<Kind> kinds = kindMapper.selectByIds(kindIds);
+        return Result.success(kinds);
+    }
+
     @Transactional
     public Result updateGameKind(Integer game, List<Integer> kinds) {
         kindmapperMapper.deleteByGame(game);
