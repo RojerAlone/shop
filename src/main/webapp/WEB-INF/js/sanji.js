@@ -111,14 +111,16 @@ $(
             shoppingcar.appendChild(spc);
 
             j = 0;
-            var tt = document.getElementById("tags");
-            while (result.data.tags[j]) {
-                var ll = document.createElement("ll");
-                var tid = result.data.tags[j].id;
-                ll.innerHTML = "<a href='/tag/"+tid+"/games"  +  "'><span class='tags'>" + result.data.tags[j].name + "</span></a>";
-                //<a href='fenlei.html?id="+id+"&class="+result.data[i].name+"'>
-                tt.appendChild(ll);
-                j++;
+            if(result.data.tags) {
+                var tt = document.getElementById("tags");
+                while (result.data.tags[j]) {
+                    var ll = document.createElement("ll");
+                    var tid = result.data.tags[j].id;
+                    ll.innerHTML = "<a href='/tag/" + tid + "/games" + "'><span class='tags'>" + result.data.tags[j].name + "</span></a>";
+                    //<a href='fenlei.html?id="+id+"&class="+result.data[i].name+"'>
+                    tt.appendChild(ll);
+                    j++;
+                }
             }
 
             i = 0;

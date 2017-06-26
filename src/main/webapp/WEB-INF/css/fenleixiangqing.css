@@ -90,3 +90,9 @@ ul, li {
 .yingcang {
     display: none;
 }
+
+.pagination{
+    position: relative;
+    left:120px;
+    bottom: 0px;
+}

@@ -20,6 +20,7 @@
                 var i = confirm("您确定放弃付款？？");
                 if (i == true) {
                     alert("您放弃了付款！！");
+                    window.location = "/order/orders";
                 }
                 else {
                     alert("请继续付款！");

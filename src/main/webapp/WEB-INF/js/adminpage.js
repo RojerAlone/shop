@@ -113,6 +113,8 @@ $(
             var current = result.data.page.current;
             var last = current - 1;
             var next = current + 1;
+            if(last<1){last=1}
+            if(next>pages){next=pages}
             var li_first = document.createElement("li");
             li_first.id = "li_first";
             li_first.innerHTML = "<a href='#'onclick='getgeame("+last+")'>&laquo;</a>";
@@ -138,10 +140,26 @@ $(
             while(result.data[i]){
                 j = i + 1;
                 var tr = document.createElement("tr");
-                tr.innerHTML = "<td id='kindid_"+j+"'>"
-                    + result.data[i].id + "</td><td id='kindname_"+j+"'>"
-                    + result.data[i].name + "</td><td><button class='btn' onclick='restrict("+")'>"
-                    + "限制登录" + "</button>";
+                var kid = result.data[i].id;
+                tr.innerHTML = "<th id='kindid_"+j+"'>"
+                    + result.data[i].id + "</th><th id='kindname_"+j+"'>"
+                    + result.data[i].name + "</th><th><button type='button' class='btn' data-toggle='modal' data-target='#myModal_2' onclick='managekind("+kid+","+1+")'>"
+                    + "管理" + "</button>" +text_2 +
+                    "<p>种类编号"+"<input type='text' readOnly='true' class='inputmargin_2'id='kindgameid"+"'></p><br>"+
+                    "<p><div id='kindgame'>游戏"+"</div></p><br>"+
+                    "</div>"+
+                    "<div class='pagination  yema' >"+
+                    "<ul id='paging_4'>"+
+                    "</ul>"+
+                    "</div>"+
+                    "<div class='modal-footer' id='savebtn'>"+
+                    "<button type='button' class='btn btn-default' data-dismiss='modal'>取消</button>"+
+                    "<button type='button' class='btn btn-primary' onclick='savekinds("+")'>保存</button>"+
+                    "</div>"+
+                    "</div>"+
+                    "</div>"+
+                    "</div>"+
+                    "</th>";
                 i++;
                 kind_all.appendChild(tr);
             }
@@ -213,6 +231,8 @@ function getgeame(pagenum) {
         var current = result.data.page.current;
         var last = current - 1;
         var next = current + 1;
+        if(last<1){last=1}
+        if(next>pages){next=pages}
         var li_first = document.createElement("li");
         li_first.id = "li_first";
         li_first.innerHTML = "<a href='#'onclick='getgeame("+last+")'>&laquo;</a>";
@@ -356,6 +376,65 @@ function savekinds(){
     })
     $('#myModal_1').modal('hide');
 }
+function managekind(kid,page) {
+    document.getElementById("kindgameid").value = kid;
+    var i = 0;
+    $.post("/admin/getgames",{page:page},function (result) {
+        document.getElementById("kindgame").innerHTML = "游戏";
+        while(result.data.game[i]){
+            var j = result.data.game[i].id;
+            document.getElementById("kindgame").innerHTML  += "<br>"+"<input type='checkbox' id='kind_"+kid+"_"+j+"'>" + result.data.game[i].name;
+            i++;
+        }
+        var ul = document.getElementById("paging_4");
+        ul.className = "pagination";
+        ul.innerHTML = "";
+        var pages = result.data.page.pages;
+        var current = result.data.page.current;
+        var last = current - 1;
+        var next = current + 1;
+        if(last<1){last=1}
+        if(next>pages){next=pages}
+        var li_first = document.createElement("li");
+        li_first.id = "li_"+kid+"_first";
+        li_first.innerHTML = "<a href='#'onclick='managekind("+kid+","+last+")'>&laquo;</a>";
+        ul.appendChild(li_first);
+        document.getElementById("li_first").className = "disabled";
+        for(i=0;i<pages;i++){
+            var  j = i + 1;
+            var li = document.createElement("li");
+            li.id = "li_"+kid+"_"+j ;
+            li.innerHTML = "<a href='#'onclick='managekind("+kid+","+j+")'>"+j+"</a>";
+            ul.appendChild(li);
+        }
+        document.getElementById("li_"+kid+"_"+current).className = "active";
+        var li_last = document.createElement("li");
+        li_last.innerHTML = "<a href='#'onclick='managekind("+kid+","+next+")'>&raquo;</a>";
+        ul.appendChild(li_last);
+        $.post("/kind/"+kid+"/games",function (result) {
+            var i = 0;
+            while(result.data[i]) {
+                var gid = result.data[i].id;
+                //alert("kind_"+kid+"_"+gid);
+                if(document.getElementById("kind_"+kid+"_"+gid)) {
+                    document.getElementById("kind_"+kid+"_"+gid).checked = true;
+                }
+                i++;
+            }
+        })
+    })
+     // $.post("/kind/"+kid+"/games",function (result) {
+     //     var i = 0;
+     //     while(result.data[i]) {
+     //         var gid = result.data[i].id;
+     //         //alert("kind_"+kid+"_"+gid);
+     //         if(document.getElementById("kind_"+kid+"_"+gid)) {
+     //             document.getElementById("kind_"+kid+"_"+gid).checked = true;
+     //         }
+     //         i++;
+     //     }
+     // })
+}
 function showright_0() {
     document.getElementById("right_0").style.display = "block";
     document.getElementById("right_1").style.display = "none";
@@ -450,6 +529,15 @@ var text_1 = "<div class='modal fade' id='myModal_1' tabindex='-1' role='dialog'
     "<div class='modal-header'>"+
     "<button type='button' class='close' data-dismiss='modal' aria-label='Close'><span aria-hidden='true'>&times;</span></button>"+
     "<h4 class='modal-title' id='myModalLabel'>游戏种类</h4>"+
+    "</div>"+
+    "<div class='modal-body'>"
+
+var text_2 = "<div class='modal fade' id='myModal_2' tabindex='-1' role='dialog' aria-labelledby='myModalLabel'>"+
+    "<div class='modal-dialog' role='document'>"+
+    "<div class='modal-content'>"+
+    "<div class='modal-header'>"+
+    "<button type='button' class='close' data-dismiss='modal' aria-label='Close'><span aria-hidden='true'>&times;</span></button>"+
+    "<h4 class='modal-title' id='myModalLabel'>种类管理</h4>"+
     "</div>"+
     "<div class='modal-body'>"
 

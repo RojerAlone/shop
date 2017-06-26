@@ -46,6 +46,8 @@ $(
                 var current = result.data.page.current;
                 var last = current - 1;
                 var next = current + 1;
+                if(last<1){last=1}
+                if(next>pages){next=pages}
                 var li_first = document.createElement("li");
                 li_first.id = "li_first";
                 li_first.innerHTML = "<a href='#'onclick='getpaid(" + last + ")'>&laquo;</a>";
@@ -75,9 +77,13 @@ $(
                 var k = i + 1;
                 var oid = result.data.order[i].id;
                 //row.className = "row";
-                var time = new Date(result.data[i].ctime).toLocaleString();
+                var time = new Date(result.data.order[i].ctime).toLocaleString();
                 var prices = result.data.order[i].total;
-                row.innerHTML = "<td>" + "<div class='dropdown'> <button type='button' class='btn dropdown-toggle' id='dropdownMenu1' data-toggle='dropdown'>" + k + "<span class='caret'></span> </button><ul id = 'ulb_" + i + "'class='dropdown-menu' role='menu' aria-labelledby='dropdownMenu1'>" + "</td><td>" + prices + "</td><td>" + time + "</td><td><button class='btn' onclick='cancel(" + oid + ")'>取消</button></td>";
+                row.innerHTML = "<td>" +
+                    "<div class='dropdown'> <button type='button' class='btn dropdown-toggle' id='dropdownMenu1' data-toggle='dropdown'>" + k +
+                    "<span class='caret'></span> </button><ul id = 'ulb_" + i + "'class='dropdown-menu' role='menu' aria-labelledby='dropdownMenu1'>" +
+                    "</td><td>" + prices + "</td><td>" + time + "</td><th><button class='btn smargin' onclick='topay(" + oid + ")'>去支付</button></th>"+
+                    "<th><button class='btn smargin' onclick='cancel(" + oid + ")'>取消</button></th>";
                 orderclass.appendChild(row);
                 i++;
             }
@@ -107,6 +113,8 @@ $(
             var current = result.data.page.current;
             var last = current - 1;
             var next = current + 1;
+            if(last<1){last=1}
+            if(next>pages){next=pages}
             var li_first = document.createElement("li");
             li_first.id = "li_first";
             li_first.innerHTML = "<a href='#'onclick='getnotpay(" + last + ")'>&laquo;</a>";
@@ -168,6 +176,8 @@ $(
             var current = result.data.page.current;
             var last = current - 1;
             var next = current + 1;
+            if(last<1){last=1}
+            if(next>pages){next=pages}
             var li_first = document.createElement("li");
             li_first.id = "li3_first";
             li_first.innerHTML = "<a href='#'onclick='getcancel(" + last + ")'>&laquo;</a>";
@@ -233,6 +243,8 @@ function getpaid(pagenum) {
             var current = result.data.page.current;
             var last = current - 1;
             var next = current + 1;
+            if(last<1){last=1}
+            if(next>pages){next=pages}
             var li_first = document.createElement("li");
             li_first.id = "li1_first";
             li_first.innerHTML = "<a href='#'onclick='getpaid(" + last + ")'>&laquo;</a>";
@@ -256,9 +268,10 @@ function getnotpay(pagenum) {
             var i = 0;
             //var orderTab = document.getElementById("orderTab");
             var disc = document.createElement("tr");
+            var oid = result.data.order[i].id;
             disc.innerHTML = "<td>序号</td><td>总价</td><td class='td_1'>下单时间</td>";
             //orderTab.appendChild(disc);
-            var orderclass = document.getElementById("cancel");
+            var orderclass = document.getElementById("yet");
             orderclass.innerHTML = "";
             orderclass.appendChild(disc);
             while (result.data.order[i]) {
@@ -267,7 +280,11 @@ function getnotpay(pagenum) {
                 var time = new Date(result.data.order[i].ctime).toLocaleString();
                 var prices = result.data.order[i].total;
                 var k = 10 * (pagenum-1) + i + 1;
-                row.innerHTML = "<td>" + "<div class='dropdown'> <button type='button' class='btn dropdown-toggle' id='dropdownMenu1' data-toggle='dropdown'>" + k + "<span class='caret'></span> </button><ul id = 'ulb_" + i + "'class='dropdown-menu' role='menu' aria-labelledby='dropdownMenu1'>" + "</td><td>" + prices + "</td><td>" + time + "</td>";
+                row.innerHTML = "<td>" +
+                    "<div class='dropdown'> <button type='button' class='btn dropdown-toggle' id='dropdownMenu1' data-toggle='dropdown'>" + k +
+                    "<span class='caret'></span> </button><ul id = 'ulb_" + i + "'class='dropdown-menu' role='menu' aria-labelledby='dropdownMenu1'>" +
+                    "</td><td>" + prices + "</td><td>" + time + "</td><th><button class='btn smargin' onclick='topay(" + oid + ")'>去支付</button></th>"+
+                    "<th><button class='btn smargin' onclick='cancel(" + oid + ")'>取消</button></th>";
                 //row.innerHTML = "<td>" + i + "</td><td>" + prices + "</td><td>" + time + "</td>";
                 orderclass.appendChild(row);
                 i++;
@@ -298,6 +315,8 @@ function getnotpay(pagenum) {
             var current = result.data.page.current;
             var last = current - 1;
             var next = current + 1;
+            if(last<1){last=1}
+            if(next>pages){next=pages}
             var li_first = document.createElement("li");
             li_first.id = "li2_first";
             li_first.innerHTML = "<a href='#'onclick='getnotpay(" + last + ")'>&laquo;</a>";
@@ -363,6 +382,8 @@ $.post("/order/cancel/"+pagenum, function (result) {
         var current = result.data.page.current;
         var last = current - 1;
         var next = current + 1;
+        if(last<1){last=1}
+        if(next>pages){next=pages}
         var li_first = document.createElement("li");
         li_first.id = "li3_first";
         li_first.innerHTML = "<a href='#'onclick='getcancel(" + last + ")'>&laquo;</a>";
@@ -387,4 +408,6 @@ function cancel(oid) {
         location.reload();
     })
 }
-
+function topay(oid) {
+    self.location='/order/' + oid + '/payway'
+}
