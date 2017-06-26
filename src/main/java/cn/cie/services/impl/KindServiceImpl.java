@@ -46,8 +46,7 @@ public class KindServiceImpl implements KindService {
     }
 
     public Result<Kind> getAll() {
-        redisUtil.setSchema(Kind.class);
-        List<Kind> kinds = redisUtil.lall("kinds", Kind.class);
+        List<Kind> kinds = redisUtil.lall(RedisUtil.KINDS, Kind.class);
         // 如果缓存中没有，从数据库中查询，并且添加到缓存中
         if (kinds == null || kinds.size() == 0) {
             List<Kind> data = kindMapper.selectAll();
@@ -57,7 +56,7 @@ public class KindServiceImpl implements KindService {
                 array[index] = k;
                 index++;
             }
-            redisUtil.rpushObject("kinds", Kind.class, array);
+            redisUtil.rpushObject(RedisUtil.KINDS, Kind.class, array);
             return Result.success(data);
         }
         return Result.success(kinds);
@@ -68,6 +67,10 @@ public class KindServiceImpl implements KindService {
             return Result.fail(MsgCenter.NOT_FOUND);
         }
         List<Integer> gameIds = kindmapperMapper.selectByKind(kind);
+        // 如果没有就返回
+        if (gameIds == null || gameIds.size() == 0) {
+            return Result.success();
+        }
         List<Game> games = gameMapper.selectByIdsAndStat(gameIds, Game.STAT_OK);
         PageUtil pageUtil = new PageUtil(games.size(), page);
         // 假分页

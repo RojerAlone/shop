@@ -14,16 +14,24 @@ import java.util.List;
 /**
  * Created by RojerAlone on 2017/6/13.
  * 封装了redis操作，用protostuff进行序列化和反序列化
- * 如果要插入对象，需要调用setSchema方法指定对象的Class类型
+ * 如果要插入对象，需要传入插入对象的Class类型
  */
 @Component
 public class RedisUtil<T> implements InitializingBean {
 
     private JedisPool jedisPool;
 
+    private RuntimeSchema schema;
+
     private static final String REDIS_URL = "redis://localhost:6379/6";
 
-    private RuntimeSchema schema;
+    public static final String EVERYDAY = "everyday";
+
+    public static final String KINDS = "kinds";
+
+    public static final String NEWESTGAME = "newestgame";
+
+    public static final String PRE_UP_GAMES = "preupgames";
 
     /**
      * 存放一条数据
@@ -80,9 +88,7 @@ public class RedisUtil<T> implements InitializingBean {
      * @return
      */
     public String putObject(String key, T value) {
-//        if (schema == null) {
-            this.setSchema(value.getClass());
-//        }
+        this.setSchema(value.getClass());
         Jedis jedis = null;
         try {
             jedis = jedisPool.getResource();
@@ -101,9 +107,7 @@ public class RedisUtil<T> implements InitializingBean {
      * @return
      */
     public String putObjectEx(String key, T value, int timeout) {
-//        if (schema == null) {
-            this.setSchema(value.getClass());
-//        }
+        this.setSchema(value.getClass());
         Jedis jedis = null;
         try {
             jedis = jedisPool.getResource();
@@ -151,16 +155,14 @@ public class RedisUtil<T> implements InitializingBean {
      * @param values
      * @return
      */
-    public long lpushObject(String key, T... values) {
-//        if (schema == null) {
-            this.setSchema(values.getClass());
-//        }
+    public long lpushObject(String key, Class clazz, Object... values) {
+        this.setSchema(clazz);
         Jedis jedis = null;
         try {
             jedis = jedisPool.getResource();
             byte[][] bytes = new byte[values.length][];
             int index = 0;
-            for (T value : values) {
+            for (Object value : values) {
                 bytes[index] = setBytes(value);
                 index++;
             }
@@ -199,16 +201,14 @@ public class RedisUtil<T> implements InitializingBean {
      * @param values
      * @return
      */
-    public long rpushObject(String key, Class clazz, T... values) {
-//        if (schema == null) {
-            this.setSchema(clazz);
-//        }
+    public long rpushObject(String key, Class clazz, Object... values) {
+        this.setSchema(clazz);
         Jedis jedis = null;
         try {
             jedis = jedisPool.getResource();
             byte[][] bytes = new byte[values.length][];
             int index = 0;
-            for (T value : values) {
+            for (Object value : values) {
                 bytes[index] = setBytes(value);
                 index++;
             }
@@ -225,16 +225,14 @@ public class RedisUtil<T> implements InitializingBean {
      * @param values
      * @return
      */
-    public long rpushObjectExAtTime(String key, Class clazz, long time, T... values) {
-//        if (schema == null) {
-            this.setSchema(clazz);
-//        }
+    public long rpushObjectExAtTime(String key, Class clazz, long time, Object... values) {
+        this.setSchema(clazz);
         Jedis jedis = null;
         try {
             jedis = jedisPool.getResource();
             byte[][] bytes = new byte[values.length][];
             int index = 0;
-            for (T value : values) {
+            for (Object value : values) {
                 bytes[index] = setBytes(value);
                 index++;
             }
@@ -275,7 +273,7 @@ public class RedisUtil<T> implements InitializingBean {
      * 如果要从redis中查询对象，那么必须调用这个方法设置对象的class
      * @param clazz
      */
-    public void setSchema(Class clazz) {
+    private void setSchema(Class clazz) {
         this.schema = RuntimeSchema.createFrom(clazz);
     }
 
@@ -284,7 +282,7 @@ public class RedisUtil<T> implements InitializingBean {
      * @param value
      * @return
      */
-    private byte[] setBytes(T value) {
+    private byte[] setBytes(Object value) {
         return ProtostuffIOUtil.toByteArray(value, schema, LinkedBuffer.allocate(LinkedBuffer.DEFAULT_BUFFER_SIZE));
     }
 

@@ -23,6 +23,16 @@ public interface GameService {
      */
     Result<List<GameDTO>> getRandomGames();
 
-//    Result<List<GameDTO>> get
+    /**
+     * 从缓存中获取最新的5个游戏，如果没有就从数据库中获取
+     * @return
+     */
+    Result<List<GameDTO>> newestGames();
+
+    /**
+     * 从缓存中获取最新的5个准备上架的游戏，如果没有就从数据库中获取
+     * @return
+     */
+    Result<List<GameDTO>> preUpGames();
 
 }

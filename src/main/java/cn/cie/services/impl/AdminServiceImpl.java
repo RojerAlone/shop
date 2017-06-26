@@ -199,6 +199,7 @@ public class AdminServiceImpl implements AdminService {
             game.setUtime(date);
         }
         if (1 == gameMapper.update(game)) {
+            redisUtil.delete(RedisUtil.NEWESTGAME);    // 上架游戏后将缓存中的最新游戏清空
             return Result.success();
         }
         return Result.fail(MsgCenter.ERROR);
@@ -212,6 +213,7 @@ public class AdminServiceImpl implements AdminService {
         }
         game.setStat(Game.STAT_DEL);
         if (1 == gameMapper.update(game)) {
+            redisUtil.delete(RedisUtil.NEWESTGAME);    // 下架游戏后将缓存中的最新游戏清空
             return Result.success();
         }
         return Result.fail(MsgCenter.ERROR);

@@ -74,6 +74,13 @@
   <select id="selectNums" resultType="java.lang.Integer">
     select count(*) from game
   </select>
+  <select id="selectByStatOrderByDate" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from game
+    where stat = #{stat,jdbcType=TINYINT}
+    order by utime desc limit 5
+  </select>
 
   <insert id="insert" parameterType="cn.cie.entity.Game" useGeneratedKeys="true" keyProperty="id">
     insert into game

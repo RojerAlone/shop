@@ -24,6 +24,8 @@ public interface GameMapper {
 
     List<Game> selectByStat(Byte stat);
 
+    List<Game> selectByStatOrderByDate(Byte stat);
+
     int update(Game record);
 
 }

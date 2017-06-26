@@ -130,7 +130,25 @@ public class CommonController extends AbstractController {
         return "shoppingcart";
     }
 
+    /**
+     * 最新的5个游戏，根据上架时间排序，放在缓存中
+     * @return
+     */
+    @PostMapping(value = "newestgames")
+    @ResponseBody
+    public Result newestGames() {
+        return gameService.newestGames();
+    }
 
+    /**
+     * 最新的5个未上架游戏，根据时间排序，放在缓存中
+     * @return
+     */
+    @PostMapping(value = "preupgames")
+    @ResponseBody
+    public Result preUpGames() {
+        return gameService.preUpGames();
+    }
 
     /**
      * 检查用户是否登陆，如果登陆就返回应该跳转到的页面，否则执行接下来的逻辑

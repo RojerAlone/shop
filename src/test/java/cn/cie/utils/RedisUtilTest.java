@@ -1,6 +1,5 @@
 package cn.cie.utils;
 
-import cn.cie.entity.Kind;
 import cn.cie.entity.User;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -45,7 +44,6 @@ public class RedisUtilTest {
         user.setNickname("rojeralone");
         user.setPassword("alsdjflasdhflsdahnfklnsdaf");
         user.setPhone(18392566666L);
-        redis.setSchema(User.class);
         logger.info(redis.putObject("alone", user));
     }
 
@@ -55,7 +53,6 @@ public class RedisUtilTest {
 
     @Test
     public void getObject() throws Exception {
-        redis.setSchema(User.class);
         User user = (User) redis.getObject("alone");
         logger.info("user={}", user);
     }
@@ -67,8 +64,7 @@ public class RedisUtilTest {
 
     @Test
     public void lall() throws Exception {
-        redis.setSchema(Kind.class);
-//        logger.info("kinds={}" + redis.lall("kinds"));
+
     }
 
 }

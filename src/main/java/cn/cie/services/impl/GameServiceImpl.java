@@ -21,7 +21,6 @@ import java.util.*;
  * Created by RojerAlone on 2017/6/8.
  */
 @Service
-@RequestMapping(value = "game")
 public class GameServiceImpl implements GameService{
 
     @Autowired
@@ -72,17 +71,30 @@ public class GameServiceImpl implements GameService{
                 games = allgames;
             }
             res = paresGameDTO(games);
-            GameDTO[] data = new GameDTO[res.size()];
-            int index = 0;
-            for (GameDTO g : res) {
-                data[index] = g;
-                index++;
-            }
             // 将数据存入缓存中
-            redisUtil.setSchema(GameDTO.class);
             int tmp = 1000 * 3600 * 24;
             long zero = (System.currentTimeMillis() / tmp * tmp + tmp - TimeZone.getDefault().getRawOffset()) / 1000;    //明天零点零分零秒的unix时间戳
-            redisUtil.rpushObjectExAtTime("everyday",GameDTO.class, zero, data);
+            redisUtil.rpushObjectExAtTime(RedisUtil.EVERYDAY,GameDTO.class, zero, res.toArray());
+        }
+        return Result.success(res);
+    }
+
+    public Result<List<GameDTO>> newestGames() {
+        List<GameDTO> res = redisUtil.lall(RedisUtil.NEWESTGAME, GameDTO.class);
+        if (res == null || res.size() == 0) {
+            List<Game> games = gameMapper.selectByStatOrderByDate(Game.STAT_OK);
+            res = paresGameDTO(games);
+            redisUtil.rpushObjectExAtTime(RedisUtil.NEWESTGAME, GameDTO.class, 60 * 10, res.toArray());
+        }
+        return Result.success(res);
+    }
+
+    public Result<List<GameDTO>> preUpGames() {
+        List<GameDTO> res = redisUtil.lall(RedisUtil.PRE_UP_GAMES, GameDTO.class);
+        if (res == null || res.size() == 0) {
+            List<Game> games = gameMapper.selectByStatOrderByDate(Game.STAT_PRE);
+            res = paresGameDTO(games);
+            redisUtil.rpushObjectExAtTime(RedisUtil.PRE_UP_GAMES, GameDTO.class, 60 * 10, res.toArray());
         }
         return Result.success(res);
     }
