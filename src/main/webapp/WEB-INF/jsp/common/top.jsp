@@ -13,6 +13,12 @@
                     <li>
                         <a href="/">商城</a>
                     </li>
+                    <li class="navbar-form">
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="Search" id="searchbox">
+                        </div>
+                        <button type="submit" class="btn btn-default" onclick="search()"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
+                    </li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     <c:choose>

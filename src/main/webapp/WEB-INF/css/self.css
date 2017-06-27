@@ -28,6 +28,7 @@ body {
 .btn {
     background-color: #316282;
     border: 0px;
+    padding: 9px 12px;
 }
 
 .daohangyanse {
@@ -224,4 +225,59 @@ ul li {
 
 .imgwh {
     height: 353px;
+}
+
+.zximgwh {
+    height: 140px;
+    width: 300px;
+}
+
+.zximgwh_1 {
+    height: 140px;
+    width: 295px;
+    margin-top: 2px;
+    text-align: center;
+}
+
+.rowpy {
+    margin-bottom: 2px;
+    background-color: #1D3041;
+    color: white;
+}
+
+.cancelpadding {
+    padding: 0px;
+}
+
+.smargin {
+    margin-top: 15px;
+}
+
+.smargin_1 {
+    float: right;
+    margin-right: 20px;
+    margin-top: 25px;
+}
+
+.smargin_2 {
+    margin-top: 70px;
+}
+
+.smargin_3 {
+    font-size: 20px;
+    color: #183F59;
+}
+.smargin_4 {
+    margin-top: 5px;
+    margin-bottom: 5px;
+    font-size: 8px;
+    color: #c6d4df;
+}
+.spadding{
+    padding-top: 10px;
+    padding-bottom: 10px;
+    background-color: #356F95;
+}
+.divHover {
+    color: white;
 }

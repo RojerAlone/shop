@@ -142,68 +142,21 @@
                 </div>
             </div>
             <div class="row zx">
-                <div class="col-xs-8 col-sm-8 col-md-8">
+                <div class="col-md-8">
                     <ul id="myTab" class="nav nav-tabs">
                         <li role="presentation"><a href="#home" data-toggle="tab">新品与热门商品</a></li>
-                        <li role="presentation"><a href="#rexiao" data-toggle="tab">热销商品</a></li>
                         <li role="presentation"><a href="#jijiang" data-toggle="tab">即将推出</a></li>
-                        <li role="presentation"><a href="#youhui" data-toggle="tab">优惠</a></li>
                     </ul>
                     <div id="myTabContent" class="tab-content" ;>
-                        <div class="tab-pane fade in active" id="home">
-                            <div class="row rowpy">
-                                <a href="#">
-                                    <img src="/img/static/zx_1.png" onmouseover="hoverShowDiv(1);">
-                                </a>
-                            </div>
-                            <div class="row rowpy">
-                                <a href="#">
-                                    <img src="/img/static/zx_2.png" onmouseover="hoverShowDiv(2);">
-                                </a>
-                            </div>
-                            <div class="row rowpy">
-                                <a href="#">
-                                    <img src="/img/static/zx_3.png" onmouseover="hoverShowDiv(3);">
-                                </a>
-                            </div>
-                            <div class="row rowpy">
-                                <a href="#">
-                                    <img src="/img/static/zx_9.png" onmouseover="hoverShowDiv(9);">
-                                </a>
-                            </div>
-                            <div class="row rowpy">
-                                <a href="#">
-                                    <img src="/img/static/zx_10.png" onmouseover="hoverShowDiv(10);">
-                                </a>
-                            </div>
-                            <div class="row rowpy">
-                                <a href="#">
-                                    <img src="/img/static/zx_11.png" onmouseover="hoverShowDiv(11);">
-                                </a>
-                            </div>
-                        </div>
-                        <div class="tab-pane fade" id="rexiao">
-                            <div class="row rowpy"><a href="#"><img src="./img/static/zx_4.png"></a></div>
-                            <div class="row rowpy"><a href="#"><img src="./img/static/zx_5.png"></a></div>
-                            <div class="row rowpy"><a href="#"><img src="./img/static/zx_6.png"></a></div>
-                        </div>
-                        <div class="tab-pane fade" id="jijiang">
-                            <div class="row rowpy"><a href="#"><img src="./img/static/zx_7.png"></a></div>
-                            <div class="row rowpy"><a href="#"><img src="./img/static/zx_8.png"></a></div>
-                            <div class="row rowpy"><a href="#"><img src="./img/static/zx_3.png"></a></div>
-                        </div>
-                        <div class="tab-pane fade" id="youhui">
-                            <div class="row rowpy"><a href="#"><img src="./img/static/zx_3.png"></a></div>
-                            <div class="row rowpy"><a href="#"><img src="./img/static/zx_7.png"></a></div>
-                            <div class="row rowpy"><a href="#"><img src="./img/static/zx_1.png"></a></div>
-                        </div>
+
                     </div>
                 </div>
-                <div class="col-xs-2 col-sm-2 col-md-2">
-                    <img src="img/static/zx_1_1.png" id="divHover"></div>
+                <div class="col-md-4 spadding">
+                    <div  id="divHover"></div>
             </div>
         </div>
     </div>
+</div>
 </div>
 <%@ include file="common/bottom.jsp" %>
 

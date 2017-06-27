@@ -8,3 +8,13 @@ function outlogin() {
         }
     )
 }
+function search() {
+    var info = document.getElementById("searchbox").value;
+    $.post("/search",{info:info},function (result) {
+        if(result.success) {
+            window.open("/search")
+        }else {
+            alert(result.msg);
+        }
+    })
+}
