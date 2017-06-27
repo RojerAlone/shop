@@ -143,18 +143,14 @@ $(
                 var kid = result.data[i].id;
                 tr.innerHTML = "<th id='kindid_"+j+"'>"
                     + result.data[i].id + "</th><th id='kindname_"+j+"'>"
-                    + result.data[i].name + "</th><th><button type='button' class='btn' data-toggle='modal' data-target='#myModal_2' onclick='managekind("+kid+","+1+")'>"
+                    + result.data[i].name + "</th><th><button type='button' class='btn' data-toggle='modal' data-target='#myModal_2' onclick='managekind("+kid+")'>"
                     + "管理" + "</button>" +text_2 +
                     "<p>种类编号"+"<input type='text' readOnly='true' class='inputmargin_2'id='kindgameid"+"'></p><br>"+
                     "<p><div id='kindgame'>游戏"+"</div></p><br>"+
                     "</div>"+
-                    "<div class='pagination  yema' >"+
-                    "<ul id='paging_4'>"+
-                    "</ul>"+
-                    "</div>"+
                     "<div class='modal-footer' id='savebtn'>"+
                     "<button type='button' class='btn btn-default' data-dismiss='modal'>取消</button>"+
-                    "<button type='button' class='btn btn-primary' onclick='savekinds("+")'>保存</button>"+
+                    "<button type='button' class='btn btn-primary' onclick='savekindsgames("+")'>保存</button>"+
                     "</div>"+
                     "</div>"+
                     "</div>"+
@@ -334,7 +330,7 @@ function getgamekind(gid) {
     $.post("/admin/getgamekind",{game:gid},function (result) {
         var i = 0;
         var j = 0;
-        while(result.data[i].name){
+        while(result.data[i]){
             while(kinds[j]){
             if(result.data[i].name == kinds[j]) {
             document.getElementById("kindbox_"+gid+"_"+j).checked = "true";
@@ -376,64 +372,80 @@ function savekinds(){
     })
     $('#myModal_1').modal('hide');
 }
-function managekind(kid,page) {
+
+
+function managekind(kid) {
+    // var kidpages=2;
+    // var currentpage = 1;
     document.getElementById("kindgameid").value = kid;
     var i = 0;
-    $.post("/admin/getgames",{page:page},function (result) {
+    $.post("/admin/getallgames",function (result) {
         document.getElementById("kindgame").innerHTML = "游戏";
-        while(result.data.game[i]){
-            var j = result.data.game[i].id;
-            document.getElementById("kindgame").innerHTML  += "<br>"+"<input type='checkbox' id='kind_"+kid+"_"+j+"'>" + result.data.game[i].name;
+        while(result.data[i]){
+            var j = result.data[i].id;
+            document.getElementById("kindgame").innerHTML  += "<br>"+"<input type='checkbox' class='gamebox' id='kind_"+kid+"_"+j+"'>" + result.data[i].name;
             i++;
         }
-        var ul = document.getElementById("paging_4");
-        ul.className = "pagination";
-        ul.innerHTML = "";
-        var pages = result.data.page.pages;
-        var current = result.data.page.current;
-        var last = current - 1;
-        var next = current + 1;
-        if(last<1){last=1}
-        if(next>pages){next=pages}
-        var li_first = document.createElement("li");
-        li_first.id = "li_"+kid+"_first";
-        li_first.innerHTML = "<a href='#'onclick='managekind("+kid+","+last+")'>&laquo;</a>";
-        ul.appendChild(li_first);
-        document.getElementById("li_first").className = "disabled";
-        for(i=0;i<pages;i++){
-            var  j = i + 1;
-            var li = document.createElement("li");
-            li.id = "li_"+kid+"_"+j ;
-            li.innerHTML = "<a href='#'onclick='managekind("+kid+","+j+")'>"+j+"</a>";
-            ul.appendChild(li);
-        }
-        document.getElementById("li_"+kid+"_"+current).className = "active";
-        var li_last = document.createElement("li");
-        li_last.innerHTML = "<a href='#'onclick='managekind("+kid+","+next+")'>&raquo;</a>";
-        ul.appendChild(li_last);
-        $.post("/kind/"+kid+"/games",function (result) {
-            var i = 0;
-            while(result.data[i]) {
-                var gid = result.data[i].id;
-                //alert("kind_"+kid+"_"+gid);
-                if(document.getElementById("kind_"+kid+"_"+gid)) {
-                    document.getElementById("kind_"+kid+"_"+gid).checked = true;
+        var j=0;
+        i =0;
+        while(result.data[i]) {
+            if(result.data[i].kinds) {
+                while (result.data[i].kinds[j]) {
+                    if (result.data[i].kinds[j].id == kid) {
+                        var gid = result.data[i].id;
+                        document.getElementById("kind_" + kid + "_" + gid).checked = true;
+                    }
+                    j++;
                 }
-                i++;
             }
-        })
+            i++;
+            j=0;
+        }
+        // for(currentpage=1;currentpage<=kidpages;currentpage++){
+        // $.post("/kind/"+kid+"/games",{page:currentpage},function (result) {
+        //     i = 0;
+        //     while(result.data.game[i]) {
+        //         var gid = result.data.game[i].id;
+        //         if(document.getElementById("kind_"+kid+"_"+gid)) {
+        //             document.getElementById("kind_"+kid+"_"+gid).checked = true;
+        //         }
+        //         i++;
+        //     }
+        //     kidpages = result.data.page.pages;
+        // })
+        // }
     })
-     // $.post("/kind/"+kid+"/games",function (result) {
-     //     var i = 0;
-     //     while(result.data[i]) {
-     //         var gid = result.data[i].id;
-     //         //alert("kind_"+kid+"_"+gid);
-     //         if(document.getElementById("kind_"+kid+"_"+gid)) {
-     //             document.getElementById("kind_"+kid+"_"+gid).checked = true;
-     //         }
-     //         i++;
-     //     }
-     // })
+}
+
+
+function savekindsgames() {
+    var kid = document.getElementById("kindgameid").value;
+    var i=0;
+    var games = new Array();
+    var num=0;
+    var gamebox = document.getElementsByClassName("gamebox");
+    while (gamebox[i]){
+        if(gamebox[i].checked) {
+            games[num] = (gamebox[i].id).split('_')[2];
+            num++;
+        }
+        i++;
+    }
+    i=0;
+    // while(games[i]){alert(games[i]);i++;}
+    $.ajax({
+        type:"post",
+        url:"/admin/managerkind",
+        traditional: true,
+        data:{kind:kid,games:games},
+        success:function(result){
+            if(result.success){
+                alert("修改成功！");
+            }else
+                alert(result.msg);
+        }
+    })
+    $('#myModal_2').modal('hide');
 }
 function showright_0() {
     document.getElementById("right_0").style.display = "block";

@@ -101,14 +101,27 @@ $(
 
             var time = document.createElement("div");
             var utime = new Date(result.data.utime);
+            utime = utime.toLocaleString();
             time.className = "row";
-            time.innerHTML = "<p><h6 style='color:white'>发行日期：" + utime + "<h6></p><p> <h6 style='color:gray'>用户自定义标签：</h6><div class='btn-group btn-group-xs' id='tags'></div> </h6></p>";
+            time.innerHTML = "<p><h6 style='color:white'>发行日期：" + utime + "<h6></p><p><h6 style='color:white'>开发商：" + result.data.creater + "<h6></p><p> <h6 style='color:gray'>用户自定义标签：</h6><div class='btn-group btn-group-xs' id='tags'></div> </h6></p>";
             getheader.appendChild(time);
 
             var spc = document.createElement("p");
             spc.className = "text-left";
-            spc.innerHTML = "<h2>购买" + result.data.name + ":¥" + result.data.price + "</h2>";
-            shoppingcar.appendChild(spc);
+            var stat;
+            if(result.data.stat == '1') {
+                spc.innerHTML = "<h2>购买" + result.data.name + ":¥" + result.data.price + "</h2>";
+                shoppingcar.appendChild(spc);
+            }else {
+                if(result.data.stat == '0'){
+                    stat = "未上架"
+                }else if(result.data.stat == '2'){
+                    stat = "已下架"
+                }
+                document.getElementById("shopingcartbtn").innerHTML = "";
+                spc.innerHTML = "<h2>"+stat+"</h2>";
+                shoppingcar.appendChild(spc);
+            }
 
             j = 0;
             if(result.data.tags) {
@@ -188,5 +201,8 @@ function addshopingcar() {
     localStorage.setItem("data_" + i, JSON.stringify(carInfo));
     //alert(img);
     alert("添加成功！");
-
 }
+
+Date.prototype.toLocaleString = function() {
+    return this.getFullYear() + "年" + (this.getMonth() + 1) + "月" + this.getDate() + "日 ";
+};

@@ -78,7 +78,7 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="row">
-                                        <p class="text-right" style="padding-top:30px;padding-right:30px"> <a href="#" class="btn btn-info btn-lg" onclick="addshopingcar()"> <span class="glyphicon glyphicon-shopping-cart"></span>添加至购物车 </a>                                            </p>
+                                        <p class="text-right" style="padding-top:30px;padding-right:30px"id="shopingcartbtn"> <a href="#" class="btn btn-info btn-lg" onclick="addshopingcar()"> <span class="glyphicon glyphicon-shopping-cart"></span>添加至购物车 </a>                                            </p>
                                     </div>
                                 </div>
                             </div>
