@@ -17,6 +17,11 @@
     id, creater, `name`, `desc`, systemcfg, price, discount, ctime, utime, stat
   </sql>
 
+  <select id="selectAll" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from game
+  </select>
   <select id="selectById" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />

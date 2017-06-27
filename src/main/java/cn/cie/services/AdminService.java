@@ -120,4 +120,9 @@ public interface AdminService {
      */
     Result managerKind(Integer kind, List<Integer> games);
 
+    /**
+     * 获取所有的游戏
+     * @return
+     */
+    Result getAllGames();
 }

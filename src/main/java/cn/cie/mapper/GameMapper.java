@@ -13,6 +13,8 @@ public interface GameMapper {
 
     int selectNums();
 
+    List<Game> selectAll();
+
     List<Game> selectByPage(@Param(value = "startPos") Integer startPos, @Param(value = "size") Integer size);
 
     List<Game> selectByIds(@Param(value = "ids") List<Integer> ids);
@@ -31,5 +33,4 @@ public interface GameMapper {
     List<Game> selectByInfo(String info);
 
     int update(Game record);
-
 }

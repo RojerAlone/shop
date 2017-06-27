@@ -242,6 +242,21 @@ public class AdminServiceImpl implements AdminService {
         return Result.success();
     }
 
+    public Result getAllGames() {
+        List<Game> games = gameMapper.selectAll();
+        List<GameDTO> gameDTOS = new ArrayList<GameDTO>();
+        for (Game game : games) {
+            List<Kind> kinds = null;
+            List<Integer> kindIds = kindmapperMapper.selectByGame(game.getId());   // 根据游戏id获取所有的种类id
+            if (kindIds.size() != 0) {
+                kinds = kindMapper.selectByIds(kindIds);                             // 根据种类id获取种类信息
+            }
+            GameDTO dto = new GameDTO(game, kinds, null, null);
+            gameDTOS.add(dto);
+        }
+        return Result.success(gameDTOS);
+    }
+
     private List<GameDTO> paresGameDTO(List<Game> games) {
         List<GameDTO> gameDTOS = new ArrayList<GameDTO>();
         for (Game game : games) {
