@@ -13,6 +13,8 @@ public interface TagMapper {
 
     List<Tag> selectByIds(@Param(value = "ids") List<Integer> ids);
 
+    List<Integer> selectIdByLikeName(String info);
+
     List<Tag> selectAll();
 
     int update(Tag record);

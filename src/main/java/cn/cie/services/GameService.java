@@ -35,4 +35,11 @@ public interface GameService {
      */
     Result<List<GameDTO>> preUpGames();
 
+    /**
+     * 搜索，从种类、标签、游戏信息中搜索
+     * @param info
+     * @return
+     */
+    Result<List<GameDTO>> search(String info);
+
 }

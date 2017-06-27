@@ -17,4 +17,14 @@
   <select id="selectByGame" parameterType="java.lang.Integer" resultType="java.lang.Integer">
     select tag from tagmapper where game = #{game,jdbcType=INTEGER}
   </select>
+  <select id="selectBatchByTags" parameterType="list" resultType="java.lang.Integer">
+    select game from tagmapper
+    <where>
+      tag in
+      <foreach collection="tags" item="tag" separator="," open="(" close=")">
+        #{tag}
+      </foreach>
+    </where>
+  </select>
+
 </mapper>

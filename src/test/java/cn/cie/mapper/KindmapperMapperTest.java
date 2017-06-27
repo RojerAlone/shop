@@ -23,6 +23,8 @@ public class KindmapperMapperTest {
 
     @Autowired
     private KindmapperMapper kindmapperMapper;
+    @Autowired
+    private KindMapper kindMapper;
 
     @Test
     public void insertBatch() throws Exception {
@@ -38,6 +40,13 @@ public class KindmapperMapperTest {
         } catch (Exception e) {
             logger.error("错误" + e);
         }
+    }
+
+    @Test
+    public void selectIdByLikeName() throws Exception {
+        String info = "人";
+        List<Integer> res = kindMapper.selectIdByLikeName(info);
+        logger.info(String.valueOf(res));
     }
 
 }

@@ -30,6 +30,15 @@
   <select id="selectByGame" parameterType="java.lang.Integer" resultType="java.lang.Integer">
     select kind from kindmapper where game = #{game,jdbcType=INTEGER}
   </select>
+  <select id="selectBatchByKinds" parameterType="list" resultType="java.lang.Integer">
+    select game from kindmapper
+    <where>
+      kind in
+      <foreach collection="kinds" item="kind" separator="," open="(" close=")">
+        #{kind}
+      </foreach>
+    </where>
+  </select>
 
   <delete id="deleteByGame" parameterType="java.lang.Integer">
     delete from kindmapper where game = #{game,jdbcType=INTEGER}

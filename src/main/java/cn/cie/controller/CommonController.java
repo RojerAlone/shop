@@ -150,6 +150,17 @@ public class CommonController extends AbstractController {
         return gameService.preUpGames();
     }
 
+    @GetMapping(value = "search")
+    public String search() {
+        return "search";
+    }
+
+    @PostMapping(value = "search")
+    @ResponseBody
+    public Result search(String info) {
+        return gameService.search(info);
+    }
+
     /**
      * 检查用户是否登陆，如果登陆就返回应该跳转到的页面，否则执行接下来的逻辑
      * 每次登陆之前都从request的header中获取跳转之前的链接referer

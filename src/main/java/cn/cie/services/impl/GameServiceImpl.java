@@ -1,12 +1,10 @@
 package cn.cie.services.impl;
 
 import cn.cie.entity.Game;
+import cn.cie.entity.Kind;
 import cn.cie.entity.Tag;
 import cn.cie.entity.dto.GameDTO;
-import cn.cie.mapper.GameMapper;
-import cn.cie.mapper.ImgMapper;
-import cn.cie.mapper.TagMapper;
-import cn.cie.mapper.TagmapperMapper;
+import cn.cie.mapper.*;
 import cn.cie.services.GameService;
 import cn.cie.utils.MsgCenter;
 import cn.cie.utils.RedisUtil;
@@ -25,6 +23,10 @@ public class GameServiceImpl implements GameService{
 
     @Autowired
     private GameMapper gameMapper;
+    @Autowired
+    private KindMapper kindMapper;
+    @Autowired
+    private KindmapperMapper kindmapperMapper;
     @Autowired
     private TagmapperMapper tagmapperMapper;
     @Autowired
@@ -84,7 +86,7 @@ public class GameServiceImpl implements GameService{
         if (res == null || res.size() == 0) {
             List<Game> games = gameMapper.selectByStatOrderByDate(Game.STAT_OK);
             res = paresGameDTO(games);
-            redisUtil.rpushObjectExAtTime(RedisUtil.NEWESTGAME, GameDTO.class, 60 * 10, res.toArray());
+            redisUtil.rpushObjectEx(RedisUtil.NEWESTGAME, GameDTO.class, 60 * 10, res.toArray());
         }
         return Result.success(res);
     }
@@ -94,9 +96,37 @@ public class GameServiceImpl implements GameService{
         if (res == null || res.size() == 0) {
             List<Game> games = gameMapper.selectByStatOrderByDate(Game.STAT_PRE);
             res = paresGameDTO(games);
-            redisUtil.rpushObjectExAtTime(RedisUtil.PRE_UP_GAMES, GameDTO.class, 60 * 10, res.toArray());
+            redisUtil.rpushObjectEx(RedisUtil.PRE_UP_GAMES, GameDTO.class, 60 * 10, res.toArray());
         }
         return Result.success(res);
+    }
+
+    public Result<List<GameDTO>> search(String info) {
+        List<Integer> kindIds = kindMapper.selectIdByLikeName(info);
+        List<Integer> tagIds = tagMapper.selectIdByLikeName(info);
+        List<Integer> gameIdsOfKind = null;
+        if (kindIds != null && kindIds.size() > 0) {
+            gameIdsOfKind = kindmapperMapper.selectBatchByKinds(kindIds);
+        }
+        List<Integer> gameIdsOfTag = null;
+        if (tagIds != null && tagIds.size() > 0) {
+            gameIdsOfTag = tagmapperMapper.selectBatchByTags(tagIds);
+        }
+        Set<Integer> tmpGameIds = new HashSet<Integer>();
+        if (gameIdsOfKind != null && gameIdsOfKind.size() > 0) {
+            tmpGameIds.addAll(gameIdsOfKind);
+        }
+        if (gameIdsOfTag != null && gameIdsOfTag.size() > 0) {
+            tmpGameIds.addAll(gameIdsOfTag);
+        }
+        List<Game> games = null;
+        if (tmpGameIds.size() > 0) {
+            List<Integer> gameIds = new ArrayList<Integer>(tmpGameIds);
+            games = gameMapper.selectByIdsAndInfo(gameIds, info);
+        } else {
+            games = gameMapper.selectByInfo(info);
+        }
+        return Result.success(paresGameDTO(games));
     }
 
     private List<GameDTO> paresGameDTO(List<Game> games) {

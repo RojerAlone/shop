@@ -17,6 +17,8 @@ public interface KindMapper {
 
     Kind selectByName(String name);
 
+    List<Integer> selectIdByLikeName(String name);
+
     int delete(Integer id);
 
     int update(Kind record);

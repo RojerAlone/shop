@@ -17,6 +17,8 @@ public interface KindmapperMapper {
 
     List<Integer> selectByGame(Integer game);
 
+    List<Integer> selectBatchByKinds(@Param(value = "kinds") List<Integer> kinds);
+
     int deleteByGame(Integer game);
 
     int deleteByKind(Integer kind);

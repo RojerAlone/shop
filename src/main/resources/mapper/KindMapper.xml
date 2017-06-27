@@ -37,6 +37,9 @@
     from kind
     where `name` = #{name,jdbcType=VARCHAR}
   </select>
+  <select id="selectIdByLikeName" parameterType="java.lang.String" resultType="java.lang.Integer">
+    select id from kind where name like CONCAT('%',#{info,jdbcType=VARCHAR},'%')
+  </select>
 
   <delete id="delete" parameterType="java.lang.Integer">
     delete from kind

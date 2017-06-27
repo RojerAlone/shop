@@ -245,6 +245,33 @@ public class RedisUtil<T> implements InitializingBean {
     }
 
     /**
+     * 在列表尾部添加一个定期删除的数据
+     * @param key
+     * @param clazz
+     * @param timeout
+     * @param values
+     * @return
+     */
+    public long rpushObjectEx(String key, Class clazz, int timeout, Object... values) {
+        this.setSchema(clazz);
+        Jedis jedis = null;
+        try {
+            jedis = jedisPool.getResource();
+            byte[][] bytes = new byte[values.length][];
+            int index = 0;
+            for (Object value : values) {
+                bytes[index] = setBytes(value);
+                index++;
+            }
+            long res = jedis.rpush(key.getBytes(), bytes);
+            jedis.expire(key, timeout);
+            return res;
+        } finally {
+            jedis.close();
+        }
+    }
+
+    /**
      * 获取列表中所有数据,ruguo
      * @param key
      * @return

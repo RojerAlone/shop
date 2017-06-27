@@ -26,6 +26,10 @@ public interface GameMapper {
 
     List<Game> selectByStatOrderByDate(Byte stat);
 
+    List<Game> selectByIdsAndInfo(@Param(value = "ids") List<Integer> ids, @Param(value = "info") String info);
+
+    List<Game> selectByInfo(String info);
+
     int update(Game record);
 
 }

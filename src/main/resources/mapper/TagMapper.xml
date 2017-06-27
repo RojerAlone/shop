@@ -31,6 +31,9 @@
     <include refid="Base_Column_List" />
     from tag
   </select>
+  <select id="selectIdByLikeName" parameterType="java.lang.String" resultType="java.lang.Integer">
+    select id from tag where name like CONCAT('%',#{info,jdbcType=VARCHAR},'%')
+  </select>
 
   <insert id="insert" parameterType="cn.cie.entity.Tag" useGeneratedKeys="true" keyProperty="id">
     insert into tag (id, name)
