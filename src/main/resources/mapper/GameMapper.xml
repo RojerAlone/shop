@@ -107,6 +107,11 @@
     or creater like CONCAT('%',#{info,jdbcType=VARCHAR},'%')
     or `desc` like CONCAT('%',#{info,jdbcType=VARCHAR},'%')
   </select>
+  <select id="selectFreeGames" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from game where (price = 0 or discount = 0) and stat = 1
+  </select>
 
   <insert id="insert" parameterType="cn.cie.entity.Game" useGeneratedKeys="true" keyProperty="id">
     insert into game

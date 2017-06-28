@@ -129,6 +129,11 @@ public class GameServiceImpl implements GameService{
         return Result.success(paresGameDTO(games));
     }
 
+    public Result getFreeGames() {
+        List<Game> games = gameMapper.selectFreeGames();
+        return Result.success(paresGameDTO(games));
+    }
+
     private List<GameDTO> paresGameDTO(List<Game> games) {
         List<GameDTO> gameDTOS = new ArrayList<GameDTO>();
         for (Game game : games) {

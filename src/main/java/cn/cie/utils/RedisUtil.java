@@ -45,7 +45,9 @@ public class RedisUtil<T> implements InitializingBean {
             jedis = jedisPool.getResource();
             return jedis.set(key, value);
         } finally {
-            jedis.close();
+            if (jedis != null) {
+                jedis.close();
+            }
         }
     }
 
@@ -62,7 +64,9 @@ public class RedisUtil<T> implements InitializingBean {
             jedis = jedisPool.getResource();
             return jedis.setex(key, timeout, value);
         } finally {
-            jedis.close();
+            if (jedis != null) {
+                jedis.close();
+            }
         }
     }
 
@@ -77,7 +81,9 @@ public class RedisUtil<T> implements InitializingBean {
             jedis = jedisPool.getResource();
             return jedis.get(key);
         } finally {
-            jedis.close();
+            if (jedis != null) {
+                jedis.close();
+            }
         }
     }
 
@@ -95,7 +101,9 @@ public class RedisUtil<T> implements InitializingBean {
             byte[] bytes = setBytes(value);
             return  jedis.set(key.getBytes(), bytes);
         } finally {
-            jedis.close();
+            if (jedis != null) {
+                jedis.close();
+            }
         }
     }
 
@@ -114,7 +122,9 @@ public class RedisUtil<T> implements InitializingBean {
             byte[] bytes = setBytes(value);
             return  jedis.setex(key.getBytes(), timeout, bytes);
         } finally {
-            jedis.close();
+            if (jedis != null) {
+                jedis.close();
+            }
         }
     }
 
@@ -130,7 +140,9 @@ public class RedisUtil<T> implements InitializingBean {
             byte[] bytes = jedis.get(key.getBytes());
             return getBytes(bytes);
         } finally {
-            jedis.close();
+            if (jedis != null) {
+                jedis.close();
+            }
         }
     }
 
@@ -145,7 +157,9 @@ public class RedisUtil<T> implements InitializingBean {
             jedis = jedisPool.getResource();
             return jedis.del(key);
         } finally {
-            jedis.close();
+            if (jedis != null) {
+                jedis.close();
+            }
         }
     }
 
@@ -156,6 +170,9 @@ public class RedisUtil<T> implements InitializingBean {
      * @return
      */
     public long lpushObject(String key, Class clazz, Object... values) {
+        if (values.length == 0) {
+            return 0;
+        }
         this.setSchema(clazz);
         Jedis jedis = null;
         try {
@@ -168,7 +185,9 @@ public class RedisUtil<T> implements InitializingBean {
             }
             return jedis.lpush(key.getBytes(), bytes);
         } finally {
-            jedis.close();
+            if (jedis != null) {
+                jedis.close();
+            }
         }
     }
 
@@ -191,7 +210,9 @@ public class RedisUtil<T> implements InitializingBean {
             }
             return getBytes(bytes.get(1));
         } finally {
-            jedis.close();
+            if (jedis != null) {
+                jedis.close();
+            }
         }
     }
 
@@ -202,6 +223,9 @@ public class RedisUtil<T> implements InitializingBean {
      * @return
      */
     public long rpushObject(String key, Class clazz, Object... values) {
+        if (values.length == 0) {
+            return 0;
+        }
         this.setSchema(clazz);
         Jedis jedis = null;
         try {
@@ -214,7 +238,9 @@ public class RedisUtil<T> implements InitializingBean {
             }
             return jedis.rpush(key.getBytes(), bytes);
         } finally {
-            jedis.close();
+            if (jedis != null) {
+                jedis.close();
+            }
         }
     }
 
@@ -226,6 +252,9 @@ public class RedisUtil<T> implements InitializingBean {
      * @return
      */
     public long rpushObjectExAtTime(String key, Class clazz, long time, Object... values) {
+        if (values.length == 0) {
+            return 0;
+        }
         this.setSchema(clazz);
         Jedis jedis = null;
         try {
@@ -240,7 +269,9 @@ public class RedisUtil<T> implements InitializingBean {
             jedis.expireAt(key.getBytes(), time);      // 手动设置过期时间
             return res;
         } finally {
-            jedis.close();
+            if (jedis != null) {
+                jedis.close();
+            }
         }
     }
 
@@ -253,6 +284,9 @@ public class RedisUtil<T> implements InitializingBean {
      * @return
      */
     public long rpushObjectEx(String key, Class clazz, int timeout, Object... values) {
+        if (values.length == 0) {
+            return 0;
+        }
         this.setSchema(clazz);
         Jedis jedis = null;
         try {
@@ -267,7 +301,9 @@ public class RedisUtil<T> implements InitializingBean {
             jedis.expire(key, timeout);
             return res;
         } finally {
-            jedis.close();
+            if (jedis != null) {
+                jedis.close();
+            }
         }
     }
 
@@ -292,7 +328,9 @@ public class RedisUtil<T> implements InitializingBean {
             }
             return res;
         } finally {
-            jedis.close();
+            if (jedis != null) {
+                jedis.close();
+            }
         }
     }
 

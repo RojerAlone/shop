@@ -42,4 +42,9 @@ public interface GameService {
      */
     Result<List<GameDTO>> search(String info);
 
+    /**
+     * 获取免费游戏
+     * @return
+     */
+    Result getFreeGames();
 }

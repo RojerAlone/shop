@@ -3,35 +3,35 @@ $(
     function () {
         // 获取用户信息
         var userInfo = document.getElementById("userInfo");
-        $.post("/admin/getuser",function (result) {
-            for(i=0;i<10;i++) {
-                if( result.data.user[i]){
-                var tr = document.createElement("tr");
-                var j = i + 1;
-                var uid =  result.data.user[i].id;
-                var stat = result.data.user[i].stat;
-                var time = new Date(result.data.user[i].ctime).toLocaleString();
-                if(stat == '1'){
-                    stat = "正常";
+        $.post("/admin/getuser", function (result) {
+            for (i = 0; i < 10; i++) {
+                if (result.data.user[i]) {
+                    var tr = document.createElement("tr");
+                    var j = i + 1;
+                    var uid = result.data.user[i].id;
+                    var stat = result.data.user[i].stat;
+                    var time = new Date(result.data.user[i].ctime).toLocaleString();
+                    if (stat == '1') {
+                        stat = "正常";
+                    }
+                    if (stat == '2') {
+                        stat = '限制登录';
+                    }
+                    if (stat == '3') {
+                        stat = '删除';
+                    }
+                    tr.innerHTML = "<td>" + j + "</td><td>"
+                        + result.data.user[i].username + "</td><td>"
+                        + result.data.user[i].nickname + "</td><td>"
+                        + result.data.user[i].email + "</td><td>"
+                        + result.data.user[i].phone + "</td><td>"
+                        + time + "</td><td id='ustat_" + j + "'>"
+                        + stat + "</td><td><button class='btn' onclick='restrict(" + uid + "," + j + ")'>"
+                        + "限制登录" + "</button><button class='btn' onclick='del(" + uid + "," + j + ")'>"
+                        + "删除" + "</button><button class='btn' onclick='relieve(" + uid + "," + j + ")'>"
+                        + "恢复" + "</button></td>";
+                    userInfo.appendChild(tr);
                 }
-                if(stat == '2'){
-                    stat = '限制登录';
-                }
-                if (stat == '3'){
-                    stat = '删除';
-                }
-                tr.innerHTML = "<td>" + j + "</td><td>"
-                    + result.data.user[i].username + "</td><td>"
-                    + result.data.user[i].nickname + "</td><td>"
-                    + result.data.user[i].email + "</td><td>"
-                    + result.data.user[i].phone + "</td><td>"
-                    + time + "</td><td id='ustat_"+j+"'>"
-                    + stat + "</td><td><button class='btn' onclick='restrict("+uid+","+j+")'>"
-                    + "限制登录" + "</button><button class='btn' onclick='del("+uid+","+j+")'>"
-                    + "删除" + "</button><button class='btn' onclick='relieve("+uid+","+j+")'>"
-                    + "恢复" + "</button></td>";
-                userInfo.appendChild(tr);
-            }
             }
             // 用户信息的分页
             var ul = document.getElementById("paging_0");
@@ -40,11 +40,11 @@ $(
             var li_first = document.createElement("li");
             li_first.innerHTML = "<a href='#'>&laquo;</a>";
             ul.appendChild(li_first);
-            for(i=0;i<pages;i++){
-               var li = document.createElement("li");
-               var  j = i + 1;
-               li.innerHTML = "<a href='#'>"+j+"</a>";
-               ul.appendChild(li);
+            for (i = 0; i < pages; i++) {
+                var li = document.createElement("li");
+                var j = i + 1;
+                li.innerHTML = "<a href='#'>" + j + "</a>";
+                ul.appendChild(li);
             }
             var li_last = document.createElement("li");
             li_last.innerHTML = "<a href='#'>&raquo;</a>";
@@ -53,56 +53,56 @@ $(
 
         // 获取游戏信息
         var gameInfo = document.getElementById("gameInfo");
-        $.post("/admin/getgames",function (result) {
-            for(i=0;i<10;i++) {
-                if( result.data.game[i]){
+        $.post("/admin/getgames", function (result) {
+            for (i = 0; i < 10; i++) {
+                if (result.data.game[i]) {
                     var tr = document.createElement("tr");
                     var j = i + 1;
-                    var gid =  result.data.game[i].id;
+                    var gid = result.data.game[i].id;
                     var stat = result.data.game[i].stat;
-                    if(stat == "1"){
+                    if (stat == "1") {
                         stat = "已上架";
                     }
-                    if(stat == "2"){
+                    if (stat == "2") {
                         stat = "已下架";
                     }
-                    if(stat == "0"){
+                    if (stat == "0") {
                         stat = "未上架";
                     }
-                    tr.innerHTML = "<td>" + j + "</td><td id='gname_"+gid+"'>"
-                        + result.data.game[i].name + "</td><td id='gprice_"+gid+"'>"
-                        + result.data.game[i].price + "</td><td id='gstat_"+j+"'>"
-                        + stat+"</td><td><button class='btn' onclick='upgame("+gid+","+j+")'>"
-                        + "上架" + "</button><button class='btn' onclick='downgame("+gid+","+j+")'>"
-                        + "下架" + "</button><button type='button' class='btn' data-toggle='modal' data-target='#myModal_1' onclick='getgamekind("+gid+")'>"
-                        + "修改种类" + "</button>" +text_1 +
-                        "<p>编号"+"<input type='text' readOnly='true' class='inputmargin_2'id='gamekindid"+"'></p><br>"+
-                        "<p><div id='gamekind'>种类"+"</div></p><br>"+
-                        "</div>"+
-                        "<div class='modal-footer' id='savebtn'>"+
-                        "<button type='button' class='btn btn-default' data-dismiss='modal'>取消</button>"+
-                        "<button type='button' class='btn btn-primary' onclick='savekinds("+")'>保存</button>"+
-                        "</div>"+
-                        "</div>"+
-                        "</div>"+
-                        "</div>"+
-                        "<button type='button' class='btn' data-toggle='modal' data-target='#myModal' onclick='getgameinfo("+gid+")'>"
-                        + "修改信息"+
+                    tr.innerHTML = "<td>" + j + "</td><td id='gname_" + gid + "'>"
+                        + result.data.game[i].name + "</td><td id='gprice_" + gid + "'>"
+                        + result.data.game[i].price + "</td><td id='gstat_" + j + "'>"
+                        + stat + "</td><td><button class='btn' onclick='upgame(" + gid + "," + j + ")'>"
+                        + "上架" + "</button><button class='btn' onclick='downgame(" + gid + "," + j + ")'>"
+                        + "下架" + "</button><button type='button' class='btn' data-toggle='modal' data-target='#myModal_1' onclick='getgamekind(" + gid + ")'>"
+                        + "修改种类" + "</button>" + text_1 +
+                        "<p>编号" + "<input type='text' readOnly='true' class='inputmargin_2'id='gamekindid" + "'></p><br>" +
+                        "<p><div id='gamekind'>种类" + "</div></p><br>" +
+                        "</div>" +
+                        "<div class='modal-footer' id='savebtn'>" +
+                        "<button type='button' class='btn btn-default' data-dismiss='modal'>取消</button>" +
+                        "<button type='button' class='btn btn-primary' onclick='savekinds(" + ")'>保存</button>" +
+                        "</div>" +
+                        "</div>" +
+                        "</div>" +
+                        "</div>" +
+                        "<button type='button' class='btn' data-toggle='modal' data-target='#myModal' onclick='getgameinfo(" + gid + ")'>"
+                        + "修改信息" +
                         "</button>" + text +
-                        "<p>编号"+"<input type='text' readOnly='true'class='inputmargin_2'id='gameid"+"'></p><br>"+
-                        "<p>游戏"+"<input type='text' class='inputmargin_2'id='gamename"+"'></p><br>"+
-                        "<p>价格"+"<input type='text'class='inputmargin_2' id='gameprice"+"'></p><br>"+
-                        "<p>开发商"+"<input type='text'class='inputmargin_1' id='gamecreater"+"'></p><br>"+
-                        "<p>描述"+"<textarea  rows='5'  class='inputmargin_2' id='gamedesc"+"'></textarea></p><br>"+
-                        "<p>配置"+"<textarea  rows='5'  class='inputmargin_2' id='sys"+"'></textarea></p><br>"+
-                        "</div>"+
-                        "<div class='modal-footer' id='savebtn'>"+
-                        "<button type='button' class='btn btn-default' data-dismiss='modal'>取消</button>"+
-                        "<button type='button' class='btn btn-primary' onclick='savegameupdate("+")'>保存</button>"+
-                        "</div>"+
-                        "</div>"+
-                        "</div>"+
-                        "</div>"+"</td>";
+                        "<p>编号" + "<input type='text' readOnly='true'class='inputmargin_2'id='gameid" + "'></p><br>" +
+                        "<p>游戏" + "<input type='text' class='inputmargin_2'id='gamename" + "'></p><br>" +
+                        "<p>价格" + "<input type='text'class='inputmargin_2' id='gameprice" + "'></p><br>" +
+                        "<p>开发商" + "<input type='text'class='inputmargin_1' id='gamecreater" + "'></p><br>" +
+                        "<p>描述" + "<textarea  rows='5'  class='inputmargin_2' id='gamedesc" + "'></textarea></p><br>" +
+                        "<p>配置" + "<textarea  rows='5'  class='inputmargin_2' id='sys" + "'></textarea></p><br>" +
+                        "</div>" +
+                        "<div class='modal-footer' id='savebtn'>" +
+                        "<button type='button' class='btn btn-default' data-dismiss='modal'>取消</button>" +
+                        "<button type='button' class='btn btn-primary' onclick='savegameupdate(" + ")'>保存</button>" +
+                        "</div>" +
+                        "</div>" +
+                        "</div>" +
+                        "</div>" + "</td>";
                     gameInfo.appendChild(tr);
                 }
             }
@@ -113,110 +113,113 @@ $(
             var current = result.data.page.current;
             var last = current - 1;
             var next = current + 1;
-            if(last<1){last=1}
-            if(next>pages){next=pages}
+            if (last < 1) {
+                last = 1
+            }
+            if (next > pages) {
+                next = pages
+            }
             var li_first = document.createElement("li");
             li_first.id = "li_first";
-            li_first.innerHTML = "<a href='#'onclick='getgeame("+last+")'>&laquo;</a>";
+            li_first.innerHTML = "<a href='#'onclick='getgeame(" + last + ")'>&laquo;</a>";
             ul.appendChild(li_first);
             document.getElementById("li_first").className = "disabled";
-            for(i=0;i<pages;i++){
-                var  j = i + 1;
+            for (i = 0; i < pages; i++) {
+                var j = i + 1;
                 var li = document.createElement("li");
-                li.id = "li_"+ j ;
-                li.innerHTML = "<a href='#'onclick='getgeame("+j+")'>"+j+"</a>";
+                li.id = "li_" + j;
+                li.innerHTML = "<a href='#'onclick='getgeame(" + j + ")'>" + j + "</a>";
                 ul.appendChild(li);
             }
-            document.getElementById("li_"+current).className = "active";
+            document.getElementById("li_" + current).className = "active";
             var li_last = document.createElement("li");
-            li_last.innerHTML = "<a href='#'onclick='getgeame("+next+")'>&raquo;</a>";
+            li_last.innerHTML = "<a href='#'onclick='getgeame(" + next + ")'>&raquo;</a>";
             ul.appendChild(li_last);
         })
 
         //种类管理
         var kind_all = document.getElementById("kind_all");
-        $.post("/kind/all",function (result) {
+        $.post("/kind/all", function (result) {
             var i = 0;
-            while(result.data[i]){
+            while (result.data[i]) {
                 j = i + 1;
                 var tr = document.createElement("tr");
                 var kid = result.data[i].id;
-                tr.innerHTML = "<th id='kindid_"+j+"'>"
-                    + result.data[i].id + "</th><th id='kindname_"+j+"'>"
-                    + result.data[i].name + "</th><th><button type='button' class='btn' data-toggle='modal' data-target='#myModal_2' onclick='managekind("+kid+")'>"
-                    + "管理" + "</button>" +text_2 +
-                    "<p>种类编号"+"<input type='text' readOnly='true' class='inputmargin_2'id='kindgameid"+"'></p><br>"+
-                    "<p><div id='kindgame'>游戏"+"</div></p><br>"+
-                    "</div>"+
-                    "<div class='modal-footer' id='savebtn'>"+
-                    "<button type='button' class='btn btn-default' data-dismiss='modal'>取消</button>"+
-                    "<button type='button' class='btn btn-primary' onclick='savekindsgames("+")'>保存</button>"+
-                    "</div>"+
-                    "</div>"+
-                    "</div>"+
-                    "</div>"+
+                tr.innerHTML = "<th id='kindid_" + j + "'>"
+                    + result.data[i].id + "</th><th id='kindname_" + j + "'>"
+                    + result.data[i].name + "</th><th><button type='button' class='btn' data-toggle='modal' data-target='#myModal_2' onclick='managekind(" + kid + ")'>"
+                    + "管理" + "</button>" + text_2 +
+                    "<p>种类编号" + "<input type='text' readOnly='true' class='inputmargin_2'id='kindgameid" + "'></p><br>" +
+                    "<p><div id='kindgame'>游戏" + "</div></p><br>" +
+                    "</div>" +
+                    "<div class='modal-footer' id='savebtn'>" +
+                    "<button type='button' class='btn btn-default' data-dismiss='modal'>取消</button>" +
+                    "<button type='button' class='btn btn-primary' onclick='savekindsgames(" + ")'>保存</button>" +
+                    "</div>" +
+                    "</div>" +
+                    "</div>" +
+                    "</div>" +
                     "</th>";
                 i++;
                 kind_all.appendChild(tr);
             }
         })
     }
-
 )
 //游戏信息分页的函数
 function getgeame(pagenum) {
     var gameInfo = document.getElementById("gameInfo");
     gameInfo.innerHTML = "";
-    $.post("/admin/getgames",{page:pagenum},function (result) {
-        for(i=0;i<10;i++) {
-            if( result.data.game[i]){
+    $.post("/admin/getgames", {page: pagenum}, function (result) {
+        for (i = 0; i < 10; i++) {
+            if (result.data.game[i]) {
                 var tr = document.createElement("tr");
-                var j = 10 * (pagenum-1) + i + 1;
-                var gid =  result.data.game[i].id;
+                var j = 10 * (pagenum - 1) + i + 1;
+                var gid = result.data.game[i].id;
                 var stat = result.data.game[i].stat;
-                if(stat == "1"){
+                if (stat == "1") {
                     stat = "已上架";
                 }
-                if(stat == "2"){
+                if (stat == "2") {
                     stat = "已下架";
                 }
-                if(stat == "0"){
+                if (stat == "0") {
                     stat = "未上架";
                 }
-                tr.innerHTML = "<td>" + j + "</td><td id='gname_"+gid+"'>"
-                    + result.data.game[i].name + "</td><td id='gprice_"+gid+"'>"
-                    + result.data.game[i].price + "</td><td id='gstat_"+j+"'>"
-                    + stat+"</td><td><button class='btn' onclick='upgame("+gid+","+j+")'>"
-                    + "上架" + "</button><button class='btn' onclick='downgame("+gid+","+j+")'>"
-                    + "下架" + "</button><button type='button' class='btn' data-toggle='modal' data-target='#myModal_1' onclick='getgamekind("+gid+")'>"
-                    + "修改种类" + "</button>" +text_1 +
-                    "<p>编号"+"<input type='text' readOnly='true' class='inputmargin_2'id='gamekindid"+"'></p><br>"+
-                    "<p><div id='gamekind'>种类"+"</div></p><br>"+
-                    "</div>"+
-                    "<div class='modal-footer' id='savebtn'>"+
-                    "<button type='button' class='btn btn-default' data-dismiss='modal'>取消</button>"+
-                    "<button type='button' class='btn btn-primary' onclick='savekinds("+")'>保存</button>"+
-                    "</div>"+
-                    "</div>"+
-                    "</div>"+
-                    "</div>"+
-                    "<button type='button' class='btn' data-toggle='modal' data-target='#myModal' onclick='getgameinfo("+gid+")'>"
-                    + "修改信息"+
+                tr.innerHTML = "<td>" + j + "</td><td id='gname_" + gid + "'>"
+                    + result.data.game[i].name + "</td><td id='gprice_" + gid + "'>"
+                    + result.data.game[i].price + "</td><td id='gstat_" + j + "'>"
+                    + stat + "</td><td><button class='btn' onclick='upgame(" + gid + "," + j + ")'>"
+                    + "上架" + "</button><button class='btn' onclick='downgame(" + gid + "," + j + ")'>"
+                    + "下架" + "</button><button type='button' class='btn' data-toggle='modal' data-target='#myModal_1' onclick='getgamekind(" + gid + ")'>"
+                    + "修改种类" + "</button>" + text_1 +
+                    "<p>编号" + "<input type='text' readOnly='true' class='inputmargin_2'id='gamekindid" + "'></p><br>" +
+                    "<p><div id='gamekind'>种类" + "</div></p><br>" +
+                    "</div>" +
+                    "<div class='modal-footer' id='savebtn'>" +
+                    "<button type='button' class='btn btn-default' data-dismiss='modal'>取消</button>" +
+                    "<button type='button' class='btn btn-primary' onclick='savekinds(" + ")'>保存</button>" +
+                    "</div>" +
+                    "</div>" +
+                    "</div>" +
+                    "</div>" +
+                    "<button type='button' class='btn' data-toggle='modal' data-target='#myModal' onclick='getgameinfo(" + gid + ")'>"
+                    + "修改信息" +
                     "</button>" + text +
-                    "<p>编号"+"<input type='text' readOnly='true' class='inputmargin_2'id='gameid"+"'></p><br>"+
-                    "<p>游戏"+"<input type='text' class='inputmargin_2'id='gamename"+"'></p><br>"+
-                    "<p>价格"+"<input type='text'class='inputmargin_2' id='gameprice"+"'></p><br>"+
-                    "<p>开发商"+"<input type='text'class='inputmargin_1' id='gamecreater"+"'></p><br>"+
-                    "<p>描述"+"<textarea  rows='5'  class='inputmargin_2' id='gamedesc"+"'></textarea></p><br>"+
-                    "<p>配置"+"<textarea  rows='5'  class='inputmargin_2' id='sys"+"'></textarea></p><br>"+
-                    "</div>"+
-                    "<div class='modal-footer' id='savebtn'>"+
-                    "<button type='button' class='btn btn-default' data-dismiss='modal'>取消</button>"+
-                    "<button type='button' class='btn btn-primary' onclick='savegameupdate("+")'>保存</button>"+
-                    "</div>"+
-                    "</div>"+
-                    "</div>"+
-                    "</div>"+"</td>";
+                    "<p>编号" + "<input type='text' readOnly='true' class='inputmargin_2'id='gameid" + "'></p><br>" +
+                    "<p>游戏" + "<input type='text' class='inputmargin_2'id='gamename" + "'></p><br>" +
+                    "<p>价格" + "<input type='text'class='inputmargin_2' id='gameprice" + "'></p><br>" +
+                    "<p>开发商" + "<input type='text'class='inputmargin_1' id='gamecreater" + "'></p><br>" +
+                    "<p>描述" + "<textarea  rows='5'  class='inputmargin_2' id='gamedesc" + "'></textarea></p><br>" +
+                    "<p>配置" + "<textarea  rows='5'  class='inputmargin_2' id='sys" + "'></textarea></p><br>" +
+                    "</div>" +
+                    "<div class='modal-footer' id='savebtn'>" +
+                    "<button type='button' class='btn btn-default' data-dismiss='modal'>取消</button>" +
+                    "<button type='button' class='btn btn-primary' onclick='savegameupdate(" + ")'>保存</button>" +
+                    "</div>" +
+                    "</div>" +
+                    "</div>" +
+                    "</div>" + "</td>";
                 gameInfo.appendChild(tr);
             }
         }
@@ -227,89 +230,94 @@ function getgeame(pagenum) {
         var current = result.data.page.current;
         var last = current - 1;
         var next = current + 1;
-        if(last<1){last=1}
-        if(next>pages){next=pages}
+        if (last < 1) {
+            last = 1
+        }
+        if (next > pages) {
+            next = pages
+        }
         var li_first = document.createElement("li");
         li_first.id = "li_first";
-        li_first.innerHTML = "<a href='#'onclick='getgeame("+last+")'>&laquo;</a>";
+        li_first.innerHTML = "<a href='#'onclick='getgeame(" + last + ")'>&laquo;</a>";
         ul.appendChild(li_first);
-        for(i=0;i<pages;i++){
-            var  j = i + 1;
+        for (i = 0; i < pages; i++) {
+            var j = i + 1;
             var li = document.createElement("li");
-            li.id = "li_" + j ;
-            li.innerHTML = "<a href='#'onclick='getgeame("+j+")'>"+j+"</a>";
+            li.id = "li_" + j;
+            li.innerHTML = "<a href='#'onclick='getgeame(" + j + ")'>" + j + "</a>";
             ul.appendChild(li);
         }
-        document.getElementById("li_"+pagenum).className = "active";
-        if(current <= "1"){
+        document.getElementById("li_" + pagenum).className = "active";
+        if (current <= "1") {
             document.getElementById("li_first").className = "disabled";
         }
         var li_last = document.createElement("li");
         li_last.id = "li_next";
-        li_last.innerHTML = "<a href='#'onclick='getgeame("+next+")'>&raquo;</a>";
+        li_last.innerHTML = "<a href='#'onclick='getgeame(" + next + ")'>&raquo;</a>";
         ul.appendChild(li_last);
-        if(current >= i){
+        if (current >= i) {
             document.getElementById("li_next").className = "disabled";
         }
 
-})}
+    })
+}
 
 //限制用户登录
-function restrict(uid,j) {
-    $.post("/admin/restrictuser",{uid:uid},function (result) {
-        if(result.success){
+function restrict(uid, j) {
+    $.post("/admin/restrictuser", {uid: uid}, function (result) {
+        if (result.success) {
             alert("该用户已被限制登录！");
-            document.getElementById("ustat_"+j).innerHTML = "限制登录";
+            document.getElementById("ustat_" + j).innerHTML = "限制登录";
         }
-        else{
+        else {
             alert(result.msg);
         }
     })
 }
 //恢复用户
-function relieve(uid,j) {
-    $.post("/admin/relieveuser",{uid:uid},function (result) {
-        if(result.success){
+function relieve(uid, j) {
+    $.post("/admin/relieveuser", {uid: uid}, function (result) {
+        if (result.success) {
             alert("该用户已被恢复登录！");
-            document.getElementById("ustat_"+j).innerHTML = "正常";
+            document.getElementById("ustat_" + j).innerHTML = "正常";
         }
-        else{
+        else {
             alert(result.msg);
         }
     })
 }
 //删除用户
-function del(uid,j) {
-    $.post("/admin/deluser",{uid:uid},function (result) {
-        if(result.success){
+function del(uid, j) {
+    $.post("/admin/deluser", {uid: uid}, function (result) {
+        if (result.success) {
             alert("该用户已被删除！");
-            document.getElementById("ustat_"+j).innerHTML = "删除";
+            document.getElementById("ustat_" + j).innerHTML = "删除";
         }
-        else{
+        else {
             alert(result.msg);
         }
     })
 }
 //上架游戏
-function upgame(gid,j) {
-    $.post("/admin/upgame",{game:gid},function (result) {
-        if(result.success){
+function upgame(gid, j) {
+    $.post("/admin/upgame", {game: gid}, function (result) {
+        if (result.success) {
             alert("游戏已上架！")
-            document.getElementById("gstat_"+j).innerHTML = "已上架";
+            document.getElementById("gstat_" + j).innerHTML = "已上架";
         }
-        else{
+        else {
             alert(result.msg);
         }
     })
 }
 //下架游戏
-function downgame(gid,j) {
-    $.post("/admin/downgame",{game:gid},function (result) {
-        if(result.success){
+function downgame(gid, j) {
+    $.post("/admin/downgame", {game: gid}, function (result) {
+        if (result.success) {
             alert("游戏已下架！")
-            document.getElementById("gstat_"+j).innerHTML = "已下架";
+            document.getElementById("gstat_" + j).innerHTML = "已下架";
         }
-        else{
+        else {
             alert(result.msg);
         }
     })
@@ -318,57 +326,57 @@ function downgame(gid,j) {
 function getgamekind(gid) {
     document.getElementById("gamekindid").value = gid;
     var kinds = new Array();
-    $.post("/kind/all",function (result) {
+    $.post("/kind/all", function (result) {
         var i = 0;
         document.getElementById("gamekind").innerHTML = "种类";
-        while(result.data[i]) {
-            document.getElementById("gamekind").innerHTML += "<br>"+"<input type='checkbox' id='kindbox_"+gid+"_"+i+"'>" + result.data[i].name;
+        while (result.data[i]) {
+            document.getElementById("gamekind").innerHTML += "<br>" + "<input type='checkbox' id='kindbox_" + gid + "_" + i + "'>" + result.data[i].name;
             kinds[i] = result.data[i].name;
             i++;
         }
     })
-    $.post("/admin/getgamekind",{game:gid},function (result) {
+    $.post("/admin/getgamekind", {game: gid}, function (result) {
         var i = 0;
         var j = 0;
-        while(result.data[i]){
-            while(kinds[j]){
-            if(result.data[i].name == kinds[j]) {
-            document.getElementById("kindbox_"+gid+"_"+j).checked = "true";
-            }
+        while (result.data[i]) {
+            while (kinds[j]) {
+                if (result.data[i].name == kinds[j]) {
+                    document.getElementById("kindbox_" + gid + "_" + j).checked = "true";
+                }
                 j++;
             }
             i++;
-            j=0;
+            j = 0;
         }
         i = 0;
     })
 }
 //保存游戏种类
-function savekinds(){
-    var i=0;
-    var j=0;
+function savekinds() {
+    var i = 0;
+    var j = 0;
     var kid = document.getElementById("gamekindid").value;
     var check = document.getElementById("kindbox_" + kid + "_" + i);
     var kinds = new Array();
-    while(check) {
-        if(check.checked){
-            kinds[j] = parseInt(i+1);
+    while (check) {
+        if (check.checked) {
+            kinds[j] = parseInt(i + 1);
             j++;
         }
         i++;
         check = document.getElementById("kindbox_" + kid + "_" + i);
     }
     $.ajax({
-        type:"post",
-        url:"/admin/updategamekind",
+        type: "post",
+        url: "/admin/updategamekind",
         traditional: true,
-        data:{game:kid,kinds:kinds},
-        success:function(result){
-            if(result.success){
-            alert("修改成功！");
-        }else
-        alert(result.msg);
-    }
+        data: {game: kid, kinds: kinds},
+        success: function (result) {
+            if (result.success) {
+                alert("修改成功！");
+            } else
+                alert(result.msg);
+        }
     })
     $('#myModal_1').modal('hide');
 }
@@ -379,17 +387,17 @@ function managekind(kid) {
     // var currentpage = 1;
     document.getElementById("kindgameid").value = kid;
     var i = 0;
-    $.post("/admin/getallgames",function (result) {
+    $.post("/admin/getallgames", function (result) {
         document.getElementById("kindgame").innerHTML = "游戏";
-        while(result.data[i]){
+        while (result.data[i]) {
             var j = result.data[i].id;
-            document.getElementById("kindgame").innerHTML  += "<br>"+"<input type='checkbox' class='gamebox' id='kind_"+kid+"_"+j+"'>" + result.data[i].name;
+            document.getElementById("kindgame").innerHTML += "<br>" + "<input type='checkbox' class='gamebox' id='kind_" + kid + "_" + j + "'>" + result.data[i].name;
             i++;
         }
-        var j=0;
-        i =0;
-        while(result.data[i]) {
-            if(result.data[i].kinds) {
+        var j = 0;
+        i = 0;
+        while (result.data[i]) {
+            if (result.data[i].kinds) {
                 while (result.data[i].kinds[j]) {
                     if (result.data[i].kinds[j].id == kid) {
                         var gid = result.data[i].id;
@@ -399,49 +407,35 @@ function managekind(kid) {
                 }
             }
             i++;
-            j=0;
+            j = 0;
         }
-        // for(currentpage=1;currentpage<=kidpages;currentpage++){
-        // $.post("/kind/"+kid+"/games",{page:currentpage},function (result) {
-        //     i = 0;
-        //     while(result.data.game[i]) {
-        //         var gid = result.data.game[i].id;
-        //         if(document.getElementById("kind_"+kid+"_"+gid)) {
-        //             document.getElementById("kind_"+kid+"_"+gid).checked = true;
-        //         }
-        //         i++;
-        //     }
-        //     kidpages = result.data.page.pages;
-        // })
-        // }
     })
 }
 
 
 function savekindsgames() {
     var kid = document.getElementById("kindgameid").value;
-    var i=0;
+    var i = 0;
     var games = new Array();
-    var num=0;
+    var num = 0;
     var gamebox = document.getElementsByClassName("gamebox");
-    while (gamebox[i]){
-        if(gamebox[i].checked) {
+    while (gamebox[i]) {
+        if (gamebox[i].checked) {
             games[num] = (gamebox[i].id).split('_')[2];
             num++;
         }
         i++;
     }
-    i=0;
-    // while(games[i]){alert(games[i]);i++;}
+    i = 0;
     $.ajax({
-        type:"post",
-        url:"/admin/managerkind",
+        type: "post",
+        url: "/admin/managerkind",
         traditional: true,
-        data:{kind:kid,games:games},
-        success:function(result){
-            if(result.success){
+        data: {kind: kid, games: games},
+        success: function (result) {
+            if (result.success) {
                 alert("修改成功！");
-            }else
+            } else
                 alert(result.msg);
         }
     })
@@ -459,7 +453,7 @@ function showright_1() {
     document.getElementById("right_2").style.display = "none";
     document.getElementById("right_3").style.display = "none";
 }
-function  showright_2() {
+function showright_2() {
     document.getElementById("right_0").style.display = "none";
     document.getElementById("right_1").style.display = "none";
     document.getElementById("right_2").style.display = "block";
@@ -472,14 +466,6 @@ function showright_3() {
     document.getElementById("right_3").style.display = "block";
 }
 
-
-
-
-
-
-
-
-
 //导航菜单
 function navList(id) {
     var $obj = $("#nav_dot"), $item = $("#J_nav_" + id);
@@ -490,10 +476,14 @@ function navList(id) {
         $(this).removeClass("hover");
     });
     $obj.find("p").hover(function () {
-        if ($(this).hasClass("on")) { return; }
+        if ($(this).hasClass("on")) {
+            return;
+        }
         $(this).addClass("hover");
     }, function () {
-        if ($(this).hasClass("on")) { return; }
+        if ($(this).hasClass("on")) {
+            return;
+        }
         $(this).removeClass("hover");
     });
     $obj.find("h4").click(function () {
@@ -515,46 +505,48 @@ function navList(id) {
 }
 
 /****表格隔行高亮显示*****/
-window.onload=function(){
-	oTable=document.getElementById("tab");//找表格
-	aTr=document.getElementsByTagName("tr");//找所有的行
-	for(i=0;i<aTr.length;i++){
-		if(i%2==0){
-			aTr[i].style.background="#fff";	
-		}else{
-			aTr[i].style.background="#ccc";	
-		};
-	};
+window.onload = function () {
+    oTable = document.getElementById("tab");//找表格
+    aTr = document.getElementsByTagName("tr");//找所有的行
+    for (i = 0; i < aTr.length; i++) {
+        if (i % 2 == 0) {
+            aTr[i].style.background = "#fff";
+        } else {
+            aTr[i].style.background = "#ccc";
+        }
+        ;
+    }
+    ;
 };
-var text = "<div class='modal fade' id='myModal' tabindex='-1' role='dialog' aria-labelledby='myModalLabel'>"+
-    "<div class='modal-dialog' role='document'>"+
-    "<div class='modal-content'>"+
-    "<div class='modal-header'>"+
-    "<button type='button' class='close' data-dismiss='modal' aria-label='Close'><span aria-hidden='true'>&times;</span></button>"+
-    "<h4 class='modal-title' id='myModalLabel'>游戏信息</h4>"+
-    "</div>"+
+var text = "<div class='modal fade' id='myModal' tabindex='-1' role='dialog' aria-labelledby='myModalLabel'>" +
+    "<div class='modal-dialog' role='document'>" +
+    "<div class='modal-content'>" +
+    "<div class='modal-header'>" +
+    "<button type='button' class='close' data-dismiss='modal' aria-label='Close'><span aria-hidden='true'>&times;</span></button>" +
+    "<h4 class='modal-title' id='myModalLabel'>游戏信息</h4>" +
+    "</div>" +
     "<div class='modal-body'>"
 
-var text_1 = "<div class='modal fade' id='myModal_1' tabindex='-1' role='dialog' aria-labelledby='myModalLabel'>"+
-    "<div class='modal-dialog' role='document'>"+
-    "<div class='modal-content'>"+
-    "<div class='modal-header'>"+
-    "<button type='button' class='close' data-dismiss='modal' aria-label='Close'><span aria-hidden='true'>&times;</span></button>"+
-    "<h4 class='modal-title' id='myModalLabel'>游戏种类</h4>"+
-    "</div>"+
+var text_1 = "<div class='modal fade' id='myModal_1' tabindex='-1' role='dialog' aria-labelledby='myModalLabel'>" +
+    "<div class='modal-dialog' role='document'>" +
+    "<div class='modal-content'>" +
+    "<div class='modal-header'>" +
+    "<button type='button' class='close' data-dismiss='modal' aria-label='Close'><span aria-hidden='true'>&times;</span></button>" +
+    "<h4 class='modal-title' id='myModalLabel'>游戏种类</h4>" +
+    "</div>" +
     "<div class='modal-body'>"
 
-var text_2 = "<div class='modal fade' id='myModal_2' tabindex='-1' role='dialog' aria-labelledby='myModalLabel'>"+
-    "<div class='modal-dialog' role='document'>"+
-    "<div class='modal-content'>"+
-    "<div class='modal-header'>"+
-    "<button type='button' class='close' data-dismiss='modal' aria-label='Close'><span aria-hidden='true'>&times;</span></button>"+
-    "<h4 class='modal-title' id='myModalLabel'>种类管理</h4>"+
-    "</div>"+
+var text_2 = "<div class='modal fade' id='myModal_2' tabindex='-1' role='dialog' aria-labelledby='myModalLabel'>" +
+    "<div class='modal-dialog' role='document'>" +
+    "<div class='modal-content'>" +
+    "<div class='modal-header'>" +
+    "<button type='button' class='close' data-dismiss='modal' aria-label='Close'><span aria-hidden='true'>&times;</span></button>" +
+    "<h4 class='modal-title' id='myModalLabel'>种类管理</h4>" +
+    "</div>" +
     "<div class='modal-body'>"
 
 function getgameinfo(gid) {
-    $.post("/game/"+gid,function (result) {
+    $.post("/game/" + gid, function (result) {
         document.getElementById("gameid").value = result.data.id;
         document.getElementById("gamename").value = result.data.name;
         document.getElementById("gameprice").value = result.data.price;
@@ -571,17 +563,23 @@ function savegameupdate() {
     var gamedesc = document.getElementById("gamedesc").value;
     var gamecreater = document.getElementById("gamecreater").value;
     var sys = document.getElementById("sys").value;
-    $.post("/admin/updategameinfo",{id:gid,creater:gamecreater,name:gamename,desc:gamedesc,systemcfg:sys,price:gameprice},function (result) {
-        if(result.success){
+    $.post("/admin/updategameinfo", {
+        id: gid,
+        creater: gamecreater,
+        name: gamename,
+        desc: gamedesc,
+        systemcfg: sys,
+        price: gameprice
+    }, function (result) {
+        if (result.success) {
             alert("修改成功！");
         }
         else {
             alert(result.msg);
         }
-
     })
-    document.getElementById("gname_"+gid).innerHTML = gamename;
-    document.getElementById("gprice_"+gid).innerHTML = gameprice;
+    document.getElementById("gname_" + gid).innerHTML = gamename;
+    document.getElementById("gprice_" + gid).innerHTML = gameprice;
     $('#myModal').modal('hide');
 }
 
@@ -598,7 +596,7 @@ function setImagePreviews(avalue) {
         //动态添加html元素
         dd.innerHTML += "<div style='float:left' > <img id='img" + i + "'  /> </div>";
         //获取图片imgi的对象
-        var imgObjPreview = document.getElementById("img"+i);
+        var imgObjPreview = document.getElementById("img" + i);
 
         if (docObj.files && docObj.files[i]) {
             //火狐下，直接设img属性
@@ -646,7 +644,7 @@ function setImagePreviews_0(avalue) {
         //动态添加html元素
         dd.innerHTML += "<div style='float:left' > <img id='img_" + i + "'  /> </div>";
         //获取图片imgi的对象
-        var imgObjPreview = document.getElementById("img_"+i);
+        var imgObjPreview = document.getElementById("img_" + i);
 
         if (docObj.files && docObj.files[i]) {
             //火狐下，直接设img属性
@@ -690,62 +688,53 @@ function addgame() {
     var syscfg = document.getElementById("addgamesyscfg").value;
     var price = document.getElementById("addgameprice").value;
     var discount = document.getElementById("addgamediscount").value;
-    // var cover = document.getElementById("doc_0").value;
-    // var pictures = document.getElementById("doc").value;
     var cover = document.getElementById("doc_0").files[0];
-    var i=0;
-    while(document.getElementById("doc").files[i]) {
-        form.append("pics",document.getElementById("doc").files[i]);
-        // pictures[i] = document.getElementById("doc").files[i];
+    var i = 0;
+    while (document.getElementById("doc").files[i]) {
+        form.append("pics", document.getElementById("doc").files[i]);
         i++;
     }
-    //  $.post("/admin/addgame",{creater:creater,name:name,desc:desc,price:price,discount:discount,systemcfg:syscfg},function () {
-    // })
 
-
-    form.append("creater",creater);
-    form.append("name",name);
-    form.append("desc",desc);
-    form.append("systemcfg",syscfg);
-    form.append("price",price);
-    form.append("discount",discount);
-    form.append("kinds",'1');
-    form.append("header",cover);
-    // form.append("pics",pictures);
+    form.append("creater", creater);
+    form.append("name", name);
+    form.append("desc", desc);
+    form.append("systemcfg", syscfg);
+    form.append("price", price);
+    form.append("discount", discount);
+    form.append("kinds", '1');
+    form.append("header", cover);
     var xhr = new XMLHttpRequest();
     xhr.open("POST", "/admin/addgame", true);
+    xhr.onreadystatechange = callback(xhr);
     xhr.send(form);
+}
 
-    // var oData = new FormData(document.forms.namedItem("gameinfo"));
-    // oData.append("kinds",'0');
-    // var Req = new XMLHttpRequest();
-    // Req.open("POST", "/admin/addgame",true);
-    // Req.send(oData);
-
-    // var form = document.getElementById("game_info");
-    // var formdata = new FormData(form);
-    // formdata.append("kinds",'0');
-    // // var Req = new XMLHttpRequest();
-    // // Req.open("POST", "/admin/addgame",true);
-    // // Req.send(formdata);
-    // $.ajax({
-    //     url: '/admin/addgame',
-    //     type: 'POST',
-    //     datatype: 'json',
-    //     data: formdata,
-    //     cache:false,
-    //     traditional: true,
-    //     contentType: false,
-    //     processData: false,
-    //     success: function (data) {},
-    //     error: function () {}
-    // });
+function callback(req) //回调函数，对服务端的响应处理，监视response状态
+{
+    // alert(req.readystate);
+    alert(req.readystate == 4);
+    console.log(req.readystate)
+    if(req.readystate==4) //请求状态为4表示成功
+    {
+        if(req.status==200) //http状态200表示OK
+        {
+            alert("添加成功");
+        }
+        else //http返回状态失败
+        {
+            alert(req.statusText);
+        }
+    }
+    else //请求状态还没有成功，页面等待
+    {
+        document .getElementById ("addgamebtn").innerText = "上传中...";
+    }
 }
 
 function addkind() {
     var kind = document.getElementById("addkindinput").value;
-    $.post("/admin/addkind",{kind:kind},function (result) {
-        if(result.success){
+    $.post("/admin/addkind", {kind: kind}, function (result) {
+        if (result.success) {
             alert("添加成功！");
         }
         else {

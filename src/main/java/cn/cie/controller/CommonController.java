@@ -150,6 +150,12 @@ public class CommonController extends AbstractController {
         return gameService.preUpGames();
     }
 
+    @PostMapping(value = "freegames")
+    @ResponseBody
+    public Result getFreeGames() {
+        return gameService.getFreeGames();
+    }
+
     @GetMapping(value = "search")
     public String search() {
         return "search";

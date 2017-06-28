@@ -32,5 +32,7 @@ public interface GameMapper {
 
     List<Game> selectByInfo(String info);
 
+    List<Game> selectFreeGames();
+
     int update(Game record);
 }

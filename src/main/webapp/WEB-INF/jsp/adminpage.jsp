@@ -7,6 +7,7 @@
     <script src="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="/js/adminpage.js"></script>
     <link type="text/css" rel="stylesheet" href="/css/adminpage.css"/>
+    <link rel="icon" href="/smile.ico" type="image/x-icon" >
 </head>
 
 <body>
@@ -174,31 +175,24 @@
 
 
 
-                <h5 >游戏折扣</h5>
+                <h5 >游戏折扣后价格</h5>
                 <input type="text"  class="form-control" placeholder="Discont" id="addgamediscount" name="discount">
 
 
-
-
-                <h5 >上架状态</h5>
-                <input type="text"  class="form-control" placeholder="Stat" id="addgamestat" name="stat">
-
-
-
-                <h5 >上传游戏封面</h5>
+                <h5 >上传游戏封面(1张)</h5>
                 <input type="file"  id="doc_0" style="width:150px;"  accept="image/*" onchange="setImagePreviews_0();" name="header">
                 <div id="dd_0" ></div>
 
 
             <div class=" setmargin_0">
-                <h5 >上传游戏截图</h5>
+                <h5 >上传游戏截图(至少5张)</h5>
                     <input type="file"   id="doc" multiple="multiple"  style="width:150px;" onchange="setImagePreviews();" accept="image/*" name="pics">
                     <div id="dd" ></div>
             </div>
             </form>
 
             <div class=" setmargin_0">
-                <button type="submit" onclick="addgame()" >确认添加</button>
+                <button id="addgamebtn" type="submit" onclick="addgame()" >确认添加</button>
                 <button type="reset" >重置内容</button>
             </div>
         </div>

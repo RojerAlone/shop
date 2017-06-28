@@ -2,6 +2,7 @@
 <html>
 <head>
     <title>后台管理登陆</title>
+    <link rel="icon" href="/smile.ico" type="image/x-icon" >
     <link href="/css/adminlogin.css" rel="stylesheet">
     <script src="https://cdn.bootcss.com/jquery/3.2.0/jquery.min.js"></script>
     <script src="/js/adminlogin.js"></script>
