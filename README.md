@@ -23,25 +23,7 @@
 ## 跨域请求
 　　在`Controller`控制器中添加了`@CrossOrigin`注解。
 ## 用`token`验证用户身份
-　　使用唯一识别码`token`来识别每一个用户，用户登陆后生成一个`token`写入数据库和缓存中，同时写入到response中的cookie中，这样以后每次请求都会带上这个`token`，用`AuthInterceptor`对所有的请求进行拦截，根据`token`从缓存中查取对应的`uid`，再从数据库中查取对应的用户详情，并存到`UserHolder`这个工具类中，`UserHolder`的源码如下：
-```java
-	public class UserHolder {
-
-    	private static ThreadLocal<User> users = new ThreadLocal<User>();
-
-    	public User getUser() {
-        	return users.get();
-    	}
-
-    	public void setUser(User user) {
-        	users.set(user);
-    	}
-
-    	public void remove() {
-        	users.remove();
-    	}
-	}
-```
+　　使用唯一识别码`token`来识别每一个用户，用户登陆后生成一个`token`写入数据库和缓存中，同时写入到response中的cookie中，这样以后每次请求都会带上这个`token`，用`AuthInterceptor`对所有的请求进行拦截，根据`token`从缓存中查取对应的`uid`，再从数据库中查取对应的用户详情，并存到[`UserHolder`](https://github.com/RojerAlone/shop/blob/master/src/main/java/cn/cie/utils/UserHolder.java)这个工具类中。
 ## 拦截器进行权限处理
 　　很多接口只有用户验证了才能进行下一步操作，写了一个拦截器对特定的请求进行拦截，如果用户没有登录，就跳转到登陆页面，登陆成功后跳转到之前的页面。
 ## 使用`Redis`
