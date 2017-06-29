@@ -34,7 +34,6 @@ public class CommonController extends AbstractController {
 
     @RequestMapping(value = {"/", "/index"})
     public String index() {
-        this.getModel().addAttribute("str", "str");
         return "index";
     }
 
