@@ -4,7 +4,6 @@ import cn.cie.entity.User;
 import cn.cie.services.GameService;
 import cn.cie.services.UserService;
 import cn.cie.utils.MsgCenter;
-import cn.cie.utils.RedisUtil;
 import cn.cie.utils.Result;
 import cn.cie.utils.UserHolder;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,8 +28,6 @@ public class CommonController extends AbstractController {
     private UserService userService;
     @Autowired
     private GameService gameService;
-    @Autowired
-    private RedisUtil redisUtil;
 
     @RequestMapping(value = {"/", "/index"})
     public String index() {

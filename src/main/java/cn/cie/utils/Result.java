@@ -8,17 +8,11 @@ public class Result<T> {
 
     private boolean success;
     private String msg;
-    private String user;
     private T data;
 
     private Result(boolean success, String msg) {
         this.success = success;
         this.msg = msg;
-    }
-
-    private Result(boolean success, T data) {
-        this.success = success;
-        this.data = data;
     }
 
     private Result(boolean success, String msg, T data) {

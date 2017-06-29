@@ -31,12 +31,6 @@ public class GameController extends AbstractController {
     @ResponseBody
     public Result selectById(@PathVariable(value = "id") Integer id) {
         return gameService.getById(id);
-//        if (result.isSuccess()) {
-//            this.getModel().addAttribute("game", result.getData());
-//            return "gameInfo";
-//        } else {
-//            throw new NotFoundException();
-//        }
     }
 
 }

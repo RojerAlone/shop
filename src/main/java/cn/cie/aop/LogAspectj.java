@@ -49,7 +49,7 @@ public class LogAspectj {
     }
 
     @AfterThrowing(value = "execution(* cn.cie.controller.*Controller.*(..)) && !execution( * cn.cie.controller.AbstractController.*(..))", throwing = "e")   // 切面为controller中的所有方法
-    public void ErrorAccess(Throwable e) {
+    public void errorAccess(Throwable e) {
         PropertyConfigurator.configure(this.getClass().getClassLoader().getResource("/").getPath() + "log4j-error.properties");
         if (e instanceof Exception) {
             logger.error(e);

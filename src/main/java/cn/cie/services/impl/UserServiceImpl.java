@@ -9,7 +9,6 @@ import cn.cie.utils.UserHolder;
 import cn.cie.entity.Validatecode;
 import cn.cie.mapper.TokenMapper;
 import cn.cie.mapper.UserMapper;
-import cn.cie.mapper.ValidatecodeMapper;
 import cn.cie.services.UserService;
 import cn.cie.utils.*;
 import org.apache.commons.lang3.StringUtils;
@@ -28,8 +27,6 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserMapper userMapper;
-    @Autowired
-    private ValidatecodeMapper codeMapper;
     @Autowired
     private TokenMapper tokenMapper;
     @Autowired
@@ -71,12 +68,8 @@ public class UserServiceImpl implements UserService {
         user.setPassword(PasswordUtil.pwd2Md5(user.getPassword().replaceAll(" ", "")));                // 加密密码
         if (1 == userMapper.insert(user)) {                                      // 注册成功
             String uuid = UUID.randomUUID().toString();
-//            Validatecode code = new Validatecode();
-//            code.setUid(user.getId());
-//            code.setCode(uuid);
-//            codeMapper.insert(code);    // 数据库中存入验证码
             redisUtil.putEx("validatecode_" + user.getId(), uuid, Validatecode.TIMEOUT);    // 存入redis
-            MailUtil.sendValidateMail(user.getEmail(), uuid); // 发送验证邮件
+            eventProducer.product(new EventModel(EventType.SEND_VALIDATE_EMAIL).setExts("mail", user.getEmail()).setExts("code", uuid));
             return Result.success(user.getId());
         }
         return Result.fail(MsgCenter.ERROR);
@@ -84,53 +77,25 @@ public class UserServiceImpl implements UserService {
 
     @Transactional
     public Result sendMail(User user) {
-//        User user = userMapper.selectById(uid);
-//        if (user == null) {     // 找不到用户
-//            return Result.fail(MsgCenter.USER_NOT_FOUND);
-//        } else
         if (user.getStat().equals(User.STAT_OK)) {    // 用户已经验证过了
             return Result.fail(MsgCenter.USER_VALIDATED);
         }
-        Validatecode code = new Validatecode();
         String uuid = UUID.randomUUID().toString();
         // 将数据存入redis中，固定时间后过期
         redisUtil.putEx("validatecode_" + user.getId(), uuid, Validatecode.TIMEOUT);
-//        code.setUid(uid);
-//        code.setCode(uuid);
-//        codeMapper.insert(code);    // 数据库中存入验证码
         // 将邮件发送事件添加到异步事件队列中去
         eventProducer.product(new EventModel(EventType.SEND_VALIDATE_EMAIL).setExts("mail", user.getEmail()).setExts("code", uuid));
-//        MailUtil.sendValidateMail(user.getEmail(), uuid); // 发送验证邮件
         return Result.success();
     }
 
     @Transactional
     public Result validate(Integer uid, String code) {
-//        User user = userMapper.selectById(uid);
-//        if (user == null) {     // 找不到用户
-//            return Result.fail(MsgCenter.USER_NOT_FOUND);
-//        } else if (user.getStat() == User.STAT_OK) {    // 用户已经验证过了
-//            return Result.fail(MsgCenter.USER_VALIDATED);
-//        }
-//        List<String> strs = codeMapper.selectByUid(uid);
-//        for (String str : strs) {
-//            if (str != null && str.length() == 36 && code.equals(str)) {
-//                user.setStat(User.STAT_OK);
-//                if (1 == userMapper.update(user)) {
-//                    codeMapper.delete(uid);     // 验证成功后删除验证码
-//                    return Result.success();
-//                } else {
-//                    return Result.fail(MsgCenter.ERROR);
-//                }
-//            }
-//        }
         String uuid = redisUtil.get("validatecode_" + uid);
         if (code != null && code.length() == 36 && code.equals(uuid)) {
             User user = userHolder.getUser();
             user.setStat(User.STAT_OK);
             if (1 == userMapper.update(user)) {
                 redisUtil.delete("validatecode_" + uid);        // 验证成功后删除验证码
-//                codeMapper.delete(uid);     // 验证成功后删除验证码
                 return Result.success();
             } else {
                 return Result.fail(MsgCenter.ERROR);
@@ -266,19 +231,7 @@ public class UserServiceImpl implements UserService {
         // 将数据存入redis中，固定时间后过期
         redisUtil.putEx(email, uuid, Validatecode.TIMEOUT);
         eventProducer.product(new EventModel(EventType.SEND_FIND_PWD_EMAIL).setExts("mail", user.getEmail()).setExts("code", uuid));
-//        MailUtil.sendFetchPwdMail(email, uuid);
         return Result.success();
-    }
-
-    public void delValidatecode() {
-        List<Validatecode> codes = codeMapper.selectAll();
-        Date date = new Date();
-        date.setTime(date.getTime() - 1000 * 60 * 10);
-        for (Validatecode code : codes) {
-            if (code.getCtime().before(date)) {
-                codeMapper.delByCode(code);
-            }
-        }
     }
 
     public void delNotValidateUser() {

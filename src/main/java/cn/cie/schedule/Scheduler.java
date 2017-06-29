@@ -19,11 +19,6 @@ public class Scheduler {
     @Autowired
     private OrderService orderService;
 
-    @Scheduled(fixedRate = 1000 * 30)
-    public void delExpirezdValidatecode() {
-        userService.delValidatecode();
-    }
-
     @Scheduled(fixedRate = 1000 * 60 * 3)
     public void delNotValidateUser() {
         userService.delNotValidateUser();

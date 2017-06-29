@@ -37,7 +37,6 @@ public class OrderServiceImpl implements OrderService {
         order.setUid(uid);
         orderMapper.insert(order);
         double total = 0;
-        List<Orderitem> orderitems = new ArrayList<Orderitem>();
         // 对所有的游戏进行存储、计价
         for (Integer gid : gids) {
             Game game = gameMapper.selectById(gid);

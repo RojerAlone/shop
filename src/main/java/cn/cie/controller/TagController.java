@@ -37,13 +37,6 @@ public class TagController extends AbstractController{
     public Result<List<GameDTO>> getGamesByTag(@PathVariable(value = "tag") Integer tag,
                                                @RequestParam(value = "page", required = false, defaultValue = "1") Integer page) {
         return tagService.getGamesByTag(tag, page);
-//        if (result.isSuccess()) {
-//            this.getModel().addAttribute("games", (List<GameDTO>) result.getData());
-//        } else if (result.getMsg().equals(MsgCenter.NOT_FOUND)) {
-//            throw new NotFoundException();
-//        } else {
-//            this.getModel().addAttribute("msg", result.getMsg());
-//        }
     }
 
 }

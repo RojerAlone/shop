@@ -78,11 +78,6 @@ public interface UserService {
     Result sendFetchPwdMail(String email);
 
     /**
-     * 删除已经过期了的验证码，验证码有效期为10分钟
-     */
-    void delValidatecode();
-
-    /**
      * 删除没有验证的用户
      */
     void delNotValidateUser();
