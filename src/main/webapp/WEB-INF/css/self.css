@@ -189,7 +189,7 @@ body {
 }
 
 .zx {
-    margin-top: 30px;
+    margin-top: 90px;
     background-color: #183F59;
 }
 
@@ -273,11 +273,38 @@ ul li {
     font-size: 8px;
     color: #c6d4df;
 }
+.smargin_5{
+    margin-bottom: 10px;
+}
 .spadding{
     padding-top: 10px;
     padding-bottom: 10px;
     background-color: #356F95;
+    margin-top:40px;
 }
 .divHover {
     color: white;
+}
+.all_bg{
+    width:800px;
+    height:600px;
+    margin: 0px auto;
+}
+#allcanvas{
+    position: relative;
+    width:800px;
+    height: 600px;
+    margin: 0px;
+}
+#canvas1{
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    z-index: 1;
+}
+#canvas2 {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    z-index: 0;
 }

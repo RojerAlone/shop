@@ -118,7 +118,7 @@
             <div class="row">
                 <div class="tit tit_1"> 浏 览 W E P L A Y</div>
             </div>
-            <div class="row">
+            <div class="row smargin_5">
                 <div class="col-xs-3 col-sm-3 col-md-3 col-md-offset-1">
                     <a href="#">
                         <div class="liulan">
@@ -141,6 +141,20 @@
                     </a>
                 </div>
             </div>
+            <%--fish--%>
+            <div class="row">
+                <div class="tit tit_1"> 休 闲 一 下</div>
+            </div>
+
+            <div class="all_bg">
+                <%--<button id="startbtn"  class="btn" onclick="game()">开始游戏</button>--%>
+                <div id="allcanvas">
+                    <canvas id="canvas1" width="800" height="600"></canvas>
+                    <canvas id="canvas2" width="800" height="600"></canvas>
+                </div>
+            </div>
+
+
             <div class="row zx">
                 <div class="col-md-8">
                     <ul id="myTab" class="nav nav-tabs">
@@ -153,13 +167,13 @@
                 </div>
                 <div class="col-md-4 spadding">
                     <div  id="divHover"></div>
+                </div>
             </div>
         </div>
     </div>
 </div>
-</div>
 <%@ include file="common/bottom.jsp" %>
-
+<%@ include file="fishjs.jsp" %>
 </body>
 
 </html>
