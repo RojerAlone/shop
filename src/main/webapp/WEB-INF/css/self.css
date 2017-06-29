@@ -97,6 +97,10 @@ body {
     line-height: 390px;
 }
 
+.carousel-inner {
+    height:392px;
+}
+
 .carousel .item_1_1 {
     background-color: #183F59;
     width: 306px;

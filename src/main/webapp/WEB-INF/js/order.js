@@ -126,7 +126,9 @@ $(
                 li.innerHTML = "<a href='#'onclick='getnotpay(" + j + ")'>" + j + "</a>";
                 ul.appendChild(li);
             }
-            document.getElementById("li_" + current).className = "active";
+            if(current > 0){
+                document.getElementById("li_" + current).className = "active";
+            }
             var li_last = document.createElement("li");
             li_last.innerHTML = "<a href='#'onclick='getnotpay(" + next + ")'>&raquo;</a>";
             ul.appendChild(li_last);

@@ -87,8 +87,26 @@ $(
                 }
             }
         })
+
+        $.post("/freegames",function (result) {
+            var freegames_1 = document.getElementById("freegames_1");
+            for(var i=0;i<6;i++){
+                var div = document.createElement("div");
+                div.className = "item_1_2";
+                div.innerHTML = "<a href='/game/"+result.data[i].id+"'><img class='item_1_1' src='/img"+result.data[i].img[0]+"'></a>";
+                freegames_1.appendChild(div);
+            }
+            var freegames_0 = document.getElementById("freegames_0");
+            for(var i=0;i<6;i++){
+                var div = document.createElement("div");
+                div.className = "item_1_2";
+                div.innerHTML = "<a href='/game/"+result.data[i].id+"'><img class='item_1_1' src='/img"+result.data[i].img[0]+"'></a>";
+                freegames_0.appendChild(div);
+            }
+        })
 	}
 );
+
 function hoverShowDiv_1(i){
     var j = 1;
 	var divHover = document.getElementById("divHover");

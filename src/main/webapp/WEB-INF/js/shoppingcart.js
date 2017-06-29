@@ -31,7 +31,10 @@ function del(i){
 var t = document.getElementById("game_"+i);
 t.parentNode.remove(t);
 var storage = window.localStorage;
+var ii = storage.getItem("i");
+ii = ii - 1;
 storage.removeItem("data_"+i);
+storage.setItem("i",ii);
 location.reload("true");
 }
 

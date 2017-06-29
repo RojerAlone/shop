@@ -192,8 +192,8 @@
             </form>
 
             <div class=" setmargin_0">
-                <button id="addgamebtn" type="submit" onclick="addgame()" >确认添加</button>
-                <button type="reset" >重置内容</button>
+                <button  class="btn" id="addgamebtn" type="submit" onclick="addgame()" >确认添加</button>
+                <button class="btn" type="reset" >重置内容</button>
             </div>
         </div>
     </div>

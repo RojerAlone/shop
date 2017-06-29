@@ -11,7 +11,7 @@
 <%@ include file="common/top.jsp" %>
 <div class="row">
     <div class="col-md-6 col-md-offset-3">
-        <div class="row divcolor setmargin_2" id="uname">
+        <div class="row divcolor" id="uname">
             <h3>${user}   >>   个人资料</h3>
         </div>
         <div class="row">
@@ -42,8 +42,21 @@
             </div>
         </div>
 
+        <div class="row">
+            <div class="row divcolor setmargin_2">
+                <h3>我的游戏</h3>
+            </div>
+            <div class="row">
+                <div class="deletepadding">
+                    <ul id="fenleixiangqing">
+                    </ul>
+                </div>
+            </div>
+            </div>
+        </div>
     </div>
 </div>
+
 
 <%@ include file="common/bottom.jsp" %>
 

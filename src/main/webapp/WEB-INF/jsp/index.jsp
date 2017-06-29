@@ -83,7 +83,7 @@
                 </div>
             </div>
             <div class="row">
-                <div class="tit tit_1"> 特 别 优 惠</div>
+                <div class="tit tit_1"> 免 费 游 戏</div>
             </div>
             <div class="row">
                 <div id="carousel_1" class="carousel slide" data-ride="carousel">
@@ -91,19 +91,12 @@
                         <li data-target="#carousel_1" data-slide-to="0" class="active"></li>
                         <li data-target="#carousel_1" data-slide-to="1"></li>
                     </ol>
-                    <div class="carousel-inner" role="listbox">
-                        <div class="item active">
-                            <div class="item_1"><a href="#"><img src="./img/static/youhui_1.png"></a></div>
-                            <div class="item_1"><a href="#"><img src="./img/static/youhui_2.png"></a></div>
-                            <div class="item_1_1"><a href="#"><img src="./img/static/youhui_3.png"></a></div>
-                            <div class="item_1_1"><a href="#"><img src="./img/static/youhui_4.png"></a></div>
+                    <div class="carousel-inner" role="listbox" >
+                        <div class="item active" id="freegames_0">
+
                         </div>
-                        <div class="item">
-                            <div class="item_1"><a href="#"><img src="./img/static/youhui_5.png"></a></div>
-                            <div class="item_1_1"><a href="#"><img src="./img/static/youhui_6.png"></a></div>
-                            <div class="item_1_1"><a href="#"><img src="./img/static/youhui_7.png"></a></div>
-                            <div class="item_1_1"><a href="#"><img src="./img/static/youhui_8.png"></a></div>
-                            <div class="item_1_1"><a href="#"><img src="./img/static/youhui_9.png"></a></div>
+                        <div class="item" id="freegames_1">
+
                         </div>
                     </div>
                     <a class="left carousel-control" href="#carousel_1" role="button" data-slide="prev"> <span
@@ -115,32 +108,26 @@
                     </a>
                 </div>
             </div>
-            <div class="row">
-                <div class="tit tit_1"> 浏 览 W E P L A Y</div>
-            </div>
-            <div class="row smargin_5">
-                <div class="col-xs-3 col-sm-3 col-md-3 col-md-offset-1">
-                    <a href="#">
-                        <div class="liulan">
-                            <div class="bs">新 品</div>
-                        </div>
-                    </a>
-                </div>
-                <div class="col-xs-3 col-sm-3 col-md-3">
-                    <a href="#">
-                        <div class="liulan">
-                            <div class="bs">优 惠</div>
-                        </div>
-                    </a>
-                </div>
-                <div class="col-xs-3 col-sm-3 col-md-3">
-                    <a href="#">
-                        <div class="liulan">
-                            <div class="bs">免 费 游 戏</div>
-                        </div>
-                    </a>
-                </div>
-            </div>
+            <%--<div class="row">--%>
+                <%--<div class="tit tit_1"> 浏 览 W E P L A Y</div>--%>
+            <%--</div>--%>
+            <%--<div class="row smargin_5">--%>
+                <%--<div class="col-xs-3 col-sm-3 col-md-3 col-md-offset-2">--%>
+                    <%--<a href="#">--%>
+                        <%--<div class="liulan">--%>
+                            <%--<div class="bs">新 品</div>--%>
+                        <%--</div>--%>
+                    <%--</a>--%>
+                <%--</div>--%>
+
+                <%--<div class="col-xs-3 col-sm-3 col-md-3">--%>
+                    <%--<a href="#">--%>
+                        <%--<div class="liulan">--%>
+                            <%--<div class="bs">免 费 游 戏</div>--%>
+                        <%--</div>--%>
+                    <%--</a>--%>
+                <%--</div>--%>
+            <%--</div>--%>
             <%--fish--%>
             <div class="row">
                 <div class="tit tit_1"> 休 闲 一 下</div>

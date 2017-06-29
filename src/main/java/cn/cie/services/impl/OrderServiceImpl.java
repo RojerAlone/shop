@@ -151,7 +151,7 @@ public class OrderServiceImpl implements OrderService {
                 Game game = gameMapper.selectById(orderitem.getGid());      // 游戏信息
                 Code code;
                 // 如果code不为空那么获取code
-                if (orderitem.getCode() == null) {
+                if (orderitem.getCode() != null) {
                     code = codeMapper.selectById(orderitem.getCode());     // 激活码信息
                 } else {
                     code = null;

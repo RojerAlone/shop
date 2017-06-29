@@ -679,7 +679,7 @@ function setImagePreviews_0(avalue) {
     }
     return true;
 }
-
+var xhr = new XMLHttpRequest();
 function addgame() {
     var form = new FormData();
     var creater = document.getElementById("addgamecreater").value;
@@ -703,33 +703,52 @@ function addgame() {
     form.append("discount", discount);
     form.append("kinds", '1');
     form.append("header", cover);
-    var xhr = new XMLHttpRequest();
     xhr.open("POST", "/admin/addgame", true);
-    xhr.onreadystatechange = callback(xhr);
+    xhr.onreadystatechange = call;
     xhr.send(form);
 }
-
-function callback(req) //回调函数，对服务端的响应处理，监视response状态
-{
-    // alert(req.readystate);
-    alert(req.readystate == 4);
-    console.log(req.readystate)
-    if(req.readystate==4) //请求状态为4表示成功
-    {
-        if(req.status==200) //http状态200表示OK
-        {
-            alert("添加成功");
+function call(){
+    //判断对象的状态是否完成
+    //alert(xmlh.status);
+    if(xhr.readyState==4){
+        if(xhr.status ==200){ //等于200表示成功
+            //alert("成功了");
+            //获取服务器端返回的数据
+            //纯文本
+            //var respons = xmlh.responseText;
+            //var text = respons;
+            var result = xhr.responseText;
+            var s = result.substring(result.indexOf(':')+1,result.indexOf(','));
+            if(s == "true"){
+                alert("添加成功！")
+            }
+            else{
+                var s1 = result.substring(result.indexOf(':"')+2,result.indexOf('",'));
+                alert(s1);
+            }
         }
-        else //http返回状态失败
-        {
-            alert(req.statusText);
-        }
-    }
-    else //请求状态还没有成功，页面等待
-    {
-        document .getElementById ("addgamebtn").innerText = "上传中...";
     }
 }
+
+// function callback() //回调函数，对服务端的响应处理，监视response状态
+// {
+//
+//     if(xhr.readystate==4) //请求状态为4表示成功
+//     {
+//         if(xhr.status==200) //http状态200表示OK
+//         {
+//             alert("添加成功");
+//         }
+//         else //http返回状态失败
+//         {
+//             alert(xhr.statusText);
+//         }
+//     }
+//     else //请求状态还没有成功，页面等待
+//     {
+//         document .getElementById ("addgamebtn").innerText = "上传中...";
+//     }
+// }
 
 function addkind() {
     var kind = document.getElementById("addkindinput").value;
