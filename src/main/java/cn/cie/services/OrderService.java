@@ -33,14 +33,6 @@ public interface OrderService {
     Result pay(int uid, int orderid);
 
     /**
-     * 获取自己所有的订单
-     * @param uid
-     * @return
-     */
-    @Deprecated
-    Result getOrders(int uid);
-
-    /**
      * 判断订单是否存在
      * @param orderid
      * @return

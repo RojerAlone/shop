@@ -21,6 +21,4 @@
     <!--指定要扫描的包-->
     <context:component-scan base-package="cn.cie.services, cn.cie.schedule, cn.cie.utils, cn.cie.event" />
 
-    <!--<bean id="eventConsumer" class="cn.cie.event.EventConsumer"></bean>-->
-
 </beans>

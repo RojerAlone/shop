@@ -105,10 +105,6 @@ public class OrderServiceImpl implements OrderService {
         return Result.success();
     }
 
-    public Result getOrders(int uid) {
-        return null;
-    }
-
     public boolean exists(int orderid) {
         return orderMapper.selectById(orderid) != null;
     }

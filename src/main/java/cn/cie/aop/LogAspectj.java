@@ -20,9 +20,10 @@ public class LogAspectj {
 
     private final Logger logger = Logger.getLogger(this.getClass());
 
-    @Before("execution(* cn.cie.controller.*Controller.*())")   // 切面为controller中的所有方法
+    @Before("execution(* cn.cie.controller.*Controller.*(..)) && !execution( * cn.cie.controller.AbstractController.*(..))")   // 切面为controller中的所有方法
     public void logParams(JoinPoint joinPoint) {
-        PropertyConfigurator.configure("classpath:log4j-acc.properties");
+        PropertyConfigurator.configure("log4j-acc.properties");
+        logger.info("***************************************************************************");
         ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
         HttpServletRequest request = attributes.getRequest();
 
