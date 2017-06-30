@@ -38,36 +38,30 @@
                             <div class="item_0"><a id="gameurl_0"><img class="imgwh" id="gameimg_0"></a></div>
                             <div class="item_1" id="gamename_0">
                                 <div class="shoujia shoujia_1" id="gameprice_0"></div>
-                                <div class="zhichi zhichi_1"><img src="./img/static/zhichi_win.png"></div>
                             </div>
                         </div>
                         <div class="item">
                             <div class="item_0"><a id="gameurl_1"><img class="imgwh" id="gameimg_1"></a></div>
                             <div class="item_1" id="gamename_1">
                                 <div class="shoujia" id="gameprice_1"></div>
-                                <div class="zhichi"><img src="./img/static/zhichi_win.png"></div>
                             </div>
                         </div>
                         <div class="item">
                             <div class="item_0"><a id="gameurl_2"><img class="imgwh" id="gameimg_2"></a></div>
                             <div class="item_1" id="gamename_2">
                                 <div class="shoujia" id="gameprice_2"></div>
-                                <div class="zhichi"><img src="./img/static/zhichi_win.png"></div>
                             </div>
                         </div>
                         <div class="item">
                             <div class="item_0"><a id="gameurl_3"><img class="imgwh" id="gameimg_3"></a></div>
                             <div class="item_1" id="gamename_3">
                                 <div class="shoujia" id="gameprice_3"></div>
-                                <div class="zhichi"><img src="./img/static/zhichi_win.png"></div>
-                                <div class="zhichi zhichi_2"><img src="./img/static/zhichi_app.png"></div>
                             </div>
                         </div>
                         <div class="item">
                             <div class="item_0"><a id="gameurl_4"><img class="imgwh" id="gameimg_4"></a></div>
                             <div class="item_1" id="gamename_4">
                                 <div class="shoujia shoujia_1" id="gameprice_4"></div>
-                                <div class="zhichi zhichi_1"><img src="./img/static/zhichi_win.png"></div>
                             </div>
                         </div>
                     </div>
