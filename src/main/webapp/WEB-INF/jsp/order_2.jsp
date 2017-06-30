@@ -17,45 +17,27 @@
                 })
             }
             else {
-                var i = confirm("您确定放弃付款？？");
-                if (i == true) {
-                    alert("您放弃了付款！！");
-                    window.location = "/order/orders";
-                }
-                else {
-                    alert("请继续付款！");
-                    window.location = "选择支付方式.html";
-                }
+                window.location = "/order/orders";
             }
         }
     </script>
 </head>
 
 <body>
+<%@ include file="common/top.jsp" %>
 <br/>
 <br/>
 <div class="container">
-    <div class="row">
-        <div class="col-xs-3">
-            <h1 style="color:#FFE">收银台</h1>
-        </div>
-        <div class="col-xs-3"></div>
-        <div class="col-xs-6">
-            <a href="order_1.jsp"><img src="/img/static/order_1_1.png" align="middle" height="60" width="120"></a>
-            <a href="order_2.jsp"><img src="/img/static/order_2_1.png" align="middle" height="60" width="120"></a>
-        </div>
+
+    <div style=" padding:15px; height:60px;background-color:#7A8D96"><span style="background-color:#84CF30"
+                                                                           class="glyphicon glyphicon-ok btn btn-info"></span>&nbsp;&nbsp;
+        <h4 style=" font-family:'黑体'; font-weight:bold; display:inline">您已选择购买的商品，请尽快支付！ </h4>
     </div>
+    <br/>
     <hr size="5" color="#000000" width="100%"></hr>
-    <div class="row" style="background-color:#000">
-        <div class="col-xs-3">
-            <img src="/img/static/logo.jpg" height="60" width="60"/>
-        </div>
-        <div class="col-xs-9" style="color:#FFF;">
-            <h3 align="center">支付</h3>
-        </div>
-    </div>
     <br/>
     <br/>
+
     <div class="row">
         <div class="col-xs-4">
             <div class="row mar" align="center">
@@ -75,5 +57,6 @@
         </div>
     </div>
 </div>
+<%@ include file="common/bottom.jsp" %>
 </body>
 </html>

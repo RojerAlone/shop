@@ -8,15 +8,16 @@
 </head>
 <body>
 <%@ include file="common/top.jsp" %>
-<!--左侧导航栏-->
 <div class="container">
     <div class="row">
         <div class="col-xs-1 col-sm-1 col-md-1"></div>
         <div class="col-xs-10 col-sm-10 col-md-10">
-            <h1 style="color:#FFF"><span class="glyphicon glyphicon-shopping-cart"></span>您的购物车</h1>
+            <h1 style="color:#FFF;font-family: 'Adobe 黑体 Std R'"><span class="glyphicon glyphicon-shopping-cart"></span>您的购物车
+            </h1>
+            <br>
             <div id="grad1"></div>
 
-            <table style="color:#FFF" class="table">
+            <table style="color: #fbfbfb" class="table">
                 <thead>
                 <tr>
                     <th width="20%">
@@ -29,12 +30,12 @@
                         单价
                     </th>
 
-                    <th width="25%">
+                    <th width="15%">
                         操作
                     </th>
                 </tr>
                 </thead>
-                <tbody style=" background-color:#066" id="spcar">
+                <tbody style="background-color:#1f486a" id="spcar">
 
                 </tbody>
             </table>
@@ -46,13 +47,11 @@
                         onclick="orderadd()">确定购买
                 </button>
             </div>
-
-
             <br>
             <br>
             <h3 style="color:#fff" align="left">交付</h3>
             <div style="background-color:#000;padding:10px 40px 10px 100px;">
-                <h4 style="color:#FFF"><a href="#"><img src="./img/static/logo.jpg" width="61" height="50"></a>&nbsp;&nbsp;&nbsp;&nbsp;
+                <h4 style="color:#FFF"><a href="#"><img src="/img/static/logo.jpg" width="61" height="50"></a>&nbsp;&nbsp;&nbsp;&nbsp;
                     所有电子商品将会经有WEPLAY桌面应用程序递送给您</h4>
             </div>
             <br/>
@@ -66,7 +65,6 @@
         </div>
         <div class="col-xs-1 col-sm-1 col-md-1"></div>
     </div>
-</div>
 </div>
 <%@ include file="common/bottom.jsp" %>
 </body>

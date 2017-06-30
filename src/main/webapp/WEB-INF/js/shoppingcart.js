@@ -10,7 +10,6 @@ $(
                 var gname = game.name;
                 var price = game.price;
                 prices += price;
-                //alert(prices);
                 var tr = document.createElement("tr");
                 tr.className = "cart_item";
                 tr.id = "game_" + j;
@@ -52,6 +51,7 @@ function orderadd() {
             data: {games: gamesid},
             success: function (result) {
                 if (result.success) {
+                    window.localStorage.clear();
                     self.location = '/order/' + result.data.id + '/payway';
                 }
             }
