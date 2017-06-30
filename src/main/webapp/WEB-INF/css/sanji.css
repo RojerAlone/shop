@@ -142,3 +142,7 @@ ul {
 .yingcang {
     display: none;
 }
+
+.carousel-inner>.item>img{
+    height:337px;
+}

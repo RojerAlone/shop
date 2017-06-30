@@ -118,6 +118,7 @@ public class UserController extends AbstractController {
      * 登陆流程中第一次登陆就会调用本方法获取跳转链接，登陆失败将referer写入session中
      * 如果是从登录页跳转过来的，可能是登陆出错了，但是跳转到登录页之前的referer在session存着，从session中获取
      * 如果sesson中有referer，那么登陆成功跳转到referer，并且从session中删除referer
+     *
      * @return
      */
     private String getReferer() {

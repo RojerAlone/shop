@@ -23,7 +23,8 @@ public class LogAspectj {
 
     private final Logger logger = Logger.getLogger(this.getClass());
 
-    @Before("execution(* cn.cie.controller.*Controller.*(..)) && !execution( * cn.cie.controller.AbstractController.*(..))")   // 切面为controller中的所有方法
+    @Before("execution(* cn.cie.controller.*Controller.*(..)) && !execution( * cn.cie.controller.AbstractController.*(..))")
+    // 切面为controller中的所有方法
     public void logAccess(JoinPoint joinPoint) {
         PropertyConfigurator.configure(this.getClass().getClassLoader().getResource("/").getPath() + "log4j-acc.properties");
         ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
@@ -43,16 +44,19 @@ public class LogAspectj {
         sb.append("\turl: " + request.getRequestURI());
         sb.append("\tparams: ");
         for (Object object : joinPoint.getArgs()) {
-             sb.append("\t" + object.getClass().getSimpleName() + " " + object.toString());
+            if (object != null) {
+                sb.append("\t" + object.getClass().getSimpleName() + " " + object.toString());
+            }
         }
         logger.info(sb.toString());
     }
 
-    @AfterThrowing(value = "execution(* cn.cie.controller.*Controller.*(..)) && !execution( * cn.cie.controller.AbstractController.*(..))", throwing = "e")   // 切面为controller中的所有方法
+    @AfterThrowing(value = "execution(* cn.cie.controller.*Controller.*(..)) && !execution( * cn.cie.controller.AbstractController.*(..))", throwing = "e")
+    // 切面为controller中的所有方法
     public void errorAccess(Throwable e) {
         PropertyConfigurator.configure(this.getClass().getClassLoader().getResource("/").getPath() + "log4j-error.properties");
         if (e instanceof Exception) {
-            logger.error(e);
+            logger.error("", e);
         }
     }
 

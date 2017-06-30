@@ -20,7 +20,7 @@ public class GameController extends AbstractController {
 
     @GetMapping(value = "{id}")
     public String gameInfo(@PathVariable(value = "id") Integer id) {
-        if (gameService.getById(id) == null) {
+        if (!gameService.exists(id)) {
             throw new NotFoundException();
         }
         this.getModel().addAttribute("id", id);

@@ -16,7 +16,7 @@ import java.util.Arrays;
 @CrossOrigin
 @Controller
 @RequestMapping(value = "/order")
-public class OrderController extends AbstractController{
+public class OrderController extends AbstractController {
 
     @Autowired
     private OrderService orderService;

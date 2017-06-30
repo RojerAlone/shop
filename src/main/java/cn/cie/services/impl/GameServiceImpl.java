@@ -19,7 +19,7 @@ import java.util.*;
  * Created by RojerAlone on 2017/6/8.
  */
 @Service
-public class GameServiceImpl implements GameService{
+public class GameServiceImpl implements GameService {
 
     @Autowired
     private GameMapper gameMapper;
@@ -53,7 +53,7 @@ public class GameServiceImpl implements GameService{
 
     public Result<List<GameDTO>> getRandomGames() {
         // 先从缓存中取数据，如果没有再自动生成
-        List<GameDTO> res =  redisUtil.lall("everyday", GameDTO.class);
+        List<GameDTO> res = redisUtil.lall("everyday", GameDTO.class);
         if (res == null || res.size() == 0) {
             List<Game> allgames = gameMapper.selectByStat(Game.STAT_OK);
             int count = allgames.size();
@@ -76,7 +76,7 @@ public class GameServiceImpl implements GameService{
             // 将数据存入缓存中
             int tmp = 1000 * 3600 * 24;
             long zero = (System.currentTimeMillis() / tmp * tmp + tmp - TimeZone.getDefault().getRawOffset()) / 1000;    //明天零点零分零秒的unix时间戳
-            redisUtil.rpushObjectExAtTime(RedisUtil.EVERYDAY,GameDTO.class, zero, res.toArray());
+            redisUtil.rpushObjectExAtTime(RedisUtil.EVERYDAY, GameDTO.class, zero, res.toArray());
         }
         return Result.success(res);
     }
@@ -132,6 +132,10 @@ public class GameServiceImpl implements GameService{
     public Result getFreeGames() {
         List<Game> games = gameMapper.selectFreeGames();
         return Result.success(paresGameDTO(games));
+    }
+
+    public boolean exists(Integer id) {
+        return gameMapper.selectById(id) != null;
     }
 
     private List<GameDTO> paresGameDTO(List<Game> games) {

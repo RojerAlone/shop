@@ -47,4 +47,11 @@ public interface GameService {
      * @return
      */
     Result getFreeGames();
+
+    /**
+     * 判断游戏是否存在
+     * @param id
+     * @return
+     */
+    boolean exists(Integer id);
 }

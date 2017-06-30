@@ -16,7 +16,7 @@ import java.util.List;
 @CrossOrigin
 @Controller
 @RequestMapping(value = "tag")
-public class TagController extends AbstractController{
+public class TagController extends AbstractController {
 
     @Autowired
     private TagService tagService;
