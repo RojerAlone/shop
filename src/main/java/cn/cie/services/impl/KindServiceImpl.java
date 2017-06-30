@@ -50,13 +50,7 @@ public class KindServiceImpl implements KindService {
         // 如果缓存中没有，从数据库中查询，并且添加到缓存中
         if (kinds == null || kinds.size() == 0) {
             List<Kind> data = kindMapper.selectAll();
-            Kind[] array = new Kind[data.size()];
-            int index = 0;
-            for (Kind k : data) {
-                array[index] = k;
-                index++;
-            }
-            redisUtil.rpushObject(RedisUtil.KINDS, Kind.class, array);
+            redisUtil.rpushObject(RedisUtil.KINDS, Kind.class, data.toArray());
             return Result.success(data);
         }
         return Result.success(kinds);
