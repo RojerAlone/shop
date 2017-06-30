@@ -38,12 +38,14 @@ var halo;
 
 var dust;
 var dustPic = [];
-var startbtn = new Image();
+var playbtn = document.getElementById("playbtn");
+
 document.body.onload = game;
-// var startbtn = document.getElementById("startbtn");
-// startbtn.style.color = "blue";
+
+
 
 function game(){
+    playbtn.style.display = "none";
     init();
     lastTime = Date.now();
     deltaTime = 0;
@@ -125,7 +127,7 @@ function init(){
     dust = new dustObj();
     dust.init();
 
-    startbtn.src = "img/fish/play.png"
+    // startbtn.src = "img/fish/play.png"
 }
 
 function gameloop(){

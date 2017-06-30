@@ -136,6 +136,7 @@
             <div class="all_bg">
                 <%--<button id="startbtn"  class="btn" onclick="game()">开始游戏</button>--%>
                 <div id="allcanvas">
+                    <img src="img/fish/play.png" id ="playbtn" onclick="game()">
                     <canvas id="canvas1" width="800" height="600"></canvas>
                     <canvas id="canvas2" width="800" height="600"></canvas>
                 </div>

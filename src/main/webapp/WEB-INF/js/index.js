@@ -97,7 +97,7 @@ $(
                 freegames_1.appendChild(div);
             }
             var freegames_0 = document.getElementById("freegames_0");
-            for(var i=0;i<6;i++){
+            for(var i=6;i<12;i++){
                 var div = document.createElement("div");
                 div.className = "item_1_2";
                 div.innerHTML = "<a href='/game/"+result.data[i].id+"'><img class='item_1_1' src='/img"+result.data[i].img[0]+"'></a>";

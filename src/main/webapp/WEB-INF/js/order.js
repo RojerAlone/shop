@@ -59,7 +59,9 @@ $(
                     li.innerHTML = "<a href='#'onclick='getpaid(" + j + ")'>" + j + "</a>";
                     ul.appendChild(li);
                 }
+            if(current > 0) {
                 document.getElementById("li_" + current).className = "active";
+            }
                 var li_last = document.createElement("li");
                 li_last.innerHTML = "<a href='#'onclick='getpaid(" + next + ")'>&raquo;</a>";
                 ul.appendChild(li_last);
@@ -191,7 +193,9 @@ $(
                 li.innerHTML = "<a href='#'onclick='getcancel(" + j + ")'>" + j + "</a>";
                 ul.appendChild(li);
             }
-            document.getElementById("li3_" + current).className = "active";
+            if(current > 0) {
+                document.getElementById("li3_" + current).className = "active";
+            }
             var li_last = document.createElement("li");
             li_last.innerHTML = "<a href='#'onclick='getcancel(" + next + ")'>&raquo;</a>";
             ul.appendChild(li_last);

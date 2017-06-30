@@ -25,19 +25,7 @@ dataObj.prototype.draw = function(){
         ctx1.fillStyle = "rgba(255,255,255," + this.alpha +")";
         ctx1.fillText("GAMEOVER",w *0.5,h*0.5);
         ctx1.fillText("GAMEOVER",w *0.5,h*0.5);
-        var pic={x:330,y:310};
-        ctx1.drawImage(startbtn,pic.x,pic.y);
-        // ctx1.fillRect(330,310,75,70);
-        can1.onclick = function (e) {
-            e=e || event;
-            var x = e.clientX -can1.offsetLeft;
-            var y = e.clientY - can1.offsetTop;
-            console.log(x+" "+y);
-            if(x>=pic.x&&x<=(pic.x+75)&&y>=(pic.y)&&y<=(pic.y+70)){
-                alert("111");
-                //game();
-            }
-        }
+        playbtn.style.display = "block";
 }
     ctx1.restore();
 }
