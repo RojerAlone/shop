@@ -1,12 +1,11 @@
-
 $(
     function () {
         var prtW = window.opener;
         var info = prtW.document.getElementById("searchbox").value;
-        document.getElementById("xianshineirong").innerText = "正在浏览关于"+info+"的内容";
+        document.getElementById("xianshineirong").innerText = "正在浏览关于" + info + "的内容";
         var ul = document.getElementById("fenleixiangqing");
         var ull = document.getElementById("fenleiyouxitupian");
-        $.post("/search",{info:info} ,function (result) {
+        $.post("/search", {info: info}, function (result) {
             var i = 0;
             var j = 0;
             var k = 0;
@@ -21,8 +20,7 @@ $(
                 var li = document.createElement("li");
                 var gid = k;
                 var u;
-                u = "<a href='/game/"+result.data[k].id;
-                //u = "<a href='sanji.jsp?gameid=" + result.data[k].id;
+                u = "<a href='/game/" + result.data[k].id;
                 li.innerHTML = u + "'><div class='row fenleizitiyanse jutiyouxi'><div class='col-md-4'><img id='xianshitupian_" + k +
                     "'onmouseover='xianshitupian(" + k + ")'" +
                     "onmouseout='yingcangtupian(+" + k + ")' src='/img" + result.data[k].img[0] + "' class='imgdx_1'></div><div class='col-md-8'><div class='row youximingzi'>" +

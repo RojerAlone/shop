@@ -3,7 +3,7 @@ body {
 }
 
 .divcolor {
-    background-image: url(../img/static/personalbackground_1.jpg);
+    background-image: url(/img/static/personalbackground_1.jpg);
     color: #FFF;
 }
 
@@ -54,6 +54,7 @@ body {
     padding-left: 150px;
     padding-right: 150px;
 }
+
 .fenleizitiyanse {
     color: #FFF;
 }
@@ -62,13 +63,16 @@ body {
     background-color: #16202D;
     margin-top: 10px;
 }
+
 .imgdx_1 {
     height: 69px;;
     width: 184px;
 }
+
 .youximingzi {
     margin-top: 10px;
 }
-ul{
+
+ul {
     padding: 0px;
 }

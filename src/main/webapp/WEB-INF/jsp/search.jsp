@@ -33,7 +33,7 @@
                     </div>
                 </div>
             </div>
-            <div class="pagination" >
+            <div class="pagination">
                 <ul id="paging">
 
                 </ul>

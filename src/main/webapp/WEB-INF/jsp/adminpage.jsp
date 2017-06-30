@@ -7,7 +7,7 @@
     <script src="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="/js/adminpage.js"></script>
     <link type="text/css" rel="stylesheet" href="/css/adminpage.css"/>
-    <link rel="icon" href="/smile.ico" type="image/x-icon" >
+    <link rel="icon" href="/smile.ico" type="image/x-icon">
 </head>
 
 <body>
@@ -57,7 +57,7 @@
                                     用户名
                                 </th>
                                 <%--<th>--%>
-                                    <%--密码--%>
+                                <%--密码--%>
                                 <%--</th>--%>
                                 <th>
                                     昵称
@@ -86,7 +86,7 @@
                     </div>
                     <div class="row-fluid">
                         <div class="span12">
-                            <div class="pagination pagination-right yema divsetcenter" >
+                            <div class="pagination pagination-right yema divsetcenter">
                                 <ul id="paging_0">
 
                                 </ul>
@@ -132,7 +132,7 @@
                     </div>
                     <div class="row-fluid">
                         <div class="span12">
-                            <div class="pagination pagination-right yema divsetcenter" >
+                            <div class="pagination pagination-right yema divsetcenter">
                                 <ul id="paging_1">
 
                                 </ul>
@@ -150,50 +150,47 @@
             <form method="post" name="game_info" id="game_info" enctype="multipart/form-data">
 
 
-                <h5 >开发商</h5>
-                <input type="text "  class="form-control" placeholder="Create" id="addgamecreater" name="creater">
+                <h5>开发商</h5>
+                <input type="text " class="form-control" placeholder="Create" id="addgamecreater" name="creater">
 
 
-
-                <h5 >游戏名称</h5>
-                <input type="text"  class="form-control" placeholder="Name" id="addgamename" name="name">
-
+                <h5>游戏名称</h5>
+                <input type="text" class="form-control" placeholder="Name" id="addgamename" name="name">
 
 
-                <h5 >游戏描述</h5>
-                <textarea   class="form-control" placeholder="Desc" id="addgamedesc" name="desc"></textarea>
+                <h5>游戏描述</h5>
+                <textarea class="form-control" placeholder="Desc" id="addgamedesc" name="desc"></textarea>
 
 
-
-                <h5 >系统配置</h5>
+                <h5>系统配置</h5>
                 <textarea class="form-control" placeholder="Systemcfg" id="addgamesyscfg" name="systemcfg"></textarea>
 
 
-
-                <h5 >游戏价格</h5>
-                <input type="text"  class="form-control" placeholder="Price" id="addgameprice" name="price">
-
+                <h5>游戏价格</h5>
+                <input type="text" class="form-control" placeholder="Price" id="addgameprice" name="price">
 
 
-                <h5 >游戏折扣后价格</h5>
-                <input type="text"  class="form-control" placeholder="Discont" id="addgamediscount" name="discount">
+                <h5>游戏折扣后价格</h5>
+                <input type="text" class="form-control" placeholder="Discont" id="addgamediscount" name="discount">
 
 
-                <h5 >上传游戏封面(1张)</h5>
-                <input type="file"  id="doc_0" style="width:150px;"  accept="image/*" onchange="setImagePreviews_0();" name="header">
-                <div id="dd_0" ></div>
+                <h5>上传游戏封面(1张)</h5>
+                <input type="file" id="doc_0" style="width:150px;" accept="image/*" onchange="setImagePreviews_0();"
+                       name="header">
+                <div id="dd_0"></div>
 
 
-            <div class=" setmargin_0">
-                <h5 >上传游戏截图(至少5张)</h5>
-                    <input type="file"   id="doc" multiple="multiple"  style="width:150px;" onchange="setImagePreviews();" accept="image/*" name="pics">
-                    <div id="dd" ></div>
-            </div>
+                <div class=" setmargin_0">
+                    <h5>上传游戏截图(至少5张)</h5>
+                    <input type="file" id="doc" multiple="multiple" style="width:150px;" onchange="setImagePreviews();"
+                           accept="image/*" name="pics">
+                    <div id="dd"></div>
+                </div>
             </form>
 
             <div class=" setmargin_0">
-                <button  class="btn" id="addgamebtn" type="submit" onclick="addgame()" >确认添加</button>
-                <button class="btn" type="reset" >重置内容</button>
+                <button class="btn" id="addgamebtn" type="submit" onclick="addgame()">确认添加</button>
+                <button class="btn" type="reset">重置内容</button>
             </div>
         </div>
     </div>
@@ -219,7 +216,9 @@
                             <tr>
                                 <th>0</th>
                                 <th><input type="text" id="addkindinput"></th>
-                                <th><button class="btn" onclick="addkind()">添加 </button></th>
+                                <th>
+                                    <button class="btn" onclick="addkind()">添加</button>
+                                </th>
                             </tr>
                             </thead>
                             <tbody id="kind_all">
@@ -229,7 +228,7 @@
                     </div>
                     <div class="row-fluid">
                         <div class="span12">
-                            <div class="pagination pagination-right yema divsetcenter" >
+                            <div class="pagination pagination-right yema divsetcenter">
                                 <ul id="paging_3">
 
                                 </ul>

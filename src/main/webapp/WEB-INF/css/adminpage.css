@@ -358,7 +358,8 @@ input, textarea {
     margin-right: 3px;
     vertical-align: middle;
 }
-#kindgame{
+
+#kindgame {
     height: 200px;
     overflow-y: scroll;
 }

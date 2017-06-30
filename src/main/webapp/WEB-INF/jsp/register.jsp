@@ -1,14 +1,14 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <%@ include file="common/head.jsp"%>
+    <%@ include file="common/head.jsp" %>
     <link href="/css/login.css" rel="stylesheet">
     <link href="/css/regist.css" rel="stylesheet">
     <script src="/js/regist.js" type="text/javascript" charset="utf-8"></script>
     <title>用户注册</title>
 </head>
 <body>
-<%@ include file="common/top.jsp"%>
+<%@ include file="common/top.jsp" %>
 <!--左侧导航栏-->
 <div class="container">
     <div class="row">
@@ -72,6 +72,6 @@
         </div>
     </div>
 </div>
-<%@ include file="common/bottom.jsp"%>
+<%@ include file="common/bottom.jsp" %>
 </body>
 </html>

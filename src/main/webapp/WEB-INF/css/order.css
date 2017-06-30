@@ -1,40 +1,48 @@
 @charset "utf-8";
 /* CSS Document */
-.container{
-	width:970px!important
+.container {
+    width: 970px !important
 }
 
-body{
-	background-color:#183F59;
-}
-.mar{
-    margin-top:50px; 
-}
-td{
-	color: white;
-	width: 100px;
-}
-.smargin{
-	color: white;
-	margin-left:15px;
-}
-.td_1{
-	color: white;
-	width: 250px;
-}
-.btn{
-	background-color: #1E6E93;
-}
-.setright{
-	float: right;
-}
-.setleft{
-	float: left;
+body {
+    background-color: #183F59;
 }
 
-.divwidth{
-	width: 300px;
+.mar {
+    margin-top: 50px;
 }
-.divsetcenter{
-	margin-left: 20%;
+
+td {
+    color: white;
+    width: 100px;
+}
+
+.smargin {
+    color: white;
+    margin-left: 15px;
+}
+
+.td_1 {
+    color: white;
+    width: 250px;
+}
+
+.btn {
+    background-color: #1E6E93;
+}
+
+.setright {
+    float: right;
+}
+
+.setleft {
+    float: left;
+}
+
+.divwidth {
+    width: 300px;
+}
+
+.divsetcenter {
+    margin-left: 20%;
 }

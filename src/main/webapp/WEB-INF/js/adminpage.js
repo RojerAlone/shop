@@ -707,23 +707,23 @@ function addgame() {
     xhr.onreadystatechange = call;
     xhr.send(form);
 }
-function call(){
+function call() {
     //判断对象的状态是否完成
     //alert(xmlh.status);
-    if(xhr.readyState==4){
-        if(xhr.status ==200){ //等于200表示成功
+    if (xhr.readyState == 4) {
+        if (xhr.status == 200) { //等于200表示成功
             //alert("成功了");
             //获取服务器端返回的数据
             //纯文本
             //var respons = xmlh.responseText;
             //var text = respons;
             var result = xhr.responseText;
-            var s = result.substring(result.indexOf(':')+1,result.indexOf(','));
-            if(s == "true"){
+            var s = result.substring(result.indexOf(':') + 1, result.indexOf(','));
+            if (s == "true") {
                 alert("添加成功！")
             }
-            else{
-                var s1 = result.substring(result.indexOf(':"')+2,result.indexOf('",'));
+            else {
+                var s1 = result.substring(result.indexOf(':"') + 2, result.indexOf('",'));
                 alert(s1);
             }
         }

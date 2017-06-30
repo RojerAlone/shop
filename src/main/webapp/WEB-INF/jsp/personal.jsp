@@ -12,7 +12,7 @@
 <div class="row">
     <div class="col-md-6 col-md-offset-3">
         <div class="row divcolor" id="uname">
-            <h3>${user}   >>   个人资料</h3>
+            <h3>${user} >> 个人资料</h3>
         </div>
         <div class="row">
             <!--左侧资料列-->
@@ -52,14 +52,12 @@
                     </ul>
                 </div>
             </div>
-            </div>
         </div>
     </div>
 </div>
-
+</div>
 
 <%@ include file="common/bottom.jsp" %>
 
 </body>
-
 </html>

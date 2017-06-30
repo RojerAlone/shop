@@ -91,7 +91,7 @@
                         <li data-target="#carousel_1" data-slide-to="0" class="active"></li>
                         <li data-target="#carousel_1" data-slide-to="1"></li>
                     </ol>
-                    <div class="carousel-inner" role="listbox" >
+                    <div class="carousel-inner" role="listbox">
                         <div class="item active" id="freegames_0">
 
                         </div>
@@ -108,35 +108,13 @@
                     </a>
                 </div>
             </div>
-            <%--<div class="row">--%>
-                <%--<div class="tit tit_1"> 浏 览 W E P L A Y</div>--%>
-            <%--</div>--%>
-            <%--<div class="row smargin_5">--%>
-                <%--<div class="col-xs-3 col-sm-3 col-md-3 col-md-offset-2">--%>
-                    <%--<a href="#">--%>
-                        <%--<div class="liulan">--%>
-                            <%--<div class="bs">新 品</div>--%>
-                        <%--</div>--%>
-                    <%--</a>--%>
-                <%--</div>--%>
-
-                <%--<div class="col-xs-3 col-sm-3 col-md-3">--%>
-                    <%--<a href="#">--%>
-                        <%--<div class="liulan">--%>
-                            <%--<div class="bs">免 费 游 戏</div>--%>
-                        <%--</div>--%>
-                    <%--</a>--%>
-                <%--</div>--%>
-            <%--</div>--%>
-            <%--fish--%>
             <div class="row">
                 <div class="tit tit_1"> 休 闲 一 下</div>
             </div>
 
             <div class="all_bg">
-                <%--<button id="startbtn"  class="btn" onclick="game()">开始游戏</button>--%>
                 <div id="allcanvas">
-                    <img src="img/fish/play.png" id ="playbtn" onclick="game()">
+                    <img src="img/fish/play.png" id="playbtn" onclick="game()">
                     <canvas id="canvas1" width="800" height="600"></canvas>
                     <canvas id="canvas2" width="800" height="600"></canvas>
                 </div>
@@ -154,7 +132,7 @@
                     </div>
                 </div>
                 <div class="col-md-4 spadding">
-                    <div  id="divHover"></div>
+                    <div id="divHover"></div>
                 </div>
             </div>
         </div>
@@ -163,5 +141,4 @@
 <%@ include file="common/bottom.jsp" %>
 <%@ include file="fishjs.jsp" %>
 </body>
-
 </html>

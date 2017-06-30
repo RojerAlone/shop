@@ -43,8 +43,7 @@ var playbtn = document.getElementById("playbtn");
 document.body.onload = game;
 
 
-
-function game(){
+function game() {
     playbtn.style.display = "none";
     init();
     lastTime = Date.now();
@@ -52,14 +51,14 @@ function game(){
     gameloop();
 }
 
-function init(){
+function init() {
     //获得canvas context
     can1 = document.getElementById("canvas1");//fishes,dust,UI,circle
     ctx1 = can1.getContext('2d');
     can2 = document.getElementById("canvas2");//background,ane,fruits
     ctx2 = can2.getContext('2d');
 
-    can1.addEventListener('mousemove',onmouseMove,false);
+    can1.addEventListener('mousemove', onmouseMove, false);
 
     bgPic.src = "img/fish/background.jpg";
 
@@ -79,32 +78,32 @@ function init(){
     baby.init();
 
     mx = canWidth * 0.5;
-    my = canHeight *0.5;
+    my = canHeight * 0.5;
 
-    for(var i=0;i<8;i++){
+    for (var i = 0; i < 8; i++) {
         babyTail[i] = new Image();
-        babyTail[i].src = "img/fish/babyTail" + i +".png";
+        babyTail[i].src = "img/fish/babyTail" + i + ".png";
     }
-    for(var i=0;i<2;i++){
+    for (var i = 0; i < 2; i++) {
         babyEye[i] = new Image();
-        babyEye[i].src = "img/fish/babyEye" + i +".png";
+        babyEye[i].src = "img/fish/babyEye" + i + ".png";
     }
-    for(var i=0;i<20;i++){
+    for (var i = 0; i < 20; i++) {
         babyBody[i] = new Image();
-        babyBody[i].src = "img/fish/babyFade" + i +".png";
+        babyBody[i].src = "img/fish/babyFade" + i + ".png";
     }
-    for(var i=0;i<8;i++){
+    for (var i = 0; i < 8; i++) {
         momTail[i] = new Image();
-        momTail[i].src = "img/fish/bigTail" + i +".png";
+        momTail[i].src = "img/fish/bigTail" + i + ".png";
     }
-    for(var i=0;i<2;i++){
+    for (var i = 0; i < 2; i++) {
         momEye[i] = new Image();
-        momEye[i].src = "img/fish/bigEye" + i +".png";
+        momEye[i].src = "img/fish/bigEye" + i + ".png";
     }
-    
+
     data = new dataObj();
 
-    for(var i=0;i<8;i++){
+    for (var i = 0; i < 8; i++) {
         momBodyOra[i] = new Image();
         momBodyBlue[i] = new Image();
         momBodyOra[i].src = "img/fish/bigSwim" + i + ".png";
@@ -120,29 +119,29 @@ function init(){
     halo = new haloObj();
     halo.init();
 
-    for(var i=0;i<7;i++){
+    for (var i = 0; i < 7; i++) {
         dustPic[i] = new Image();
         dustPic[i].src = "img/fish/dust" + i + ".png";
     }
     dust = new dustObj();
     dust.init();
-
-    // startbtn.src = "img/fish/play.png"
 }
 
-function gameloop(){
+function gameloop() {
     window.requestAnimationFrame(gameloop);//根据机器的配置来决定延迟多少时间来绘制下一帧
-    var now = Date.now(); 
+    var now = Date.now();
     deltaTime = now - lastTime;
     lastTime = now;
-    if(deltaTime > 40){deltaTime = 40;}
+    if (deltaTime > 40) {
+        deltaTime = 40;
+    }
 
     drawBackground();
     ane.draw();
     fruitMonitor();
     fruit.draw();
 
-    ctx1.clearRect(0,0,canWidth,canHeight);
+    ctx1.clearRect(0, 0, canWidth, canHeight);
     mom.draw();
     baby.draw();
     momFruitsCollision();
@@ -154,11 +153,11 @@ function gameloop(){
     dust.draw();
 }
 
-function onmouseMove(e){
-    if(!data.gameOver){
-        if(e.offSetX || e.layerX){
-        mx = e.offSetX == undefined ? e.layerX : e.offSetX;
-        my = e.offSetY == undefined ? e.layerY : e.offSetY;
-    }
+function onmouseMove(e) {
+    if (!data.gameOver) {
+        if (e.offSetX || e.layerX) {
+            mx = e.offSetX == undefined ? e.layerX : e.offSetX;
+            my = e.offSetY == undefined ? e.layerY : e.offSetY;
+        }
     }
 }

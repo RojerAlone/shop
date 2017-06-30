@@ -9,7 +9,6 @@
 </head>
 <body>
 <%@ include file="common/top.jsp" %>
-<!--左侧导航栏-->
 <div class="container">
     <div class="row">
         <div class="col-xs-2 col-sm-2 col-md-2">
@@ -18,19 +17,18 @@
 
                 </ul>
             </div>
-            <!-- /.gutter_header -->
         </div>
-        <!-- /.col-xs-2 col-sm-2 col-md-2 -->
-        <!-- 广告 -->
         <div class="col-xs-10 col-sm-10 col-md-10">
 
             <div class="row zczt"><h1>找回密码</h1></div>
-            <div class="row zczt" >
+            <div class="row zczt">
                 <div class="col-xs-offset-1 col-xs-5" id="regist_2">
                     <div class="row zczt">
                         输入您的邮箱：<br/>
-                        <input class="inputcolor"  id="email"><input  id = "btna" type="button"  class="btnsz" value="发送邮件" style="background-color:#417a9b;" onclick="sendMail()"><br>
-                        输入您的验证码：<br />
+                        <input class="inputcolor" id="email"><input id="btna" type="button" class="btnsz" value="发送邮件"
+                                                                    style="background-color:#417a9b;"
+                                                                    onclick="sendMail()"><br>
+                        输入您的验证码：<br/>
                         <input class="inputcolor" type="text" id="code"><br>
                         输入您的新密码：<br/>
                         <input class="inputcolor" type="password" id="newpassword"><br>
@@ -39,7 +37,9 @@
                     </div>
                     <div class="form-group">
                         <div class=" col-sm-10">
-                            <button type="submit" class="btn btn-default" style="background-color:#417a9b;" onclick="findpassword()">确定</button>
+                            <button type="submit" class="btn btn-default" style="background-color:#417a9b;"
+                                    onclick="findpassword()">确定
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -64,17 +64,12 @@
                             获取自动游戏更新以及更多！
                         </li>
                     </ul>
-                    <img src="/img/static/login_1.png" />
+                    <img src="/img/static/login_1.png"/>
                 </div>
             </div>
         </div>
     </div>
 </div>
-<!--col-10-->
-</div>
-<!--row-->
-</div>
-<!--continer-->
 <%@ include file="common/bottom.jsp" %>
 </body>
 </html>

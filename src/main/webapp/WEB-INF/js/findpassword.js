@@ -10,8 +10,6 @@ function schedule() {
     }, 1000)
 }
 
-
-
 function time() {
     if (wait == 0) {
         document.getElementById("btna").removeAttribute("disabled");
@@ -27,7 +25,7 @@ function time() {
 
 function sendMail() {
     var email = document.getElementById("email").value;
-    $.post("/user/sendfetchpwdmail",{email:email},function (result) {
+    $.post("/user/sendfetchpwdmail", {email: email}, function (result) {
         if (result.success) {
             alert("发送成功！");
             time()
@@ -42,13 +40,13 @@ function findpassword() {
     var email = document.getElementById("email").value;
     var password = document.getElementById("newpassword").value;
     var password_1 = document.getElementById("newpassword_1").value;
-    if(password != password_1){
+    if (password != password_1) {
         alert("您输入的密码不一致！");
     }
     else {
-        $.post("/user/findpassword", {password:password,email:email,code: code}, function (result) {
+        $.post("/user/findpassword", {password: password, email: email, code: code}, function (result) {
             if (result.success) {
-                alert("成功找回！您的用户名是:"+result.data);
+                alert("成功找回！您的用户名是:" + result.data);
                 window.location.href = "/login";
             }
             else {

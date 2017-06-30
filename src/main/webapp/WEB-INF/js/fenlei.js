@@ -18,8 +18,7 @@ $(
                 var li = document.createElement("li");
                 var gid = k;
                 var u;
-                u = "<a href='/game/"+result.data.game[k].id;
-                //u = "<a href='sanji.jsp?gameid=" + result.data[k].id;
+                u = "<a href='/game/" + result.data.game[k].id;
                 li.innerHTML = u + "'><div class='row fenleizitiyanse jutiyouxi'><div class='col-md-4'><img id='xianshitupian_" + k +
                     "'onmouseover='xianshitupian(" + k + ")'" +
                     "onmouseout='yingcangtupian(+" + k + ")' src='/img" + result.data.game[k].img[0] + "' class='imgdx_1'></div><div class='col-md-8'><div class='row youximingzi'>" +
@@ -66,22 +65,26 @@ $(
             var current = result.data.page.current;
             var last = current - 1;
             var next = current + 1;
-            if(last<1){last=1}
-            if(next>pages){next=pages}
+            if (last < 1) {
+                last = 1
+            }
+            if (next > pages) {
+                next = pages
+            }
             var li_first = document.createElement("li");
             li_first.id = "li_first";
-            li_first.innerHTML = "<a href='#'onclick='getgame("+last+")'>&laquo;</a>";
+            li_first.innerHTML = "<a href='#'onclick='getgame(" + last + ")'>&laquo;</a>";
             uul.appendChild(li_first);
-            for(i=0;i<pages;i++){
-                var  j = i + 1;
+            for (i = 0; i < pages; i++) {
+                var j = i + 1;
                 var li = document.createElement("li");
-                li.id = "li_"+ j ;
-                li.innerHTML = "<a href='#'onclick='getgame("+j+")'>"+j+"</a>";
+                li.id = "li_" + j;
+                li.innerHTML = "<a href='#'onclick='getgame(" + j + ")'>" + j + "</a>";
                 uul.appendChild(li);
             }
-            document.getElementById("li_"+current).className = "active";
+            document.getElementById("li_" + current).className = "active";
             var li_last = document.createElement("li");
-            li_last.innerHTML = "<a href='#'onclick='getgame("+next+")'>&raquo;</a>";
+            li_last.innerHTML = "<a href='#'onclick='getgame(" + next + ")'>&raquo;</a>";
             uul.appendChild(li_last);
 
         });
@@ -93,7 +96,7 @@ function getgame(page) {
     var ull = document.getElementById("fenleiyouxitupian");
     ul.innerHTML = "";
     ull.innerHTML = "";
-    $.post(url,{page:page},function (result) {
+    $.post(url, {page: page}, function (result) {
         var i = 0;
         var j = 0;
         var k = 0;
@@ -110,7 +113,7 @@ function getgame(page) {
             var li = document.createElement("li");
             var gid = k;
             var u;
-            u = "<a href='/game/"+result.data.game[k].id;
+            u = "<a href='/game/" + result.data.game[k].id;
             li.innerHTML = u + "'><div class='row fenleizitiyanse jutiyouxi'><div class='col-md-4'><img id='xianshitupian_" + k +
                 "'onmouseover='xianshitupian(" + k + ")'" +
                 "onmouseout='yingcangtupian(+" + k + ")' src='/img" + result.data.game[k].img[0] + "' class='imgdx_1'></div><div class='col-md-8'><div class='row youximingzi'>" +
@@ -158,22 +161,26 @@ function getgame(page) {
         var current = result.data.page.current;
         var last = current - 1;
         var next = current + 1;
-        if(last<1){last=1}
-        if(next>pages){next=pages}
+        if (last < 1) {
+            last = 1
+        }
+        if (next > pages) {
+            next = pages
+        }
         var li_first = document.createElement("li");
         li_first.id = "li_first";
-        li_first.innerHTML = "<a href='#'onclick='getgame("+last+")'>&laquo;</a>";
+        li_first.innerHTML = "<a href='#'onclick='getgame(" + last + ")'>&laquo;</a>";
         uul.appendChild(li_first);
-        for(i=0;i<pages;i++){
-            var  j = i + 1;
+        for (i = 0; i < pages; i++) {
+            var j = i + 1;
             var li = document.createElement("li");
-            li.id = "li_"+ j ;
-            li.innerHTML = "<a href='#'onclick='getgame("+j+")'>"+j+"</a>";
+            li.id = "li_" + j;
+            li.innerHTML = "<a href='#'onclick='getgame(" + j + ")'>" + j + "</a>";
             uul.appendChild(li);
         }
-        document.getElementById("li_"+current).className = "active";
+        document.getElementById("li_" + current).className = "active";
         var li_last = document.createElement("li");
-        li_last.innerHTML = "<a href='#'onclick='getgame("+next+")'>&raquo;</a>";
+        li_last.innerHTML = "<a href='#'onclick='getgame(" + next + ")'>&raquo;</a>";
         uul.appendChild(li_last);
     })
 }
