@@ -733,25 +733,20 @@ function call() {
     }
 }
 
-// function callback() //回调函数，对服务端的响应处理，监视response状态
-// {
-//
-//     if(xhr.readystate==4) //请求状态为4表示成功
-//     {
-//         if(xhr.status==200) //http状态200表示OK
-//         {
-//             alert("添加成功");
-//         }
-//         else //http返回状态失败
-//         {
-//             alert(xhr.statusText);
-//         }
-//     }
-//     else //请求状态还没有成功，页面等待
-//     {
-//         document .getElementById ("addgamebtn").innerText = "上传中...";
-//     }
-// }
+function cleartext() {
+    var creater = document.getElementById("addgamecreater");
+    var name = document.getElementById("addgamename");
+    var desc = document.getElementById("addgamedesc");
+    var syscfg = document.getElementById("addgamesyscfg");
+    var price = document.getElementById("addgameprice");
+    var discount = document.getElementById("addgamediscount");
+    creater.value = "";
+    name.value = "";
+    desc.value = "";
+    syscfg.value = "";
+    price.value = "";
+    discount.value = "";
+}
 
 function addkind() {
     var kind = document.getElementById("addkindinput").value;

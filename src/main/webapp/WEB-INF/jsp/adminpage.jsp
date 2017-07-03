@@ -190,7 +190,7 @@
 
             <div class=" setmargin_0">
                 <button class="btn" id="addgamebtn" type="submit" onclick="addgame()">确认添加</button>
-                <button class="btn" type="reset">重置内容</button>
+                <button class="btn" type="reset" onclick="cleartext()">重置内容</button>
             </div>
         </div>
     </div>
