@@ -27,7 +27,6 @@ function del(i) {
     t.parentNode.remove(t);
     var storage = window.localStorage;
     var ii = storage.getItem("i");
-    ii = ii - 1;
     storage.removeItem("data_" + i);
     storage.setItem("i", ii);
     location.reload("true");
@@ -41,8 +40,10 @@ function orderadd() {
     var k = 0;
     for (j = 1; j <= i; j++) {
         var game = JSON.parse(localStorage.getItem("data_" + j));
-        gamesid[k] = parseInt(game.id);
-        k++;
+        if(game){
+            gamesid[k] = parseInt(game.id);
+            k++;
+        }
     }
 
     $.post({

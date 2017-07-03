@@ -11,6 +11,9 @@ $(
                     var uid = result.data.user[i].id;
                     var stat = result.data.user[i].stat;
                     var time = new Date(result.data.user[i].ctime).toLocaleString();
+                    if (stat == '0') {
+                        stat = "未激活";
+                    }
                     if (stat == '1') {
                         stat = "正常";
                     }
