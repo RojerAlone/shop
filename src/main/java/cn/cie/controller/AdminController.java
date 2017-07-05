@@ -86,13 +86,6 @@ public class AdminController extends AbstractController {
                 this.getSession().getServletContext().getRealPath("/WEB-INF/image").replaceAll("\\\\", "/"));
     }
 
-    @PostMapping(value = "test")
-    @ResponseBody
-    public String test(@RequestParam(value = "img") MultipartFile img) {
-        System.out.println(img.getContentType());
-        return "result";
-    }
-
     @PostMapping(value = "updategameinfo")
     @ResponseBody
     public Result updateGameInfo(Game game) {
