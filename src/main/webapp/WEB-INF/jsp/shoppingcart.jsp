@@ -58,7 +58,7 @@
             <br/>
 
             <div align="left" style="border:30px">
-                <h4><a href="#" class="btn btn-info btn-lg">
+                <h4><a href="/" class="btn btn-info btn-lg">
                     <span class="glyphicon glyphicon-shopping-cart"></span>
                     继续购物</a></h4>
             </div>
