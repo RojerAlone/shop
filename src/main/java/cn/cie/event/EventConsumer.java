@@ -14,6 +14,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ThreadPoolExecutor;
 
 /**
  * Created by RojerAlone on 2017/6/25.
@@ -49,8 +51,7 @@ public class EventConsumer implements InitializingBean, ApplicationContextAware 
                 }
             }
         }
-        // 创建一个新线程处理事件
-        Thread eventHandlerThread = new Thread(new Runnable() {
+        class EventSonsumerThread implements Runnable {
             public void run() {
                 while (true) {
                     EventModel event = redisUtil.blpopObject(0, EventModel.EVENT_KEY, EventModel.class);
@@ -61,13 +62,36 @@ public class EventConsumer implements InitializingBean, ApplicationContextAware 
                         logger.error("error event type");
                         continue;
                     }
+                    logger.info("当前线程为：" + Thread.currentThread().getName());
                     for (EventHandler handler : handlers.get(event.getEventType())) {
                         handler.doHandler(event);
                     }
                 }
             }
-        }, "eventHandlerThread");
-        eventHandlerThread.start();
+        }
+        // 创建一个新线程处理事件
+//        Thread eventHandlerThread = new Thread(new Runnable() {
+//            public void run() {
+//                while (true) {
+//                    EventModel event = redisUtil.blpopObject(0, EventModel.EVENT_KEY, EventModel.class);
+//                    if (event == null) {
+//                        continue;
+//                    }
+//                    if (!handlers.containsKey(event.getEventType())) {
+//                        logger.error("error event type");
+//                        continue;
+//                    }
+//                    for (EventHandler handler : handlers.get(event.getEventType())) {
+//                        handler.doHandler(event);
+//                    }
+//                }
+//            }
+//        }, "eventHandlerThread");
+//        eventHandlerThread.start();
+        ThreadPoolExecutor threadPool = (ThreadPoolExecutor) Executors.newFixedThreadPool(3);
+        threadPool.execute(new EventSonsumerThread());
+        threadPool.execute(new EventSonsumerThread());
+        threadPool.execute(new EventSonsumerThread());
     }
 
     public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
