@@ -149,17 +149,22 @@
       <artifactId>jedis</artifactId>
       <version>2.9.0</version>
     </dependency>
+    <dependency>
+      <groupId>com.alibaba</groupId>
+      <artifactId>fastjson</artifactId>
+      <version>1.2.13</version>
+    </dependency>
     <!--protostuff，用于序列化和反序列化-->
-    <dependency>
-      <groupId>com.dyuproject.protostuff</groupId>
-      <artifactId>protostuff-core</artifactId>
-      <version>1.1.1</version>
-    </dependency>
-    <dependency>
-      <groupId>com.dyuproject.protostuff</groupId>
-      <artifactId>protostuff-runtime</artifactId>
-      <version>1.1.1</version>
-    </dependency>
+    <!--<dependency>-->
+      <!--<groupId>com.dyuproject.protostuff</groupId>-->
+      <!--<artifactId>protostuff-core</artifactId>-->
+      <!--<version>1.1.1</version>-->
+    <!--</dependency>-->
+    <!--<dependency>-->
+      <!--<groupId>com.dyuproject.protostuff</groupId>-->
+      <!--<artifactId>protostuff-runtime</artifactId>-->
+      <!--<version>1.1.1</version>-->
+    <!--</dependency>-->
     <!--apache common工具集-->
     <dependency>
       <groupId>org.apache.commons</groupId>

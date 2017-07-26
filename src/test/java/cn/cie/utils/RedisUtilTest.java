@@ -53,7 +53,7 @@ public class RedisUtilTest {
 
     @Test
     public void getObject() throws Exception {
-        User user = (User) redis.getObject("alone");
+        User user = (User) redis.getObject("alone", User.class);
         logger.info("user={}", user);
     }
 

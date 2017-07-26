@@ -4,6 +4,7 @@ import cn.cie.event.handler.EventHandler;
 import cn.cie.utils.RedisUtil;
 import org.apache.log4j.Logger;
 import org.springframework.beans.BeansException;
+import org.springframework.beans.factory.DisposableBean;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
@@ -22,7 +23,7 @@ import java.util.concurrent.ThreadPoolExecutor;
  * 事件消费者，不断从事件队列中获取事件，根据事件类型处理不同的事件
  */
 @Service
-public class EventConsumer implements InitializingBean, ApplicationContextAware {
+public class EventConsumer implements InitializingBean, ApplicationContextAware, DisposableBean {
 
     private final Logger logger = Logger.getLogger(this.getClass());
 
@@ -30,6 +31,8 @@ public class EventConsumer implements InitializingBean, ApplicationContextAware 
 
     @Autowired
     private RedisUtil<EventModel> redisUtil;
+
+    private ThreadPoolExecutor threadPool;
 
     /**
      * 事件类型以及执行这些事件的handler
@@ -54,7 +57,7 @@ public class EventConsumer implements InitializingBean, ApplicationContextAware 
         class EventSonsumerThread implements Runnable {
             public void run() {
                 while (true) {
-                    EventModel event = redisUtil.blpopObject(0, EventModel.EVENT_KEY, EventModel.class);
+                    EventModel event = redisUtil.lpopObject(EventModel.EVENT_KEY, EventModel.class);
                     if (event == null) {
                         continue;
                     }
@@ -69,26 +72,8 @@ public class EventConsumer implements InitializingBean, ApplicationContextAware 
                 }
             }
         }
-        // 创建一个新线程处理事件
-//        Thread eventHandlerThread = new Thread(new Runnable() {
-//            public void run() {
-//                while (true) {
-//                    EventModel event = redisUtil.blpopObject(0, EventModel.EVENT_KEY, EventModel.class);
-//                    if (event == null) {
-//                        continue;
-//                    }
-//                    if (!handlers.containsKey(event.getEventType())) {
-//                        logger.error("error event type");
-//                        continue;
-//                    }
-//                    for (EventHandler handler : handlers.get(event.getEventType())) {
-//                        handler.doHandler(event);
-//                    }
-//                }
-//            }
-//        }, "eventHandlerThread");
-//        eventHandlerThread.start();
-        ThreadPoolExecutor threadPool = (ThreadPoolExecutor) Executors.newFixedThreadPool(3);
+        // 多线程、线程池处理事件
+        threadPool = (ThreadPoolExecutor) Executors.newFixedThreadPool(3);
         threadPool.execute(new EventSonsumerThread());
         threadPool.execute(new EventSonsumerThread());
         threadPool.execute(new EventSonsumerThread());
@@ -96,5 +81,11 @@ public class EventConsumer implements InitializingBean, ApplicationContextAware 
 
     public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
         this.applicationContext = applicationContext;
+    }
+
+    public void destroy() throws Exception {
+        if (threadPool != null) {
+            threadPool.shutdown();
+        }
     }
 }
