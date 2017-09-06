@@ -54,29 +54,37 @@ public class EventConsumer implements InitializingBean, ApplicationContextAware,
                 }
             }
         }
-        class EventSonsumerThread implements Runnable {
-            public void run() {
-                while (true) {
-                    EventModel event = redisUtil.lpopObject(EventModel.EVENT_KEY, EventModel.class);
-                    if (event == null) {
-                        continue;
-                    }
-                    if (!handlers.containsKey(event.getEventType())) {
-                        logger.error("error event type");
-                        continue;
-                    }
-                    logger.info("当前线程为：" + Thread.currentThread().getName());
-                    for (EventHandler handler : handlers.get(event.getEventType())) {
-                        handler.doHandler(event);
-                    }
-                }
+        // 设置线程池的大小为 CPU 的核数 * 2
+        threadPool = (ThreadPoolExecutor) Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors() + 2);
+        while (true) {
+            EventModel event = redisUtil.lpopObject(EventModel.EVENT_KEY, EventModel.class);
+            if (event == null) {
+                continue;
+            }
+            if (!handlers.containsKey(event.getEventType())) {
+                logger.error("error event type");
+                continue;
+            }
+            for (EventHandler handler : handlers.get(event.getEventType())) {
+                threadPool.execute(new EventConsumerThread(handler, event));
             }
         }
-        // 多线程、线程池处理事件
-        threadPool = (ThreadPoolExecutor) Executors.newFixedThreadPool(3);
-        threadPool.execute(new EventSonsumerThread());
-        threadPool.execute(new EventSonsumerThread());
-        threadPool.execute(new EventSonsumerThread());
+    }
+
+    class EventConsumerThread implements Runnable {
+
+        private EventHandler handler;
+
+        private EventModel event;
+
+        public EventConsumerThread(EventHandler handler, EventModel event) {
+            this.handler = handler;
+            this.event = event;
+        }
+
+        public void run() {
+            handler.doHandler(event);
+        }
     }
 
     public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
@@ -85,7 +93,10 @@ public class EventConsumer implements InitializingBean, ApplicationContextAware,
 
     public void destroy() throws Exception {
         if (threadPool != null) {
-            threadPool.shutdown();
+            while (threadPool.getQueue().size() != 0 || threadPool.getActiveCount() != 0) {
+                // 等待所有任务执行完毕
+            }
+            threadPool.shutdownNow();
         }
     }
 }
