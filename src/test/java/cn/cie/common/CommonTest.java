@@ -1,5 +1,10 @@
 package cn.cie.common;
 
+import cn.cie.event.EventModel;
+import cn.cie.event.EventType;
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.serializer.SerializerFeature;
 import org.apache.commons.lang3.StringUtils;
 import org.junit.Test;
 import org.slf4j.Logger;
@@ -69,5 +74,21 @@ public class CommonTest {
     public void equals() {
         String type = "image/png";
         logger.info(String.valueOf(type.equalsIgnoreCase("image/png")));
+    }
+
+    /**
+     * 如果对象中的 map 不是 public 的，会无法序列化和反序列化
+     * https://github.com/alibaba/fastjson/issues/1245
+     */
+    @Test
+    public void jsonTest() {
+        EventModel model = new EventModel(EventType.SEND_VALIDATE_EMAIL);
+        String jsonStr = JSON.toJSONString(model);
+        System.out.println("toJSONString" + jsonStr);
+        System.out.println(JSON.parseObject(jsonStr, EventModel.class).getEventType());
+        model.setExts("key", "value").setExts("key2", "value2");
+        jsonStr = JSON.toJSONString(model);
+        System.out.println("toJSONStringWithMap" + jsonStr);
+        System.out.println(JSON.parseObject(jsonStr, EventModel.class).getExts("key"));
     }
 }
