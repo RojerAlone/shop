@@ -56,19 +56,23 @@ public class EventConsumer implements InitializingBean, ApplicationContextAware,
         }
         // 设置线程池的大小为 CPU 的核数 * 2
         threadPool = (ThreadPoolExecutor) Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors() + 2);
-        while (true) {
-            EventModel event = redisUtil.lpopObject(EventModel.EVENT_KEY, EventModel.class);
-            if (event == null) {
-                continue;
+        new Thread(new Runnable() {
+            public void run() {
+                while (true) {
+                    EventModel event = redisUtil.lpopObject(EventModel.EVENT_KEY, EventModel.class);
+                    if (event == null) {
+                        continue;
+                    }
+                    if (!handlers.containsKey(event.getEventType())) {
+                        logger.error("error event type");
+                        continue;
+                    }
+                    for (EventHandler handler : handlers.get(event.getEventType())) {
+                        threadPool.execute(new EventConsumerThread(handler, event));
+                    }
+                }
             }
-            if (!handlers.containsKey(event.getEventType())) {
-                logger.error("error event type");
-                continue;
-            }
-            for (EventHandler handler : handlers.get(event.getEventType())) {
-                threadPool.execute(new EventConsumerThread(handler, event));
-            }
-        }
+        }).start();
     }
 
     class EventConsumerThread implements Runnable {
