@@ -100,4 +100,12 @@ public class EventModel {
         this.exts.put(key, value);
         return this;
     }
+
+    public Map<String, String> getExts() {
+        return exts;
+    }
+
+    public void setExts(Map<String, String> exts) {
+        this.exts = exts;
+    }
 }
