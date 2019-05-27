@@ -4,7 +4,7 @@
 - 项目描述：基于SSM框架的网上游戏商城
 ## 环境配置
 - JDK 1.8
-- Spring 4.3.9
+- Spring 5.1.7
 - MyBatis 3.4
 - MySQL 5.7.18
 - Maven 3
