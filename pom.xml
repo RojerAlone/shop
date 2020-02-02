@@ -8,7 +8,7 @@
   <name>shop Maven Webapp</name>
   <url>http://maven.apache.org</url>
   <properties>
-    <spring.version>5.1.7.RELEASE</spring.version>
+    <spring.version>5.2.3.RELEASE</spring.version>
     <aop.version>1.8.10</aop.version>
     <mybatis.version>3.4.1</mybatis.version>
     <log4j.version>1.2.17</log4j.version>
